@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creator Portal | Stars Zone Media</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #FF6B9D;
+            --primary-gradient: linear-gradient(135deg, #FF6B9D 0%, #e04b7f 100%);
+            --card-bg: rgba(18, 18, 20, 0.85);
+            --input-bg: rgba(30, 30, 34, 0.6);
+            --border-color: rgba(255, 107, 157, 0.3);
+            --text-main: #ffffff;
+            --text-muted: #9a9ba5;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .full-screen-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.45);
+            z-index: 0;
+        }
+
+        .lang-switch {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: rgba(18, 18, 20, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-main);
+            padding: 6px 12px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            z-index: 10;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+        }
+        .lang-switch:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 10px rgba(255, 107, 157, 0.3);
+        }
+
+        .login-wrapper {
+            position: relative;
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 560px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .top-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .top-header img {
+            width: 80px;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 0 10px rgba(255, 107, 157, 0.4));
+        }
+        .top-header h1 {
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin: 0 0 5px 0;
+            text-transform: uppercase;
+        }
+        .top-header p {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin: 0;
+            letter-spacing: 0.5px;
+        }
+
+        .login-container {
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 45px 50px;
+            border-radius: 24px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--border-color);
+            width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .portal-icon {
+            font-size: 32px;
+            color: var(--text-main);
+            margin-bottom: 12px;
+        }
+
+        .login-container h2 {
+            margin: 0 0 6px 0;
+            font-size: 26px;
+            font-weight: 700;
+        }
+        .login-container h2 span {
+            color: var(--primary);
+        }
+        .login-container .subtitle {
+            margin: 0 0 35px 0;
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        .input-row {
+            display: flex;
+            align-items: center;
+            background: var(--input-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .input-row:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 12px rgba(255, 107, 157, 0.15);
+        }
+
+        .input-icon-box {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--primary);
+            font-size: 16px;
+        }
+        body[dir="rtl"] .input-icon-box {
+            border-right: none;
+            border-left: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 15px;
+            color: var(--text-main);
+            font-size: 14px;
+            outline: none;
+            box-sizing: border-box;
+        }
+        input::placeholder {
+            color: #62636c;
+        }
+
+        .toggle-password {
+            padding: 0 15px;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+        .toggle-password:hover { color: var(--text-main); }
+
+        .options-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            margin-bottom: 30px;
+            color: var(--text-muted);
+        }
+        .remember-me { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+        .remember-me input { flex: none; width: auto; padding: 0; accent-color: var(--primary); }
+        .forgot-pass { color: var(--text-muted); text-decoration: none; transition: color 0.2s; cursor: pointer; }
+        .forgot-pass:hover { color: var(--primary); }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3);
+            transition: all 0.3s ease;
+        }
+        .submit-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(255, 107, 157, 0.45);
+        }
+
+        .contact-admin {
+            margin-top: 25px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+        .contact-admin a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .contact-admin a:hover { text-decoration: underline; }
+
+        .error { color: #ff4d4d; margin-top: 15px; font-size: 12px; min-height: 15px; font-weight: 500; }
+        .success-msg { color: #00ffa2; margin-top: 15px; font-size: 12px; min-height: 15px; font-weight: 500; }
+
+        .footer-banner {
+            position: relative;
+            z-index: 5;
+            margin-top: 40px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 15px;
+            width: 100%;
+            max-width: 560px;
+            justify-content: center;
+        }
+        .footer-banner span.highlight {
+            color: var(--primary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<img src="images/loginback1.JPEG" alt="Background" class="full-screen-bg">
+
+<button class="lang-switch" id="langBtn" onclick="toggleLanguage()">العربية</button>
+
+<div class="login-wrapper">
+    <div class="top-header">
+        <img src="images/loginicon.PNG" alt="Stars Zone Logo">
+        <h1 id="brandName">Stars Zone Media</h1>
+        <p id="brandTag">Elevate, Empower, &Entertain</p>
+    </div>
+
+    <div class="login-container">
+        <div class="portal-icon"><i class="fab fa-tiktok"></i></div>
+        <h2>Creator <span>Portal</span></h2>
+        <div class="subtitle" id="loginSubtitle">Stars Zone Media Dashboard</div>
+        
+        <div class="input-row">
+            <div class="input-icon-box"><i class="fas fa-envelope"></i></div>
+            <input type="email" id="email" placeholder="Email Address">
+        </div>
+        
+        <div class="input-row">
+            <div class="input-icon-box"><i class="fas fa-lock"></i></div>
+            <input type="password" id="password" placeholder="Password">
+            <div class="toggle-password" onclick="togglePasswordVisibility()"><i class="fas fa-eye-slash" id="eyeIcon"></i></div>
+        </div>
+        
+        <div class="options-row">
+            <label class="remember-me">
+                <input type="checkbox"> <span id="lblRemember">Remember me</span>
+            </label>
+            <span onclick="handleForgotPassword()" class="forgot-pass" id="lblForgot">Forgot password?</span>
+        </div>
+        
+        <button class="submit-btn" id="loginBtn" onclick="login()">Sign In</button>
+        <div id="errorMessage" class="error"></div>
+        
+        <div class="contact-admin" id="lblAdmin">Don't have an account? <a href="https://www.tiktok.com/@starszonemedia" target="_blank">Contact Admin</a></div>
+    </div>
+
+    <div class="footer-banner">
+        <span class="highlight"><i class="fas fa-sparkles"></i> <span id="ftPartner">Official TikTok Live Partner</span></span>
+        <div style="width: 1px; height: 12px; background: rgba(255,255,255,0.15);"></div>
+        <span id="ftEmpower">Empowering Creators Across MENA</span>
+    </div>
+</div>
+
+<script>
+    const SUPABASE_URL = "https://akrmavzcuirbwgabkdpl.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_DyvBCsbRKbWVsC1FoTNp_w_T0cF01e3";
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    let currentLang = 'en';
+    const translations = {
+        en: {
+            subtitle: "Stars Zone Media Dashboard", email: "Email Address", password: "Password",
+            remember: "Remember me", forgot: "Forgot password?", btn: "Sign In",
+            admin: "Don't have an account? <a href='https://www.tiktok.com/@starszonemedia' target='_blank'>Contact Admin</a>",
+            partner: "Official TikTok Live Partner", empower: "Empowering Creators Across MENA",
+            err: "Invalid email or password.", langBtn: "العربية",
+            emailRequired: "Please enter your email address first",
+            resetSuccess: "Password reset link has been sent to your email!",
+            resetError: "Error sending reset link. Please verify your email."
+        },
+        ar: {
+            subtitle: "لوحة تحكم وكالة ستارز زون ميديا", email: "البريد الإلكتروني", password: "كلمة المرور",
+            remember: "تذكرني", forgot: "نسيت كلمة المرور؟", btn: "تسجيل الدخول",
+            admin: "ليس لديك حساب؟ <a href='https://www.tiktok.com/@starszonemedia' target='_blank'>تواصل مع الإدارة</a>",
+            partner: "شريك تيك توك لايف الرسمي", empower: "تمكين المبدعين في منطقة الشرق الأوسط",
+            err: "بريد إلكتروني أو كلمة مرور خاطئة.", langBtn: "English",
+            emailRequired: "الرجاء كتابة البريد الإلكتروني أولاً   ",
+            resetSuccess: "تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني بنجاح!",
+            resetError: "حدث خطأ أثناء إرسال الرابط، يرجى التأكد من البريد الإلكتروني."
+        }
+    };
+
+    function toggleLanguage() {
+        currentLang = currentLang === 'en' ? 'ar' : 'en';
+        document.body.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+        
+        document.getElementById('loginSubtitle').innerText = translations[currentLang].subtitle;
+        document.getElementById('email').placeholder = translations[currentLang].email;
+        document.getElementById('password').placeholder = translations[currentLang].password;
+        document.getElementById('lblRemember').innerText = translations[currentLang].remember;
+        document.getElementById('lblForgot').innerText = translations[currentLang].forgot;
+        document.getElementById('loginBtn').innerText = translations[currentLang].btn;
+        document.getElementById('lblAdmin').innerHTML = translations[currentLang].admin;
+        document.getElementById('ftPartner').innerText = translations[currentLang].partner;
+        document.getElementById('ftEmpower').innerText = translations[currentLang].empower;
+        document.getElementById('langBtn').innerText = translations[currentLang].langBtn;
+    }
+
+    function togglePasswordVisibility() {
+        const passwordInput = document.getElementById('password');
+        const eyeIcon = document.getElementById('eyeIcon');
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            eyeIcon.classList.remove('fa-eye-slash');
+            eyeIcon.classList.add('fa-eye');
+        } else {
+            passwordInput.type = 'password';
+            eyeIcon.classList.remove('fa-eye');
+            eyeIcon.classList.add('fa-eye-slash');
+        }
+    }
+
+    // 📩 دالة إعادة تعيين الباسورد أوتوماتيك عبر سوبابيز
+    async function handleForgotPassword() {
+        const email = document.getElementById('email').value;
+        const errorDiv = document.getElementById('errorMessage');
+        errorDiv.className = "error"; // إعادة الستايل الافتراضي للإيرور
+        
+        if (!email) {
+            errorDiv.innerText = translations[currentLang].emailRequired;
+            return;
+        }
+
+        errorDiv.className = "success-msg";
+        errorDiv.innerText = currentLang === 'en' ? "Sending link..." : "جاري إرسال الرابط...";
+
+        const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
+            redirectTo: window.location.origin + '/login.html', // هيرجع الكرييتور للوجن بعد ما يغير الباسورد
+        });
+
+        if (error) {
+            errorDiv.className = "error";
+            errorDiv.innerText = translations[currentLang].resetError;
+        } else {
+            errorDiv.className = "success-msg";
+            errorDiv.innerText = translations[currentLang].resetSuccess;
+        }
+    }
+
+ async function login() {
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const errorDiv = document.getElementById('errorMessage');
+        const btn = document.getElementById('loginBtn');
+        
+        // 👈 قراءة حالة زرار الـ Remember Me (هل معمول عليه صح ولا لأ)
+        const rememberMe = document.querySelector('.remember-me input').checked;
+        
+        errorDiv.className = "error";
+        errorDiv.innerText = "";
+        
+        btn.innerText = currentLang === 'en' ? "Connecting..." : "جاري الاتصال...";
+        btn.style.opacity = "0.7";
+
+        const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+
+        if (error) {
+            errorDiv.innerText = translations[currentLang].err;
+            btn.innerText = translations[currentLang].btn;
+            btn.style.opacity = "1";
+        } else {
+            // 🧮 --- تشغيل ميزة الـ Remember Me برمجياً ---
+            if (rememberMe) {
+                // لو عمل صح، بنحفظ إيميله في المتصفح عشان نسهل عليه المرة الجاية
+                localStorage.setItem('rememberedEmail', email);
+            } else {
+                // لو معملش صح، بنمسح الإيميل المحفوظ
+                localStorage.removeItem('rememberedEmail');
+            }
+            
+            window.location.href = `dashboard.html?lang=${currentLang}`;
+        }
+    }
+
+    // 🌟 كود إضافي ذكي: أول ما الصفحة تفتح، لو الكرييتور كان قايل "تذكرني" قبل كده، السيستم بيكتب إيميله أوتوماتيك ويعمل صح على الزرار!
+    window.addEventListener('DOMContentLoaded', () => {
+        const savedEmail = localStorage.getItem('rememberedEmail');
+        if (savedEmail) {
+            document.getElementById('email').value = savedEmail;
+            document.querySelector('.remember-me input').checked = true;
+        }
+    });
+</script>
+</body>
+</html>
