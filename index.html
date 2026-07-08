@@ -16,7 +16,11 @@
     <title>Stars Zone Media | TikTok Creator Network Agency</title>
 
 <link rel="icon" href="images/webicon.webp">
-
+<link
+    rel="preload"
+    as="image"
+    href="images/icon-old.webp"
+    fetchpriority="high">
 <link rel="stylesheet" href="styles.css">
 
 <!-- Google Fonts -->
@@ -83,11 +87,25 @@
                     <a href="https://www.tiktok.com/tcn/scout_creators?use_spark=1&agency_scout_source=qr_code_leads&ShareLinkID=7499157794223770423" class="cta-button" target="_blank">Get Started <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
                 </div>
             </div>
-            <div class="hero-image">
-                <a href="https://www.tiktok.com/@starszonemedia" target="_blank" rel="noopener noreferrer" title="Visit @starszonemedia's TikTok Profile">
-                    <div class="image-wrapper">
-                        <img src="images/icon-old.webp" alt="SZM Logo" loading="eager">
-                    </div>
+          <div class="hero-image">
+    <a href="https://www.tiktok.com/@starszonemedia"
+       target="_blank"
+       rel="noopener noreferrer"
+       title="Visit @starszonemedia's TikTok Profile">
+
+        <div class="image-wrapper">
+            <img
+                src="images/icon-old.webp"
+                alt="SZM Logo"
+                loading="eager"
+                fetchpriority="high"
+                decoding="async"
+                width="280"
+                height="280">
+        </div>
+
+    </a>
+</div>
                 </a>
             </div>
         </div>
