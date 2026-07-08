@@ -1035,10 +1035,10 @@ console.log("CREATOR ID:", creatorId);
             if (responseResult.status !== "success") { return; }
 
             const data = responseResult.data;
-            globalLiveHours = Number Text(data.live_hours) || 0;
-            globalLiveDays = Number Text(data.live_days) || 0;
-            globalDiamondsThisMonth = Number Text(data.diamonds_this_month) || 0;
-            globalDiamondsLastMonth = Number Text(data.diamonds_last_month) || 0;
+            globalLiveHours = Number(data.live_hours) || 0;
+            globalLiveDays = Number(data.live_days) || 0;
+            globalDiamondsThisMonth = Number(data.diamonds_this_month) || 0;
+            globalDiamondsLastMonth = Number(data.diamonds_last_month) || 0;
 
             document.getElementById("tiktokId").innerText = "@" + (data.creator_name || "");
             document.getElementById("liveHours").innerText = globalLiveHours;
