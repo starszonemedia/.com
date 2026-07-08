@@ -64,10 +64,46 @@
             z-index: 10;
             backdrop-filter: blur(8px);
             transition: all 0.3s ease;
+            text-decoration: none;
         }
         .lang-switch:hover {
             border-color: var(--primary);
             box-shadow: 0 0 10px rgba(255, 107, 157, 0.3);
+        }
+
+        .home-switch {
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            background: rgba(18, 18, 20, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-main);
+            padding: 6px 15px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            z-index: 10;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .home-switch:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 10px rgba(255, 107, 157, 0.3);
+        }
+
+        /* دعم قلب الاتجاهات بشكل صحيح بدون تداخل */
+        body[dir="rtl"] .lang-switch {
+            right: auto;
+            left: 25px;
+        }
+        body[dir="rtl"] .home-switch {
+            left: auto;
+            right: 25px;
         }
 
         .login-wrapper {
@@ -266,17 +302,27 @@
 
 <img src="images/loginback1.JPEG" alt="Background" class="full-screen-bg">
 
+<!-- زرار الـ Home (تم وضعه مرة واحدة في مكان صحيح) -->
+<a href="index.html" class="home-switch">
+    <i class="fas fa-home"></i> <span id="homeText">Home</span>
+</a>
+
+<!-- زرار تغيير اللغة (مرة واحدة فقط لتجنب الجليتش) -->
 <button class="lang-switch" id="langBtn" onclick="toggleLanguage()">العربية</button>
 
 <div class="login-wrapper">
-    <div class="top-header">
+   <div class="top-header">
+    <a href="index.html" style="text-decoration: none; cursor: pointer;">
         <img src="images/loginicon.PNG" alt="Stars Zone Logo">
-        <h1 id="brandName">Stars Zone Media</h1>
-        <p id="brandTag">Elevate, Empower, &Entertain</p>
-    </div>
+    </a>
+    <h1 id="brandName">Stars Zone Media</h1>
+    <p id="brandTag">Elevate, Empower, & Entertain</p>
+</div>
 
     <div class="login-container">
-        <div class="portal-icon"><i class="fab fa-tiktok"></i></div>
+        <a href="index.html" class="portal-icon" style="text-decoration: none; display: block;">
+            <i class="fab fa-tiktok"></i>
+        </a>
         <h2>Creator <span>Portal</span></h2>
         <div class="subtitle" id="loginSubtitle">Stars Zone Media Dashboard</div>
         
@@ -319,6 +365,7 @@
     let currentLang = 'en';
     const translations = {
         en: {
+            home: "Home",
             subtitle: "Stars Zone Media Dashboard", email: "Email Address", password: "Password",
             remember: "Remember me", forgot: "Forgot password?", btn: "Sign In",
             admin: "Don't have an account? <a href='https://www.tiktok.com/@starszonemedia' target='_blank'>Contact Admin</a>",
@@ -329,6 +376,7 @@
             resetError: "Error sending reset link. Please verify your email."
         },
         ar: {
+            home: "الصفحة الرئيسية",
             subtitle: "لوحة تحكم وكالة ستارز زون ميديا", email: "البريد الإلكتروني", password: "كلمة المرور",
             remember: "تذكرني", forgot: "نسيت كلمة المرور؟", btn: "تسجيل الدخول",
             admin: "ليس لديك حساب؟ <a href='https://www.tiktok.com/@starszonemedia' target='_blank'>تواصل مع الإدارة</a>",
@@ -344,6 +392,7 @@
         currentLang = currentLang === 'en' ? 'ar' : 'en';
         document.body.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
         
+        document.getElementById('homeText').innerText = translations[currentLang].home;
         document.getElementById('loginSubtitle').innerText = translations[currentLang].subtitle;
         document.getElementById('email').placeholder = translations[currentLang].email;
         document.getElementById('password').placeholder = translations[currentLang].password;
@@ -370,11 +419,10 @@
         }
     }
 
-    // 📩 دالة إعادة تعيين الباسورد أوتوماتيك عبر سوبابيز
     async function handleForgotPassword() {
         const email = document.getElementById('email').value;
         const errorDiv = document.getElementById('errorMessage');
-        errorDiv.className = "error"; // إعادة الستايل الافتراضي للإيرور
+        errorDiv.className = "error"; 
         
         if (!email) {
             errorDiv.innerText = translations[currentLang].emailRequired;
@@ -385,7 +433,7 @@
         errorDiv.innerText = currentLang === 'en' ? "Sending link..." : "جاري إرسال الرابط...";
 
         const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
-            redirectTo: window.location.origin + '/login.html', // هيرجع الكرييتور للوجن بعد ما يغير الباسورد
+            redirectTo: window.location.origin + '/login.html', 
         });
 
         if (error) {
@@ -397,13 +445,11 @@
         }
     }
 
- async function login() {
+    async function login() {
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
         const errorDiv = document.getElementById('errorMessage');
         const btn = document.getElementById('loginBtn');
-        
-        // 👈 قراءة حالة زرار الـ Remember Me (هل معمول عليه صح ولا لأ)
         const rememberMe = document.querySelector('.remember-me input').checked;
         
         errorDiv.className = "error";
@@ -419,20 +465,15 @@
             btn.innerText = translations[currentLang].btn;
             btn.style.opacity = "1";
         } else {
-            // 🧮 --- تشغيل ميزة الـ Remember Me برمجياً ---
             if (rememberMe) {
-                // لو عمل صح، بنحفظ إيميله في المتصفح عشان نسهل عليه المرة الجاية
                 localStorage.setItem('rememberedEmail', email);
             } else {
-                // لو معملش صح، بنمسح الإيميل المحفوظ
                 localStorage.removeItem('rememberedEmail');
             }
-            
             window.location.href = `dashboard.html?lang=${currentLang}`;
         }
     }
 
-    // 🌟 كود إضافي ذكي: أول ما الصفحة تفتح، لو الكرييتور كان قايل "تذكرني" قبل كده، السيستم بيكتب إيميله أوتوماتيك ويعمل صح على الزرار!
     window.addEventListener('DOMContentLoaded', () => {
         const savedEmail = localStorage.getItem('rememberedEmail');
         if (savedEmail) {
