@@ -155,14 +155,7 @@ body {
     align-items: centrer;
 }
 
-.hero-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 60px;
-    width: 100%;
-    padding-left: 40px; /* لإبعاد المحتوى عن حافة الشاشة جهة اليمين */
-}
+
 
 /* تعديل محاذاة ومسافات قسم البداية (Hero) */
 .hero-container {
