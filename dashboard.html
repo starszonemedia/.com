@@ -1015,17 +1015,23 @@
             return;
         }
         const creatorId = session.user.email;
-       const savedPref = localStorage.getItem("payoutPreference");
+  const savedPref = localStorage.getItem("payoutPreference");
 
-if (savedPref) {
-    setPayoutStrategy(savedPref);
-} else {
-    setPayoutStrategy("hold"); // Default لأول مرة
+if(savedPref === "cash"){
+    document.getElementById('btnPayoutCash').classList.add('active');
+    document.getElementById('btnPayoutHold').classList.remove('active');
+}
+else{
+    document.getElementById('btnPayoutHold').classList.add('active');
+    document.getElementById('btnPayoutCash').classList.remove('active');
 }
 
         try {
             const response = await fetch(`${googleSheetWebAppUrl}?id=${encodeURIComponent(creatorId)}`);
             const responseResult = await response.json();
+            console.log("FULL RESPONSE:", responseResult);
+console.log("DATA KEYS:", Object.keys(responseResult.data));
+console.log("CREATOR ID:", creatorId);
             if (responseResult.status !== "success") { return; }
 
             const data = responseResult.data;
