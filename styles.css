@@ -175,6 +175,7 @@ body {
     flex-direction: column;
     align-items: flex-start; /* بيخلي الكلام جاي مظبوط تحت بعضه */
     text-align: left;       /* محاذاة النص لليسار بشكل شيك وراقي */
+    margin-right: 170px;
 }
 
 .hero-badge {
