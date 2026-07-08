@@ -24,7 +24,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: url('images/bashback.JPEG') no-repeat center center fixed;
+            background: url('images/bashback.JPEG') no-repeat center center fixed ;
             background-size: cover;
             color: var(--text-main);
             margin: 0;
@@ -311,7 +311,7 @@
         .congrats-text h3 { margin: 0 0 5px 0; font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
         .congrats-text p { margin: 0; font-size: 14px; color: var(--text-muted); }
         
-  .congrats-right { 
+        .congrats-right { 
             display: flex; 
             justify-content: center; 
             align-items: center; 
@@ -325,7 +325,7 @@
             justify-content: center; 
         }
         .congrats-amount { 
-            font-size: 38px; /* تم تكبير حجم القيمة قليلاً */
+            font-size: 38px; 
             font-weight: 800; 
             color: var(--primary); 
             text-shadow: 0 0 20px rgba(255, 107, 157, 0.35); 
@@ -345,6 +345,74 @@
         body[dir="rtl"] .req-title { text-align: right; }
         body[dir="rtl"] .congrats-right { text-align: left; flex-direction: row-reverse; }
         body[dir="rtl"] .payout-options { flex-direction: row-reverse; }
+
+        /* MODAL STYLING (نافذة السحب المنبثقة) */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0; pointer-events: none;
+            transition: all 0.4s ease;
+        }
+        .modal-overlay.show { opacity: 1; pointer-events: auto; }
+        
+        .withdrawal-card {
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.05) 0%, rgba(18, 18, 20, 0.98) 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 35px;
+            width: 100%;
+            max-width: 550px;
+            box-sizing: border-box;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            transform: scale(0.9); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .modal-overlay.show .withdrawal-card { transform: scale(1); }
+
+        .card-header-area { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 25px; }
+        .header-title-flex { display: flex; gap: 15px; align-items: center; }
+        .wallet-icon-box { background: rgba(255, 107, 157, 0.1); border: 1px solid rgba(255, 107, 157, 0.2); padding: 12px; border-radius: 14px; color: var(--primary); font-size: 22px; display: flex; align-items: center; justify-content: center; }
+        .title-text h2 { font-size: 20px; margin: 0 0 4px 0; font-weight: 700; }
+        .title-text p { font-size: 12px; margin: 0; color: var(--text-muted); }
+        
+        /* تعديل منطقة الهيدر لإضافة زر لغة السحب بجانب زر الإغلاق */
+        .header-right-actions { display: flex; align-items: center; gap: 12px; }
+        .close-modal-btn { background: none; border: none; color: var(--text-muted); font-size: 20px; cursor: pointer; transition: 0.3s; padding: 0; }
+        .close-modal-btn:hover { color: var(--danger); }
+
+        .form-group { margin-bottom: 20px; position: relative; }
+        .form-label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 10px; color: #e1e1e6; }
+        
+        .custom-select-wrapper { position: relative; cursor: pointer; }
+        .select-trigger { background: rgba(18, 18, 20, 0.9); border: 1px solid rgba(255, 255, 255, 0.08); padding: 12px 18px; border-radius: 12px; display: flex; align-items: center; justify-content: space-between; font-weight: 500; font-size: 14px; }
+        .select-trigger:hover, .custom-select-wrapper.open .select-trigger { border-color: rgba(255, 107, 157, 0.5); }
+        .trigger-content { display: flex; align-items: center; gap: 12px; }
+        .select-options { position: absolute; top: calc(100% + 6px); left: 0; right: 0; background: #121214; border: 1px solid rgba(255, 107, 157, 0.3); border-radius: 12px; overflow: hidden; z-index: 110; display: none; }
+        .custom-select-wrapper.open .select-options { display: block; }
+        .option-item { padding: 12px 18px; display: flex; align-items: center; justify-content: space-between; font-size: 14px; }
+        .option-item:hover { background: rgba(255, 107, 157, 0.08); }
+        .option-left { display: flex; align-items: center; gap: 12px; }
+        .option-item .fa-check { color: var(--primary); display: none; }
+        .option-item.selected .fa-check { display: block; }
+
+        .input-wrapper { position: relative; }
+        .input-wrapper i { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
+        .custom-input { width: 100%; background: rgba(18, 18, 20, 0.6); border: 1px solid rgba(255, 255, 255, 0.08); padding: 14px 14px 14px 44px; border-radius: 12px; color: white; font-size: 13px; box-sizing: border-box; }
+        .custom-input:focus { outline: none; border-color: var(--primary); }
+        .input-hint { font-size: 11px; color: var(--text-muted); margin-top: 6px; display: block; }
+
+        .submit-btn { width: 100%; background: var(--primary); border: none; padding: 14px; border-radius: 12px; color: white; font-weight: 700; font-size: 14px; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 15px rgba(255, 107, 157, 0.35); }
+        .submit-btn:hover { background: #ff4781; }
+        .submit-btn:disabled { background: #444; color: #888; cursor: not-allowed; box-shadow: none; }
+        .secure-notice { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 11px; color: var(--text-muted); margin-top: 15px; }
+
+        body[dir="rtl"] .input-wrapper i { left: auto; right: 16px; }
+        body[dir="rtl"] .custom-input { padding: 14px 44px 14px 14px; }
 
         @media (max-width: 768px) {
             .main-wrapper { padding: 20px 12px; }
@@ -373,13 +441,15 @@
 
 <div class="main-wrapper">
     <div class="navbar">
-        <div class="brand-area">
-            <img src="images/loginicon.PNG" alt="Stars Zone Logo">
-            <div class="brand-info">
-                <h1>Stars Zone Media</h1>
-                <p>Elevate, Empower, & Entertain</p>
-            </div>
+    <div class="brand-area">
+        <a href="index.html" style="display: flex; align-items: center; text-decoration: none; color: inherit;">
+            <img src="images/loginicon.PNG" alt="Stars Zone Logo" style="cursor: pointer;">
+        </a>
+        <div class="brand-info">
+            <h1>Stars Zone Media</h1>
+            <p>Elevate, Empower, & Entertain</p>
         </div>
+    </div>
         <div class="nav-actions">
             <button class="lang-switch" id="langBtn" onclick="toggleLanguage()">العربية</button>
             <button class="icon-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i></button>
@@ -487,13 +557,13 @@
                     <i class="far fa-calendar-check"></i>
                     <div>
                         <h4 id="lblReq1Title">1. Live Activity</h4>
-                        <p id="lblReq1Desc">Complete both Live Hours (60h) and Live Days (18d) targets to unlock the activeness bonus.</p>
+                        <p id="lblReq1Desc">Complete both Live Hours and Live Days targets to unlock the activeness bonus.</p>
                     </div>
                 </div>
                 <div class="req-metrics">
-                    <div class="metric-item"><span id="lblMetricHours">Live Hours at least</span> <div id="reqHours">0 / 60 Hours</div> <span id="subBadgeHours" class="badge" style="margin-top:5px;"><i class="fas fa-minus-circle"></i> <span>-</span></span></div>
+                    <div class="metric-item"><span id="lblMetricHours">Live Hours</span> <div id="reqHours">0 / 80 Hours</div> <span id="subBadgeHours" class="badge" style="margin-top:5px;"><i class="fas fa-minus-circle"></i> <span>-</span></span></div>
                     <span class="plus-sign">+</span>
-                    <div class="metric-item"><span id="lblMetricDays">Live Days at least</span> <div id="reqDays">0 / 18 Days</div> <span id="subBadgeDays" class="badge" style="margin-top:5px;"><i class="fas fa-minus-circle"></i> <span>-</span></span></div>
+                    <div class="metric-item"><span id="lblMetricDays">Live Days</span> <div id="reqDays">0 / 22 Days</div> <span id="subBadgeDays" class="badge" style="margin-top:5px;"><i class="fas fa-minus-circle"></i> <span>-</span></span></div>
                 </div>
                 <div id="circleReq1" class="status-circle">
                     <i></i>
@@ -552,6 +622,70 @@
     </div>
 </div>
 
+<!-- OVERLAY MODAL (نافذة السحب اللي هتفتح في نفس الصفحة) -->
+<div class="modal-overlay" id="withdrawalModal">
+    <div class="withdrawal-card">
+        <div class="card-header-area">
+            <div class="header-title-flex">
+                <div class="wallet-icon-box"><i class="fas fa-wallet"></i></div>
+                <div class="title-text">
+                    <h2 id="lblWTitle">Withdrawal Information</h2>
+                    <p id="lblWSubtitle">Choose your preferred payment method and provide details</p>
+                </div>
+            </div>
+            <div class="header-right-actions">
+                <!-- زرار تغيير لغة نافذة السحب مستقل -->
+                <button class="lang-switch" id="modalLangBtn" onclick="toggleLanguage()" style="padding: 5px 12px; font-size: 11px;">العربية</button>
+                <button class="close-modal-btn" onclick="closeWithdrawalModal()"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" id="lblWMethod">Payment Method</label>
+            <div class="custom-select-wrapper" id="paymentSelect" onclick="toggleDropdown(event)">
+                <div class="select-trigger">
+                    <div class="trigger-content" id="selectedDisplay">
+                        <i class="fas fa-wallet" style="color: #e60000;"></i> <span>Vodafone Cash</span>
+                    </div>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="select-options">
+                    <div class="option-item selected" onclick="selectOption('vodafone', 'Vodafone Cash', 'fas fa-wallet', '#e60000', 'Enter your Vodafone Cash number')">
+                        <div class="option-left"><i class="fas fa-wallet" style="color: #e60000;"></i> <span>Vodafone Cash</span></div>
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="option-item" onclick="selectOption('instapay', 'InstaPay', 'fas fa-university', '#8a2be2', 'Enter your InstaPay Address')">
+                        <div class="option-left"><i class="fas fa-university" style="color: #8a2be2;"></i> <span>InstaPay</span></div>
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="option-item" onclick="selectOption('bank', 'Bank Account', 'fas fa-landmark', '#cca43b', 'Enter Name, Bank and IBAN')">
+                        <div class="option-left"><i class="fas fa-landmark" style="color: #cca43b;"></i> <span>Bank Account</span></div>
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="option-item" onclick="selectOption('tiktok', 'TikTok Gift', 'fab fa-tiktok', '#fff', 'Enter TikTok details')">
+                        <div class="option-left"><i class="fab fa-tiktok" style="color: #fff;"></i> <span>TikTok Gift</span></div>
+                        <i class="fas fa-check"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" id="lblWAccount">Account Number</label>
+            <div class="input-wrapper">
+                <i class="fas fa-mobile-alt" id="inputIcon" style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
+                <input type="text" class="custom-input" id="accountInput" placeholder="Enter your Vodafone Cash number">
+            </div>
+            <small class="input-hint" id="lblWHint">Make sure the number is correct to avoid delays.</small>
+        </div>
+
+        <button class="submit-btn" id="btnWSubmit" onclick="submitRequest()">Submit Withdrawal Request</button>
+        <div class="secure-notice">
+            <i class="fas fa-lock"></i> <span id="lblWSecure">Your information is secure and encrypted.</span>
+        </div>
+    </div>
+</div>
+
 <script>
     const SUPABASE_URL = "https://akrmavzcuirbwgabkdpl.supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_DyvBCsbRKbWVsC1FoTNp_w_T0cF01e3";
@@ -560,6 +694,7 @@
     const googleSheetWebAppUrl = "https://script.google.com/macros/s/AKfycbyUrAF-Ae4jsFC2oCeXp56qvygGaj9ln1qkUOtaUmUuoIHfr0DL3hKLFMDvTtrWQzHY/exec";
 
     let currentLang = 'en';
+    let currentSelectedMethod = 'Vodafone Cash'; // لتخزين وسيلة الدفع الحالية لإرسالها للشيت
     
     let globalLiveHours = 0;
     let globalLiveDays = 0;
@@ -571,8 +706,8 @@
             title: "Creator Dashboard", welcome: "Welcome back! 👋", subWelcome: "Here's your performance overview", update: "Last updated: Daily",
             hours: "Live Hours", days: "Live Days", diamonds: "Diamonds", bonus: "Estimated Bonus", totalEstimated: "Total Estimated Bonus",
             status: "Status", eligible: "Eligible", notEligible: "Ineligible", basedOn: "* Based on eligibility", secTitle: "Bonus Eligibility",
-            secSub: "Your bonus is calculated based on the following two requirements", req1Title: "1. Live Activity", req1Desc: "Complete both Live Hours (60h) and Live Days (18d) targets to unlock 50% of the bonus.",
-            met: "Requirement Met", notMet: "Not Met", req2Title: "2. Diamonds Target", req2Desc: "Earn the same or more Diamonds compared to last month to unlock 50% of the bonus.",
+            secSub: "Your bonus is calculated based on the following two requirements", req1Title: "1. Live Activity", req1Desc: "Complete both Live Hours (60h at least) and Live Days (18d at least) targets to unlock the activeness bonus.",
+            met: "Requirement Met", notMet: "Not Met", req2Title: "2. Diamonds Target", req2Desc: "Earn at least 200,000 Diamonds and match or exceed last month's diamonds to unlock the diamonds bonus.",
             thisMonth: "This Month", lastMonth: "Last Month", 
             payoutTitle: "Payout Preference", payoutDesc: "Choose how you prefer to receive your monthly generated agency rewards",
             payoutCash: "Cash Out Now", payoutHold: "Hold to Next Month", langBtn: "العربية", tiktokLabel: "TikTok ID",
@@ -582,28 +717,40 @@
             congratsNone: "Keep going to unlock your Bonus! 💪", descNone: "Stream more hours/days and collect diamonds to start earning bonuses.",
             status1Met: "Live Activity Status: Eligible. You have met the minimum requirements for Live Hours and Live Days.",
             status1NotMet: "Live Activity Status: Ineligible. You must stream at least 60 hours and 18 days.",
-            status2Met: "Diamonds Status: Eligible. You have earned the same or more Diamonds compared to last month.",
-            status2NotMet: "Diamonds Status: Ineligible. This month's diamonds are less than last month.",
-            fromActiveness: "from activeness", fromDiamonds: "from diamonds"
+            status2Met: "Diamonds Status: Eligible. You have earned at least 200,000 diamonds and matched or exceeded last month's diamonds.",
+            status2NotMet: "Diamonds Status: Ineligible. You must reach at least 200,000 diamonds and match or exceed last month's diamonds.",
+            fromActiveness: "from activeness", fromDiamonds: "from diamonds",
+            wTitle: "Withdrawal Information", wSubtitle: "Choose your preferred payment method and provide details",
+            wMethod: "Payment Method", wAccount: "Account Number", wHint: "Make sure the number is correct to avoid wrong transfers.",
+            wSubmit: "Submit Withdrawal Request", wSecure: "Your information is secure and encrypted.",
+            submitting: "Submitting request...",
+            vodafonePlaceholder: "Enter your Vodafone Cash number", instapayPlaceholder: "Enter your InstaPay Address or number",
+            bankPlaceholder: "Enter Name, Bank and IBAN", tiktokPlaceholder: "Enter TikTok Username"
         },
         ar: {
-            title: "لوحة تحكم المبدع", welcome: "أهلاً بك مجدداً! 👋", subWelcome: "إليك نظنة عامة على أدائك الحالي", update: "آخر تحديث: يومي",
+            title: "لوحة تحكم المبدع", welcome: "أهلاً بك مجدداً! 👋", subWelcome: "إليك نظرة عامة على أدائك الحالي", update: "آخر تحديث: يومي",
             hours: "ساعات البث", days: "أيام البث", diamonds: "الماس المحقق", bonus: "البونص المستحق", totalEstimated: "إجمالي البونص التقديري",
             status: "الحالة", eligible: "مؤهل", notEligible: "غير مؤهل", basedOn: "* بناءً على شروط الأهلية", secTitle: "أهلية الحصول على البونص",
-            secSub: "يتم حساب البونص الخاص بك بناءً على استيفاء الشرطين التاليين بشكل منفصل", req1Title: "1. نشاط البث المباشر", req1Desc: "تحقيق تارجت ساعات البث (60 ساعة) وأيام البث (18 يوم) معاً للحصول علي بونص التفاعل.",
-            met: "تم استيفاء الشرط", notMet: "لم يتم الاستيفاء", req2Title: "2. تارجت الماس المحقق", req2Desc: "تحقيق كمية ماس مساوية أو أكثر مقارنة بالشهر السابق للحصول علي بونص الماسات.",
+            secSub: "يتم حساب البونص الخاص بك بناءً على استيفاء الشرطين التاليين بشكل منفصل", req1Title: "1. نشاط البث المباشر", req1Desc: "تحقيق تارجت ساعات البث (60 ساعة علي الاقل) وأيام البث (18 يوم علي الاقل) معاً للحصول علي بونص التفاعل.",
+            met: "تم استيفاء الشرط", notMet: "لم يتم الاستيفاء", req2Title: "2. تارجت الماس المحقق", req2Desc: "تحقيق 200,000 ماسة على الأقل هذا الشهر، وأن تكون الكمية مساوية أو أكثر مقارنة بالشهر السابق للحصول علي بونص الماسات.",
             thisMonth: "هذا الشهر", lastMonth: "الشهر الماضي", 
-            payoutTitle: "تفضيلات استلام الأرباح", payoutDesc: "اختر الطريقة التي تفضلها لاستلام مكافأة وكالتك الشهرية الناتجة عن أدائك",
+            payoutTitle: "تفضيلات استلام الأرباح", payoutDesc: "اختر الطريقة التي تفضلها لاستلام مكافأة الوكالة الشهرية الناتجة عن أدائك",
             payoutCash: "استلام فوري", payoutHold: "تحويش للشهر القادم", langBtn: "English", tiktokLabel: "معرّف التيك توك",
             footerNote: "ملاحظة: مبالغ البونص تقديرية وقد تتغير بناءً على التدقيق النهائي والتحقق المعياري.",
             congratsFull: "أنت مؤهل بالكامل للحصول على البونص! 🎉", descFull: "عمل أسطوري! لقد استوفيت جميع الشروط وحققت الحد الأقصى من المكافآت.",
             congratsHalf: "لقد فتحت 50% من البونص المستحق! 📈", descHalf: "مجهود رائع! حاول استيفاء الشرط المتبقي لمضاعفة بونص الوكالة.",
             congratsNone: "استمر في البث لتحقيق البونص! 💪", descNone: "زد من ساعات وأيام البث واجمع المزيد من الماس لتبدأ في جني الأرباح الإضافية.",
             status1Met: "حالة نشاط البث: مؤهل. لقد استوفيت الحد الأدنى (60 ساعة و18 يوم بث) ",
-            status1NotMet: "حالة نشاط البث: غير مؤهل. يجب بث 60 ساعة و18 يوم على الأقل لتفعيل هذا النصف.",
-            status2Met: "حالة تارجت الماس: مؤهل. لقد حققت ماس مساوي أو أعلى من الشهر الماضي.",
-            status2NotMet: "حالة تارجت الماس: غير مؤهل. كمية الماس هذا الشهر أقل من الشهر الماضي.",
-            fromActiveness: "من نشاط البث", fromDiamonds: "من الماس المحقق"
+            status1NotMet: "حالة نشاط البث: غير مؤهل. يجب بث 60 ساعة و18 يوم على الأقل لتفعيل هذة المكافأة .",
+            status2Met: "حالة تارجت الماس: مؤهل. لقد حققت 200,000 ماسة على الأقل وهي مساوية أو أعلى من الشهر الماضي.",
+            status2NotMet: "حالة تارجت الماس: غير مؤهل. يجب تحقيق 200,000 ماسة على الأقل وأن تكون مساوية أو أعلى من الشهر الماضي.",
+            fromActiveness: "من نشاط البث", fromDiamonds: "من الماس المحقق",
+            wTitle: "معلومات سحب الأرباح", wSubtitle: "اختر طريقة الدفع المفضلة لديك وأدخل البيانات المطلوبة",
+            wMethod: "طريقة الدفع", wAccount: "رقم الحساب / البيانات", wHint: "تأكد من صحة البيانات لتجنب أي خطأ في التحويل.",
+            wSubmit: "إرسال طلب السحب", wSecure: "معلوماتك آمنة ومحمية بالكامل.",
+            submitting: "جاري إرسال الطلب...",
+            vodafonePlaceholder: "أدخل رقم فودافون كاش الخاص بك", instapayPlaceholder: "أدخل عنوان/رقم إنستا باي",
+            bankPlaceholder: "أدخل الاسم، اسم البنك، ورقم الـ IBAN", tiktokPlaceholder: "أدخل تفاصيل حساب التيك توك"
         }
     };
 
@@ -665,8 +812,96 @@
         
         document.getElementById('lblFooterNote').innerText = translations[currentLang].footerNote;
         document.getElementById('langBtn').innerText = translations[currentLang].langBtn;
+        document.getElementById('modalLangBtn').innerText = translations[currentLang].langBtn;
+
+        // ترجمة نافذة السحب
+        document.getElementById('lblWTitle').innerText = translations[currentLang].wTitle;
+        document.getElementById('lblWSubtitle').innerText = translations[currentLang].wSubtitle;
+        document.getElementById('lblWMethod').innerText = translations[currentLang].wMethod;
+        document.getElementById('lblWAccount').innerText = translations[currentLang].wAccount;
+        document.getElementById('lblWHint').innerText = translations[currentLang].wHint;
+        if(document.getElementById('btnWSubmit').innerText !== translations['en'].submitting && document.getElementById('btnWSubmit').innerText !== translations['ar'].submitting) {
+            document.getElementById('btnWSubmit').innerText = translations[currentLang].wSubmit;
+        }
+        document.getElementById('lblWSecure').innerText = translations[currentLang].wSecure;
 
         calculateAndUpdateBonus(globalLiveHours, globalLiveDays, globalDiamondsThisMonth, globalDiamondsLastMonth);
+    }
+
+    // دوال المودال (النافذة المنبثقة)
+    function openWithdrawalModal() {
+        document.getElementById('withdrawalModal').classList.add('show');
+    }
+    function closeWithdrawalModal() {
+        document.getElementById('withdrawalModal').classList.remove('show');
+    }
+    function toggleDropdown(e) {
+        e.stopPropagation();
+        document.getElementById('paymentSelect').classList.toggle('open');
+    }
+    function selectOption(type, name, iconClass, iconColor, placeholderEn) {
+        currentSelectedMethod = name; // تخزين الاسم لإرساله للشيت
+        document.querySelectorAll('.option-item').forEach(el => el.classList.remove('selected'));
+        if(window.event) window.event.currentTarget.classList.add('selected');
+        document.getElementById('selectedDisplay').innerHTML = `<i class="${iconClass}" style="color: ${iconColor};"></i> <span>${name}</span>`;
+        
+        const inputIcon = document.getElementById('inputIcon');
+        if(type === 'vodafone') inputIcon.className = "fas fa-mobile-alt";
+        else if(type === 'instapay') inputIcon.className = "fas fa-university";
+        else if(type === 'bank') inputIcon.className = "fas fa-landmark";
+        else inputIcon.className = "fab fa-tiktok";
+
+        const inputField = document.getElementById('accountInput');
+        inputField.placeholder = (currentLang === 'en') ? placeholderEn : translations['ar'][`${type}Placeholder`];
+    }
+    window.addEventListener('click', function() {
+        document.getElementById('paymentSelect').classList.remove('open');
+    });
+
+    // إرسال طلب السحب إلى الـ Google Sheet
+    async function submitRequest() {
+        const accountDetails = document.getElementById('accountInput').value;
+        const submitBtn = document.getElementById('btnWSubmit');
+
+        if(!accountDetails) {
+            alert(currentLang === 'en' ? "Please enter your payment details" : "الرجاء إدخال تفاصيل الحساب");
+            return;
+        }
+
+        const sessionResult = await supabaseClient.auth.getSession();
+        const session = sessionResult.data.session;
+        if (!session) {
+            alert("Session expired. Please log in again.");
+            return;
+        }
+        const creatorId = session.user.email;
+
+        // تعطيل الزرار أثناء الإرسال
+        submitBtn.disabled = true;
+        submitBtn.innerText = translations[currentLang].submitting;
+
+        try {
+            // إرسال البيانات كـ POST بارامترات متوافقة مع الـ Web App بتاع الشيت
+            await fetch(
+`${googleSheetWebAppUrl}?id=${encodeURIComponent(creatorId)}
+&payout_preference=cash
+&payment_method=${encodeURIComponent(currentSelectedMethod)}
+&account_details=${encodeURIComponent(accountDetails)}`,
+{
+    method:'POST',
+    mode:'no-cors'
+});
+
+            alert(currentLang === 'en' ? "Withdrawal request submitted successfully!" : "تم إرسال طلب السحب بنجاح إلى الإدارة!");
+            document.getElementById('accountInput').value = ""; // تفريغ الخانة
+            closeWithdrawalModal();
+        } catch (error) {
+            console.error("Error submitting withdrawal details:", error);
+            alert(currentLang === 'en' ? "Error sending data. Please try again." : "حدث خطأ أثناء إرسال البيانات. يرجى المحاولة مرة أخرى.");
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerText = translations[currentLang].wSubmit;
+        }
     }
 
     async function setPayoutStrategy(strategy) {
@@ -676,6 +911,7 @@
         if(strategy === 'cash') {
             document.getElementById('btnPayoutCash').classList.add('active');
             localStorage.setItem('payoutPreference', 'cash');
+            openWithdrawalModal(); 
         } else {
             document.getElementById('btnPayoutHold').classList.add('active');
             localStorage.setItem('payoutPreference', 'hold');
@@ -683,37 +919,32 @@
 
         const sessionResult = await supabaseClient.auth.getSession();
         const session = sessionResult.data.session;
-        if (session) {
-            const creatorId = session.user.email;
-            try {
-                fetch(`${googleSheetWebAppUrl}?id=${encodeURIComponent(creatorId)}&payout_preference=${strategy}`, {
-                    method: 'POST',
-                    mode: 'no-cors'
-                });
-                console.log(`Payout preference updated to ${strategy}`);
-            } catch (error) {
-                console.error("Error saving payout preference:", error);
-            }
-        }
+       if(strategy === "hold") {
+
+    if (session) {
+        const creatorId = session.user.email;
+
+        fetch(`${googleSheetWebAppUrl}?id=${encodeURIComponent(creatorId)}&payout_preference=hold`, {
+            method: 'POST',
+            mode: 'no-cors'
+        });
+    }
+
+}
     }
 
     function calculateAndUpdateBonus(liveHours, liveDays, diamondsThisMonth, diamondsLastMonth) {
         const isHoursMet = liveHours >= 60;
         const isDaysMet = liveDays >= 18;
         const isActivenessEligible = isHoursMet && isDaysMet; 
-        const isDiamondsEligible = diamondsThisMonth >= diamondsLastMonth; 
+        const isDiamondsEligible = diamondsThisMonth >= diamondsLastMonth && diamondsThisMonth >= 200000; 
 
         let activnessBonus = isActivenessEligible ? Math.round(diamondsThisMonth * 0.0001) : 0;
         let diamondsBonus = isDiamondsEligible ? Math.round(diamondsThisMonth * 0.00014) : 0;
-        
-        // حساب المجموع الكلي للافتة السفلية
         let totalBonus = activnessBonus + diamondsBonus;
 
-        // الحفاظ على كارت البونص العلوي (Estimated bonus) بخانتيه المنفصلتين كما هو
         document.getElementById("cardActivenessAmt").innerText = "$" + activnessBonus.toLocaleString();
         document.getElementById("cardDiamondsAmt").innerText = "$" + diamondsBonus.toLocaleString();
-
-        // تحديث المجموع الكلي في اللافتة السفلية فقط
         document.getElementById("bannerTotalAmt").innerText = "$" + totalBonus.toLocaleString();
 
         const badgeHours = document.getElementById("badgeHours");
@@ -779,48 +1010,29 @@
 
     async function loadData() {
         const { data: { session } } = await supabaseClient.auth.getSession();
-
         if (!session) {
             window.location.href = "login.html";
             return;
         }
-
         const creatorId = session.user.email;
+       const savedPref = localStorage.getItem("payoutPreference");
 
-        const savedPref = localStorage.getItem("payoutPreference");
-        if (savedPref === "hold") {
-            setPayoutStrategy("hold");
-        } else {
-            setPayoutStrategy("cash");
-        }
+if (savedPref) {
+    setPayoutStrategy(savedPref);
+} else {
+    setPayoutStrategy("hold"); // Default لأول مرة
+}
 
         try {
             const response = await fetch(`${googleSheetWebAppUrl}?id=${encodeURIComponent(creatorId)}`);
             const responseResult = await response.json();
-
-            if (responseResult.status !== "success") {
-                alert("Creator not found.");
-                return;
-            }
+            if (responseResult.status !== "success") { return; }
 
             const data = responseResult.data;
-
             globalLiveHours = Number(data.live_hours) || 0;
             globalLiveDays = Number(data.live_days) || 0;
             globalDiamondsThisMonth = Number(data.diamonds_this_month) || 0;
             globalDiamondsLastMonth = Number(data.diamonds_last_month) || 0;
-
-            if (data.payout_preference === "hold" || data.payout_preference === "cash") {
-                document.getElementById('btnPayoutCash').classList.remove('active');
-                document.getElementById('btnPayoutHold').classList.remove('active');
-                if (data.payout_preference === "cash") {
-                    document.getElementById('btnPayoutCash').classList.add('active');
-                    localStorage.setItem('payoutPreference', 'cash');
-                } else {
-                    document.getElementById('btnPayoutHold').classList.add('active');
-                    localStorage.setItem('payoutPreference', 'hold');
-                }
-            }
 
             document.getElementById("tiktokId").innerText = "@" + (data.creator_name || "");
             document.getElementById("liveHours").innerText = globalLiveHours;
@@ -833,11 +1045,7 @@
             document.getElementById("reqLastMonth").innerText = globalDiamondsLastMonth.toLocaleString();
 
             calculateAndUpdateBonus(globalLiveHours, globalLiveDays, globalDiamondsThisMonth, globalDiamondsLastMonth);
-
-        } catch (error) {
-            console.error(error);
-            alert("Error loading creator data.");
-        }
+        } catch (error) { console.error(error); }
     }
 
     async function logout() {
