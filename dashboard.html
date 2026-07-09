@@ -939,20 +939,29 @@
         }
     }
 
-    function calculateAndUpdateBonus(liveHours, liveDays, diamondsThisMonth, diamondsLastMonth) {
+ function calculateAndUpdateBonus(liveHours, liveDays, diamondsThisMonth, diamondsLastMonth) {
+        // شروط نشاط البث المباشر (مستقلة تماماً)
         const isHoursMet = liveHours >= 60;
         const isDaysMet = liveDays >= 18;
-        const isActivenessEligible = isHoursMet && isDaysMet; 
-        const isDiamondsEligible = diamondsThisMonth >= diamondsLastMonth && diamondsThisMonth >= 200000; 
+        const isActivenessEligible = isHoursMet && isDaysMet;
 
+        // التعديل هنا: بونص الماس مش هيتفعّل إلا لو جاب 200 ألف أو أكتر "وكمان" أعلى من أو يساوي الشهر اللي فات
+        const isDiamondsEligible = diamondsThisMonth >= 200000 && diamondsThisMonth >= diamondsLastMonth;
+
+        // الحسبة المنفصلة
         let activnessBonus = isActivenessEligible ? Math.round(diamondsThisMonth * 0.0001) : 0;
+        
+        // بونص الماس هيكون 0 تلقائياً لو الشرط اللي فوق ما تحققش
         let diamondsBonus = isDiamondsEligible ? Math.round(diamondsThisMonth * 0.00014) : 0;
+        
         let totalBonus = activnessBonus + diamondsBonus;
 
+        // تحديث المبالغ في الواجهة
         document.getElementById("cardActivenessAmt").innerText = "$" + activnessBonus.toLocaleString();
         document.getElementById("cardDiamondsAmt").innerText = "$" + diamondsBonus.toLocaleString();
         document.getElementById("bannerTotalAmt").innerText = "$" + totalBonus.toLocaleString();
 
+        // [باقي الكود الخاص بتحديث الألوان والشارات والدوائر يفضل زي ما هو بدون تغيير]
         const badgeHours = document.getElementById("badgeHours");
         const subBadgeHours = document.getElementById("subBadgeHours");
         if(isHoursMet) {
@@ -1013,7 +1022,6 @@
             lblCongratsDesc.innerText = translations[currentLang].descNone;
         }
     }
-
     async function loadData() {
         const { data: { session } } = await supabaseClient.auth.getSession();
         if (!session) {
@@ -1048,8 +1056,28 @@
             // فلترة النصوص في الخلفية واستخراج الأرقام فقط لضمان دقة العمليات الحسابية بدون NaN
             globalLiveHours = parseFloat(currentRawHoursText.replace(/[^0-9.]/g, '')) || 0;
             globalLiveDays = parseFloat(currentRawDaysText.replace(/[^0-9.]/g, '')) || 0;
-            globalDiamondsThisMonth = parseFloat(currentRawDiamondsThisText.replace(/[^0-9.]/g, '')) || 0;
-            globalDiamondsLastMonth = parseFloat(currentRawDiamondsLastText.replace(/[^0-9.]/g, '')) || 0;
+            // دالة داخلية سريعة لتحويل أي رقم فيه K أو k إلى القيمة الحقيقية بالأصفار
+            function parseDiamondsText(rawText) {
+                if (!rawText) return 0;
+                let text = String(rawText).trim().toLowerCase();
+                
+                // لو النص يحتوي على حرف k، نضرب الرقم الصافي في 1000
+                if (text.includes('k')) {
+                    let numPart = parseFloat(text.replace(/[^0-9.]/g, '')) || 0;
+                    return numPart * 1000;
+                }
+                
+                // لو رقم عادي بدون k، نمسح الفواصل ونرجعه طبيعي
+                return parseFloat(text.replace(/[^0-9.]/g, '')) || 0;
+            }
+
+            // فلترة النصوص في الخلفية واستخراج الأرقام بدقة (الآن تدعم الـ K)
+            globalLiveHours = parseFloat(currentRawHoursText.replace(/[^0-9.]/g, '')) || 0;
+            globalLiveDays = parseFloat(currentRawDaysText.replace(/[^0-9.]/g, '')) || 0;
+            
+            // تحويل الماسات الحالية والماضية بدعم الـ K
+            globalDiamondsThisMonth = parseDiamondsText(currentRawDiamondsThisText);
+            globalDiamondsLastMonth = parseDiamondsText(currentRawDiamondsLastText);
 
             // تحديث كروت الإحصائيات الرئيسية
             document.getElementById("tiktokId").innerText = "@" + (data.creator_name || "");
