@@ -74,7 +74,7 @@ if (joinForm) {
         }
 
         // Google Apps Script Web App URL
-        const scriptURL = "https://script.google.com/macros/s/AKfycbyUrAF-Ae4jsFC2oCeXp56qvygGaj9ln1qkUOtaUmUuoIHfr0DL3hKLFMDvTtrWQzHY/exec";
+        const scriptURL = "https://script.google.com/macros/s/AKfycbzlNAu2z4z1ryU64fDILogEF37U_PxmKRbaTMEAdrWTzd7x2Q7BRvrKzMGwrJs4m1WT/exec";
         const data = { name, tiktok, whatsApp, message };
 
         try {
