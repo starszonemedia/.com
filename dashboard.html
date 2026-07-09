@@ -654,7 +654,7 @@
                         <div class="option-left"><i class="fas fa-wallet" style="color: #e60000;"></i> <span>Vodafone Cash</span></div>
                         <i class="fas fa-check"></i>
                     </div>
-                    <div class="option-item" onclick="selectOption('instapay', 'InstaPay', 'fas fa-university', '#8a2be2', 'Enter your InstaPay Address')">
+                    <div class="option-item" onclick="selectOption('instapay', 'InstaPay', 'fas fa-university', '#8a2be2', 'Enter your InstaPay Address or number')">
                         <div class="option-left"><i class="fas fa-university" style="color: #8a2be2;"></i> <span>InstaPay</span></div>
                         <i class="fas fa-check"></i>
                     </div>
@@ -662,7 +662,7 @@
                         <div class="option-left"><i class="fas fa-landmark" style="color: #cca43b;"></i> <span>Bank Account</span></div>
                         <i class="fas fa-check"></i>
                     </div>
-                    <div class="option-item" onclick="selectOption('tiktok', 'TikTok Gift', 'fab fa-tiktok', '#fff', 'Enter TikTok details')">
+                    <div class="option-item" onclick="selectOption('tiktok', 'TikTok Gift', 'fab fa-tiktok', '#fff', 'Enter TikTok Username')">
                         <div class="option-left"><i class="fab fa-tiktok" style="color: #fff;"></i> <span>TikTok Gift</span></div>
                         <i class="fas fa-check"></i>
                     </div>
@@ -676,7 +676,7 @@
                 <i class="fas fa-mobile-alt" id="inputIcon" style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
                 <input type="text" class="custom-input" id="accountInput" placeholder="Enter your Vodafone Cash number">
             </div>
-            <small class="input-hint" id="lblWHint">Make sure the number is correct to avoid delays.</small>
+            <small class="input-hint" id="lblWHint">Make sure the number is correct to avoid wrong transfers.</small>
         </div>
 
         <button class="submit-btn" id="btnWSubmit" onclick="submitRequest()">Submit Withdrawal Request</button>
@@ -694,12 +694,18 @@
     const googleSheetWebAppUrl = "https://script.google.com/macros/s/AKfycbyUrAF-Ae4jsFC2oCeXp56qvygGaj9ln1qkUOtaUmUuoIHfr0DL3hKLFMDvTtrWQzHY/exec";
 
     let currentLang = 'en';
-    let currentSelectedMethod = 'Vodafone Cash'; // لتخزين وسيلة الدفع الحالية لإرسالها للشيت
+    let currentSelectedMethod = 'Vodafone Cash'; 
     
     let globalLiveHours = 0;
     let globalLiveDays = 0;
     let globalDiamondsThisMonth = 0;
     let globalDiamondsLastMonth = 0;
+
+    // لتخزين النصوص الصافية القادمة من الجوجل شيت منعاً لفقدانها أثناء تفعيل التبديل اللغوي
+    let currentRawHoursText = "0";
+    let currentRawDaysText = "0";
+    let currentRawDiamondsThisText = "0";
+    let currentRawDiamondsLastText = "0";
 
     const translations = {
         en: {
@@ -732,7 +738,7 @@
             hours: "ساعات البث", days: "أيام البث", diamonds: "الماس المحقق", bonus: "البونص المستحق", totalEstimated: "إجمالي البونص التقديري",
             status: "الحالة", eligible: "مؤهل", notEligible: "غير مؤهل", basedOn: "* بناءً على شروط الأهلية", secTitle: "أهلية الحصول على البونص",
             secSub: "يتم حساب البونص الخاص بك بناءً على استيفاء الشرطين التاليين بشكل منفصل", req1Title: "1. نشاط البث المباشر", req1Desc: "تحقيق تارجت ساعات البث (60 ساعة علي الاقل) وأيام البث (18 يوم علي الاقل) معاً للحصول علي بونص التفاعل.",
-            met: "تم استيفاء الشرط", notMet: "لم يتم الاستيفاء", req2Title: "2. تارجت الماس المحقق", req2Desc: "تحقيق 200,000 ماسة على الأقل هذا الشهر، وأن تكون الكمية مساوية أو أكثر مقارنة بالشهر السابق للحصول علي بونص الماسات.",
+            met: "تم استيفاء الشرط", notMet: "لم يتم الاستيفاء", req2Title: "2. تارجت الماس المحقق", req2Desc: "تحقيق 200,000 ماسة على الأثل هذا الشهر، وأن تكون الكمية مساوية أو أكثر مقارنة بالشهر السابق للحصول علي بونص الماسات.",
             thisMonth: "هذا الشهر", lastMonth: "الشهر الماضي", 
             payoutTitle: "تفضيلات استلام الأرباح", payoutDesc: "اختر الطريقة التي تفضلها لاستلام مكافأة الوكالة الشهرية الناتجة عن أدائك",
             payoutCash: "استلام فوري", payoutHold: "تحويش للشهر القادم", langBtn: "English", tiktokLabel: "معرّف التيك توك",
@@ -825,6 +831,10 @@
         }
         document.getElementById('lblWSecure').innerText = translations[currentLang].wSecure;
 
+        // إعادة ضبط الهيدر النصي في قسم التارجيتات دون مسح النص القادم من جوجل شيت
+        document.getElementById("reqHours").innerText = currentLang === 'en' ? `${currentRawHoursText} / 60 Hours` : `${currentRawHoursText} / 60 ساعة`;
+        document.getElementById("reqDays").innerText = currentLang === 'en' ? `${currentRawDaysText} / 18 Days` : `${currentRawDaysText} / 18 يوم`;
+
         calculateAndUpdateBonus(globalLiveHours, globalLiveDays, globalDiamondsThisMonth, globalDiamondsLastMonth);
     }
 
@@ -840,7 +850,7 @@
         document.getElementById('paymentSelect').classList.toggle('open');
     }
     function selectOption(type, name, iconClass, iconColor, placeholderEn) {
-        currentSelectedMethod = name; // تخزين الاسم لإرساله للشيت
+        currentSelectedMethod = name; 
         document.querySelectorAll('.option-item').forEach(el => el.classList.remove('selected'));
         if(window.event) window.event.currentTarget.classList.add('selected');
         document.getElementById('selectedDisplay').innerHTML = `<i class="${iconClass}" style="color: ${iconColor};"></i> <span>${name}</span>`;
@@ -881,7 +891,6 @@
         submitBtn.innerText = translations[currentLang].submitting;
 
         try {
-            // إرسال البيانات كـ POST بارامترات متوافقة مع الـ Web App بتاع الشيت
             await fetch(
 `${googleSheetWebAppUrl}?id=${encodeURIComponent(creatorId)}
 &payout_preference=cash
@@ -893,7 +902,7 @@
 });
 
             alert(currentLang === 'en' ? "Withdrawal request submitted successfully!" : "تم إرسال طلب السحب بنجاح إلى الإدارة!");
-            document.getElementById('accountInput').value = ""; // تفريغ الخانة
+            document.getElementById('accountInput').value = ""; 
             closeWithdrawalModal();
         } catch (error) {
             console.error("Error submitting withdrawal details:", error);
@@ -919,18 +928,15 @@
 
         const sessionResult = await supabaseClient.auth.getSession();
         const session = sessionResult.data.session;
-       if(strategy === "hold") {
-
-    if (session) {
-        const creatorId = session.user.email;
-
-        fetch(`${googleSheetWebAppUrl}?id=${encodeURIComponent(creatorId)}&payout_preference=hold`, {
-            method: 'POST',
-            mode: 'no-cors'
-        });
-    }
-
-}
+        if(strategy === "hold") {
+            if (session) {
+                const creatorId = session.user.email;
+                fetch(`${googleSheetWebAppUrl}?id=${encodeURIComponent(creatorId)}&payout_preference=hold`, {
+                    method: 'POST',
+                    mode: 'no-cors'
+                });
+            }
+        }
     }
 
     function calculateAndUpdateBonus(liveHours, liveDays, diamondsThisMonth, diamondsLastMonth) {
@@ -1015,43 +1021,55 @@
             return;
         }
         const creatorId = session.user.email;
-  const savedPref = localStorage.getItem("payoutPreference");
+        const savedPref = localStorage.getItem("payoutPreference");
 
-if(savedPref === "cash"){
-    document.getElementById('btnPayoutCash').classList.add('active');
-    document.getElementById('btnPayoutHold').classList.remove('active');
-}
-else{
-    document.getElementById('btnPayoutHold').classList.add('active');
-    document.getElementById('btnPayoutCash').classList.remove('active');
-}
+        if(savedPref === "cash"){
+            document.getElementById('btnPayoutCash').classList.add('active');
+            document.getElementById('btnPayoutHold').classList.remove('active');
+        } else {
+            document.getElementById('btnPayoutHold').classList.add('active');
+            document.getElementById('btnPayoutCash').classList.remove('active');
+        }
 
         try {
             const response = await fetch(`${googleSheetWebAppUrl}?id=${encodeURIComponent(creatorId)}`);
             const responseResult = await response.json();
-            console.log("FULL RESPONSE:", responseResult);
-console.log("DATA KEYS:", Object.keys(responseResult.data));
-console.log("CREATOR ID:", creatorId);
+            
             if (responseResult.status !== "success") { return; }
 
             const data = responseResult.data;
-            globalLiveHours = Number(data.live_hours) || 0;
-            globalLiveDays = Number(data.live_days) || 0;
-            globalDiamondsThisMonth = Number(data.diamonds_this_month) || 0;
-            globalDiamondsLastMonth = Number(data.diamonds_last_month) || 0;
+            
+            // قراءة وعرض البيانات كنصوص كاملة لمطابقة كل المدخلات في الشيت مباشرة
+            currentRawHoursText = data.live_hours !== undefined ? String(data.live_hours) : "0";
+            currentRawDaysText = data.live_days !== undefined ? String(data.live_days) : "0";
+            currentRawDiamondsThisText = data.diamonds_this_month !== undefined ? String(data.diamonds_this_month) : "0";
+            currentRawDiamondsLastText = data.diamonds_last_month !== undefined ? String(data.diamonds_last_month) : "0";
 
+            // فلترة النصوص في الخلفية واستخراج الأرقام فقط لضمان دقة العمليات الحسابية بدون NaN
+            globalLiveHours = parseFloat(currentRawHoursText.replace(/[^0-9.]/g, '')) || 0;
+            globalLiveDays = parseFloat(currentRawDaysText.replace(/[^0-9.]/g, '')) || 0;
+            globalDiamondsThisMonth = parseFloat(currentRawDiamondsThisText.replace(/[^0-9.]/g, '')) || 0;
+            globalDiamondsLastMonth = parseFloat(currentRawDiamondsLastText.replace(/[^0-9.]/g, '')) || 0;
+
+            // تحديث كروت الإحصائيات الرئيسية
             document.getElementById("tiktokId").innerText = "@" + (data.creator_name || "");
-            document.getElementById("liveHours").innerText = globalLiveHours;
-            document.getElementById("liveDays").innerText = globalLiveDays;
-            document.getElementById("diamonds").innerText = globalDiamondsThisMonth.toLocaleString();
+            document.getElementById("liveHours").innerText = currentRawHoursText;
+            document.getElementById("liveDays").innerText = currentRawDaysText;
+            
+            // لو كان حقل الألماس رقماً صافياً نقوم بتنسيقه بفواصل، ولو كان نصاً يعرض مباشرة
+            document.getElementById("diamonds").innerText = isNaN(currentRawDiamondsThisText) ? currentRawDiamondsThisText : Number(currentRawDiamondsThisText).toLocaleString();
 
-            document.getElementById("reqHours").innerText = `${globalLiveHours} / 60 Hours`;
-            document.getElementById("reqDays").innerText = `${globalLiveDays} / 18 Days`;
-            document.getElementById("reqThisMonth").innerText = globalDiamondsThisMonth.toLocaleString();
-            document.getElementById("reqLastMonth").innerText = globalDiamondsLastMonth.toLocaleString();
+            // تحديث تفاصيل قسم شروط الأهلية بالأسفل
+            document.getElementById("reqHours").innerText = currentLang === 'en' ? `${currentRawHoursText} / 60 Hours` : `${currentRawHoursText} / 60 ساعة`;
+            document.getElementById("reqDays").innerText = currentLang === 'en' ? `${currentRawDaysText} / 18 Days` : `${currentRawDaysText} / 18 يوم`;
+            
+            document.getElementById("reqThisMonth").innerText = isNaN(currentRawDiamondsThisText) ? currentRawDiamondsThisText : Number(currentRawDiamondsThisText).toLocaleString();
+            document.getElementById("reqLastMonth").innerText = isNaN(currentRawDiamondsLastText) ? currentRawDiamondsLastText : Number(currentRawDiamondsLastText).toLocaleString();
 
             calculateAndUpdateBonus(globalLiveHours, globalLiveDays, globalDiamondsThisMonth, globalDiamondsLastMonth);
-        } catch (error) { console.error(error); }
+        } catch (error) { 
+            console.error("Error loading dashboard data:", error); 
+        }
     }
 
     async function logout() {
