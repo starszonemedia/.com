@@ -1,4 +1,4 @@
-// Smooth Scroll for Navigation Links
+// 1. Smooth Scroll for Navigation Links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
@@ -12,30 +12,33 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Mobile Menu Navigation Toggle
+// 2. Mobile Menu Navigation Toggle
 const menuToggle = document.querySelector('.menu-toggle');
 const navMenu = document.querySelector('.nav-menu');
 const menuOverlay = document.querySelector('.menu-overlay');
 
 function toggleMenu() {
-    menuToggle.classList.toggle('active');
-    navMenu.classList.toggle('active');
-    menuOverlay.classList.toggle('active');
+    if(menuToggle && navMenu && menuOverlay) {
+        menuToggle.classList.toggle('active');
+        navMenu.classList.toggle('active');
+        menuOverlay.classList.toggle('active');
+    }
 }
 
 if (menuToggle) menuToggle.addEventListener('click', toggleMenu);
 if (menuOverlay) menuOverlay.addEventListener('click', toggleMenu);
 
-// Close menu when clicking any link inside it
-navMenu.addEventListener('click', (e) => {
-    if (e.target.tagName === 'A') {
-        menuToggle.classList.remove('active');
-        navMenu.classList.remove('active');
-        menuOverlay.classList.remove('active');
-    }
-});
+if (navMenu) {
+    navMenu.addEventListener('click', (e) => {
+        if (e.target.tagName === 'A' && menuToggle && navMenu && menuOverlay) {
+            menuToggle.classList.remove('active');
+            navMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
+        }
+    });
+}
 
-// Luxury Scroll Reveal Effect for Elements
+// 3. Luxury Scroll Reveal Effect for Elements
 const observerOptions = {
     threshold: 0.05,
     rootMargin: '0px 0px -40px 0px'
@@ -57,7 +60,7 @@ document.querySelectorAll('.creator-card, .service-card, .section, .form-wrapper
     observer.observe(el);
 });
 
-// Join Us Form Submission to Google Sheets
+// 4. Join Us Form Submission to Google Sheets
 const joinForm = document.getElementById("join-form");
 if (joinForm) {
     joinForm.addEventListener("submit", async (e) => {
@@ -73,7 +76,6 @@ if (joinForm) {
             return;
         }
 
-        // Google Apps Script Web App URL
         const scriptURL = "https://script.google.com/macros/s/AKfycbzlNAu2z4z1ryU64fDILogEF37U_PxmKRbaTMEAdrWTzd7x2Q7BRvrKzMGwrJs4m1WT/exec";
         const data = { name, tiktok, whatsApp, message };
 
@@ -93,3 +95,55 @@ if (joinForm) {
         }
     });
 }
+// 5. --- كود الـ Service Pop-up المطور للأزرار الجديدة ---
+const watchButtons = document.querySelectorAll('.watch-btn');
+const modal = document.getElementById('video-modal');
+const video = document.getElementById('service-video');
+const closeModal = document.querySelector('.close-modal');
+let videoTimer; 
+
+watchButtons.forEach(button => {
+    button.addEventListener('click', (e) => {
+        e.stopPropagation(); // منع انتشار الضغطة للكارد نفسه
+        const videoSrc = button.getAttribute('data-video');
+        console.log("Watch button clicked! Video source:", videoSrc); 
+        
+        if (videoSrc && modal && video) {
+            video.src = videoSrc;
+            video.load();
+            modal.style.display = 'flex'; 
+            
+            // تشغيل الفيديو تلقائياً بعد الفتح
+            video.play().catch(error => {
+                console.log("Autoplay failed or blocked by browser:", error);
+            });
+
+            // تايمر الإغلاق التلقائي (10 ثواني)
+            clearTimeout(videoTimer);
+            videoTimer = setTimeout(() => {
+                closeModalFunction();
+            }, 10000);
+        } else {
+            console.error("Missing elements! Modal:", modal, "Video:", video);
+        }
+    });
+});
+
+function closeModalFunction() {
+    if (modal && video) {
+        modal.style.display = 'none';
+        video.pause();
+        video.src = ''; 
+        clearTimeout(videoTimer); 
+    }
+}
+
+if (closeModal) {
+    closeModal.addEventListener('click', closeModalFunction);
+}
+
+window.addEventListener('click', (e) => {
+    if (e.target === modal) {
+        closeModalFunction();
+    }
+});
