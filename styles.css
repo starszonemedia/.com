@@ -39,7 +39,7 @@ body {
     border-radius: 50%;
     filter: blur(140px);
     pointer-events: none;
-    z-1: -1;
+    z-index: -1;
     opacity: 0.12;
 }
 .glow-1 {
@@ -92,44 +92,28 @@ body {
     height: 42px;
     width: auto;
     display: block;
-
-    filter:
-        drop-shadow(0 0 8px rgba(0,242,254,.45))
-        drop-shadow(0 0 14px rgba(255,0,80,.25));
-
-    transition: transform .4s ease,
-                filter .4s ease;
-
+    filter: drop-shadow(0 0 8px rgba(0,242,254,.45)) drop-shadow(0 0 14px rgba(255,0,80,.25));
+    transition: transform .4s ease, filter .4s ease;
     animation: logoFloat 4s ease-in-out infinite;
 }
 
 .nav-logo img:hover {
     transform: scale(1.08);
-    filter:
-        drop-shadow(0 0 12px rgba(0,242,254,.7))
-        drop-shadow(0 0 20px rgba(255,0,80,.5));
+    filter: drop-shadow(0 0 12px rgba(0,242,254,.7)) drop-shadow(0 0 20px rgba(255,0,80,.5));
 }
 
 @keyframes logoGlow {
     0%,100%{
-        filter:
-        drop-shadow(0 0 6px rgba(0,242,254,.35))
-        drop-shadow(0 0 10px rgba(255,0,80,.2));
+        filter: drop-shadow(0 0 6px rgba(0,242,254,.35)) drop-shadow(0 0 10px rgba(255,0,80,.2));
     }
-
     50%{
-        filter:
-        drop-shadow(0 0 14px rgba(0,242,254,.8))
-        drop-shadow(0 0 24px rgba(255,0,80,.45));
+        filter: drop-shadow(0 0 14px rgba(0,242,254,.8)) drop-shadow(0 0 24px rgba(255,0,80,.45));
     }
 }
 
 .nav-logo img{
-    animation:
-        logoFloat 4s ease-in-out infinite,
-        logoGlow 3s ease-in-out infinite;
+    animation: logoFloat 4s ease-in-out infinite, logoGlow 3s ease-in-out infinite;
 }
-
 
 .nav-menu {
     display: flex;
@@ -198,7 +182,6 @@ body {
     justify-content: space-between;
     gap: 50px;
     width: 100%;
-    /* مسافة أمان واضحة من جهة الشمال واليمين عشان ميبقاش لازق في الحواف */
     padding-left: 70px;
     padding-right: 40px; 
 }
@@ -207,9 +190,8 @@ body {
     flex: 1.2;
     display: flex;
     flex-direction: column;
-    align-items: flex-start; /* بيخلي الكلام جاي مظبوط تحت بعضه */
-    text-align: left;       /* محاذاة النص لليسار بشكل شيك وراقي */
-   
+    align-items: flex-start;
+    text-align: left;
 }
 
 .hero-badge {
@@ -413,8 +395,9 @@ body {
     transition: var(--transition-smooth);
     display: flex;
     flex-direction: column;
-    align-items: center; /* توسيط محتويات الكارت بالكامل */
+    align-items: center;
     text-align: center;
+    min-height: 340px; /* طول موحد مناسب للكروت بعد إضافة الزر */
 }
 
 .icon-box {
@@ -425,7 +408,7 @@ body {
     border-radius: 16px;
     display: flex;
     align-items: center;
-    justify-content: center; /* توسيط الأيقونة داخل المربع الخاص بها */
+    justify-content: center;
     font-size: 1.5rem;
     color: var(--text-pure);
     margin-bottom: 25px;
@@ -444,6 +427,7 @@ body {
 .service-card p {
     font-size: 0.95rem;
     color: var(--text-muted);
+    margin-bottom: 20px;
 }
 
 .service-card:hover {
@@ -558,7 +542,7 @@ body {
     height: 450px;
     border: none;
     display: block;
-    filter: invert(90%) hue-rotate(180deg); /* خريطة Dark Mode فاخرة متناسقة مع الثيم */
+    filter: invert(90%) hue-rotate(180deg);
 }
 
 /* Premium Career Showcase */
@@ -631,7 +615,6 @@ body {
 
 /* Fully Fluid Responsive Design */
 @media (max-width: 768px) {
-
     .hero {
         min-height: auto;
         padding-top: 90px;
@@ -642,10 +625,8 @@ body {
         justify-content: flex-start;
         align-items: flex-start;
         text-align: left;
-
         padding-left: 20px;
         padding-right: 20px;
-
         gap: 25px;
     }
 
@@ -673,7 +654,6 @@ body {
         max-width: 220px;
     }
 
-    /* باقي الكود بتاعك */
     .section { padding: 80px 0; }
     .section-title { font-size: 2.2rem; }
     .form-wrapper { padding: 30px 20px; }
@@ -710,5 +690,111 @@ body {
 
     .menu-overlay.active {
         display: block;
+    }
+}
+
+/* ==========================================================================
+   Services Video Buttons & Modal System (Fixed & Enhanced)
+   ========================================================================== */
+
+/* تنسيق زر Watch Video الفاخر */
+.watch-btn {
+    background: linear-gradient(135deg, var(--primary-glow), var(--secondary-glow));
+    color: var(--text-pure);
+    border: none;
+    padding: 12px 24px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    font-family: var(--font-body);
+    border-radius: 30px;
+    cursor: pointer;
+    margin-top: auto; /* يضمن بقاء الأزرار في محاذاة واحدة أسفل الكارت */
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition-smooth);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.watch-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 242, 254, 0.4);
+    filter: brightness(1.1);
+}
+
+.watch-btn i {
+    font-size: 1.1rem;
+}
+
+/* نافذة البوب اب (Modal) خارج الميديا كويري لتعمل بكفاءة على جميع الشاشات */
+.video-modal {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.modal-content {
+    position: relative;
+    background-color: #111115;
+    padding: 15px;
+    border-radius: 24px;
+    width: 100%;
+    max-width: 420px; /* حجم مثالي ومريح ومخصص لعرض فيديوهات تيك توك الطولية */
+    border: 1px solid var(--border-color);
+    box-shadow: 0 0 40px rgba(0, 242, 254, 0.25);
+}
+
+.close-modal {
+    position: absolute;
+    right: -15px;
+    top: -45px;
+    color: #fff;
+    font-size: 38px;
+    font-weight: 300;
+    cursor: pointer;
+    z-index: 10001;
+    transition: var(--transition-smooth);
+}
+
+.close-modal:hover {
+    color: var(--primary-glow);
+    transform: scale(1.1);
+}
+
+.video-container {
+    width: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #000;
+    aspect-ratio: 9 / 16; /* أبعاد شاشات الموبايل (TikTok Vertical Style) */
+}
+
+.video-container video {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover; /* ملء كامل المساحة بشكل جمالي سلس */
+}
+
+/* توافق إضافي للهواتف الصغيرة جدًا */
+@media (max-width: 480px) {
+    .modal-content {
+        max-width: 90%;
+        padding: 10px;
+    }
+    .close-modal {
+        right: 5px;
+        top: -40px;
+        font-size: 32px;
     }
 }
