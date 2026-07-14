@@ -688,14 +688,22 @@
 </div>
 
 <script>
-    // مثال داخل دالة الـ Login الناجحة بعد الفحص من الداتابيز:
-const userRole = localStorage.getItem("userRole");
-const isLoggedIn = localStorage.getItem("isLoggedIn");
+// 🔒 حماية صفحة الـ Creator وتثبيت الأمن
+function protectCreatorPage() {
+    const userRole = localStorage.getItem("userRole");
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
 
-if (!isLoggedIn || userRole !== "Agent") {
-    alert("🔒 Access Denied: This portal is for Creators only!");
-    window.location.href = "login.html"; 
+    // التحقق القاطع: لو مش مسجل دخول أو الـ Role مش Creator اطراديه فوراً للوجن
+    if (!isLoggedIn || userRole !== "Creator") {
+        alert("🔒 Access Denied: This portal is strictly for Creators only!");
+        localStorage.clear(); 
+        window.location.href = "login.html";
+        return;
+    }
 }
+
+// تشغيل الفحص فوراً أول ما الصفحة تفتح
+protectCreatorPage();
     const SUPABASE_URL = "https://akrmavzcuirbwgabkdpl.supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_DyvBCsbRKbWVsC1FoTNp_w_T0cF01e3";
     const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
