@@ -95,12 +95,12 @@ if (joinForm) {
         }
     });
 }
-// 5. --- كود الـ Service Pop-up المطور للأزرار الجديدة ---
+
+// 5. --- كود الـ Service Pop-up المطور والـ Fix الكامل للصوت والنهاية ---
 const watchButtons = document.querySelectorAll('.watch-btn');
 const modal = document.getElementById('video-modal');
 const video = document.getElementById('service-video');
 const closeModal = document.querySelector('.close-modal');
-let videoTimer; 
 
 watchButtons.forEach(button => {
     button.addEventListener('click', (e) => {
@@ -109,32 +109,38 @@ watchButtons.forEach(button => {
         console.log("Watch button clicked! Video source:", videoSrc); 
         
         if (videoSrc && modal && video) {
+            // 1. تصفير الـ properties وإلغاء الكتم صراحةً وتحديد الصوت لأعلى درجة
+            video.muted = false; 
+            video.volume = 1.0; 
             video.src = videoSrc;
             video.load();
+            
             modal.style.display = 'flex'; 
             
-            // تشغيل الفيديو تلقائياً بعد الفتح
+            // 2. تشغيل الفيديو تلقائياً بعد الفتح مع معالجة حظر المتصفح إن وجد
             video.play().catch(error => {
                 console.log("Autoplay failed or blocked by browser:", error);
             });
 
-            // تايمر الإغلاق التلقائي (10 ثواني)
-            clearTimeout(videoTimer);
-            videoTimer = setTimeout(() => {
-                closeModalFunction();
-            }, 10000);
         } else {
             console.error("Missing elements! Modal:", modal, "Video:", video);
         }
     });
 });
 
+// 3. الخدعة الذكية: إغلاق الـ Modal تلقائياً أول ما الفيديو ينتهي "بالكامل" بدون تايمر ثابت يقطع الفيديو بدري
+if (video) {
+    video.addEventListener('ended', () => {
+        console.log("الفيديو انتهى بالكامل، يتم الإغلاق الآن.");
+        closeModalFunction();
+    });
+}
+
 function closeModalFunction() {
     if (modal && video) {
         modal.style.display = 'none';
         video.pause();
-        video.src = ''; 
-        clearTimeout(videoTimer); 
+        video.src = ''; // تفريغ المصدر عشان الصوت ميفضلش شغال في الخلفية
     }
 }
 
