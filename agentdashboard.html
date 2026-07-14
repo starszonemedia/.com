@@ -420,27 +420,13 @@
     </div>
 
     <script>
-        // حماية صفحة الـ Agent
-function protectAgentPage() {
-    // 1. جلب بيانات المستخدم الـ Role المخزن عند تسجيل الدخول
-    const userRole = localStorage.getItem("userRole"); // أو الكوكيز حسب نظام اللوجن عندك
-    const isLoggedIn = localStorage.getItem("isLoggedIn");
+  const userRole = localStorage.getItem("userRole");
+const isLoggedIn = localStorage.getItem("isLoggedIn");
 
-    if (!isLoggedIn) {
-        // لو مش مسجل دخول أصلاً رجعيه لصفحة اللوجن
-        window.location.href = "login.html";
-        return;
-    }
-
-    // 2. الفحص القاطع: لو الـ Role مش Agent (يعني مثلاً Creator) اطراديه فوراً
-    if (userRole !== "Agent") {
-        alert("🔒 Access Denied: This portal is strictly for Agents only!");
-        window.location.href = "creatordashboard.html"; // وجهيه لصفحته الصح
-    }
+if (!isLoggedIn || userRole !== "Agent") {
+    alert("🔒 Access Denied: This portal is for Agents only!");
+    window.location.href = "login.html"; 
 }
-
-// تشغيل الفحص فوراً أول ما الصفحة تبدأ تقرأ
-protectAgentPage();
         const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw3juZSvsBweVrVNR2k2-LnNFjb-RIwt5BXLvMKObqbRsZji8Gko4vZ36veRspvq74/exec";
         
         const targetCreators = [
