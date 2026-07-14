@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en" id="dashboard-html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creator Performance Dashboard | Stars Zone Media</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght=300;400;600;700&family=Inter:wght=300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Ultra-Luxury Neon Dark Pink & Midnight Navy Gradient */
+            background: linear-gradient(135deg, #05070f 0%, #0b0f19 40%, #2e081d 85%, #4a0428 100%);
+            background-attachment: fixed;
+            transition: all 0.3s ease;
+        }
+        html[dir="rtl"] body {
+            font-family: 'Cairo', sans-serif;
+        }
+        .gradient-card {
+            background: linear-gradient(135deg, #a21caf 0%, #db2777 50%, #e11d48 100%);
+        }
+        .glow-diamond {
+            box-shadow: 0 0 25px rgba(244, 63, 94, 0.2);
+        }
+        /* 💎 Executive Luxury Chrome/Obsidian Number Styling */
+        .number-badge{
+            width:90px;
+            height:90px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            border-radius:24px;
+            background: linear-gradient(145deg,#ffffff,#dbe4f3 45%,#9ca3af);
+            border:1px solid rgba(255,255,255,.25);
+            box-shadow:
+                inset 0 2px 10px rgba(255,255,255,.7),
+                inset 0 -6px 12px rgba(0,0,0,.15),
+                0 18px 40px rgba(0,0,0,.45),
+                0 0 35px rgba(236,72,153,.25);
+            backdrop-filter: blur(12px);
+        }
+
+        /* ===== ULTRA LUXURY DIAMOND NUMBER (FIXED) ===== */
+        .luxury-number{
+            position:relative;
+            display:inline-block;
+            font-size:clamp(4rem,8vw,5.8rem);
+            font-weight:800;
+            letter-spacing:.06em;
+            
+            /* تثبيت الإضاءة الشفافة والتفريغ لمنع اختفاء الرقم بعد التحميل */
+            background-clip: text !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+
+            background-image: linear-gradient(
+                180deg,
+                #ffffff 0%,
+                #fdfdfd 8%,
+                #e8edf3 18%,
+                #bcc5cf 32%,
+                #ffffff 46%,
+                #9099a4 58%,
+                #eef2f6 72%,
+                #ffffff 84%,
+                #bfc8d2 100%
+            );
+            background-size:250% 250%;
+            filter:
+                drop-shadow(0 0 8px rgba(255,255,255,.65))
+                drop-shadow(0 0 18px rgba(225,232,240,.45))
+                drop-shadow(0 0 40px rgba(165,176,190,.28));
+            animation:
+                luxuryFlow 8s linear infinite,
+                luxuryGlow 3.2s ease-in-out infinite;
+        }
+
+        .luxury-number::after{
+            content:"";
+            position:absolute;
+            inset:-20%;
+            background:linear-gradient(
+                115deg,
+                transparent 35%,
+                rgba(255,255,255,.95) 48%,
+                rgba(255,248,210,.9) 50%,
+                transparent 63%
+            );
+            mix-blend-mode:screen;
+            pointer-events:none;
+            animation:diamondShine 3.5s ease-in-out infinite;
+        }
+
+        @keyframes luxuryFlow{
+            from{background-position:0% 50%;}
+            to{background-position:250% 50%;}
+        }
+
+        @keyframes luxuryGlow{
+            0%,100%{
+                filter:
+                    drop-shadow(0 0 8px rgba(29, 27, 27, 0.65))
+                    drop-shadow(0 0 18px rgba(225,232,240,.45))
+                    drop-shadow(0 0 40px rgba(128, 129, 131, 0.28));
+            }
+            50%{
+                filter:
+                    drop-shadow(0 0 8px rgba(149, 15, 15, 0.65))
+                    drop-shadow(0 0 18px rgba(207, 94, 181, 0.45))
+                    drop-shadow(0 0 40px rgba(255, 124, 205, 0.28));
+            }
+        }
+
+        @keyframes diamondShine{
+            0%{
+                transform:translateX(-220%) skewX(-25deg);
+                opacity:0;
+            }
+            15%{
+                opacity:1;
+            }
+            45%{
+                transform:translateX(220%) skewX(-25deg);
+                opacity:.95;
+            }
+            100%{
+                transform:translateX(220%) skewX(-25deg);
+                opacity:0;
+            }
+        }
+
+        .neon-bar-pink {
+            box-shadow: 0 0 10px rgba(236, 72, 153, 0.6);
+        }
+        .neon-bar-purple {
+            box-shadow: 0 0 10px rgba(168, 85, 247, 0.6);
+        }
+    </style>
+</head>
+<body class="text-gray-200 min-h-screen p-4 md:p-8 flex justify-center items-start">
+
+    <div class="w-full max-w-5xl space-y-6">
+        
+        <!-- الهيدر المطور: توزيع الأزرار بشكل متقابل على الأطراف وتحتها نصوص الترحيب -->
+        <div class="flex flex-col gap-4 sm:gap-3">
+            
+            <!-- صف الأزرار: التقويم على طرف واللغة + تسجيل الخروج على الطرف الآخر -->
+            <div class="flex flex-row items-center justify-between order-1 w-full">
+                
+                <!-- التقويم: يظهر على اليسار في الإنجليزي واليمين في العربي تلقائياً -->
+                <div class="bg-[#161920] border border-gray-800 rounded-xl px-3.5 py-2 text-xs text-gray-300 flex items-center gap-2 shadow-inner">
+                    <i data-lucide="calendar" class="w-4 h-4 text-gray-400"></i>
+                    <span id="date-range">...</span>
+                </div>
+
+                <!-- أزرار التحكم: تظهر على اليمين في الإنجليزي واليسار في العربي تلقائياً -->
+                <div class="flex items-center gap-3">
+                    <button id="lang-toggle" onclick="toggleLanguage()" class="bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-semibold px-3 py-2 rounded-xl flex items-center gap-2 hover:bg-rose-500/20 hover:border-rose-500/50 transition cursor-pointer">
+                        <i data-lucide="languages" class="w-4 h-4"></i>
+                        <span id="lang-btn-text">العربية</span>
+                    </button>
+
+                    <a href="login.html" id="logout-btn" class="w-9 h-9 flex items-center justify-center bg-rose-950/40 hover:bg-rose-600 border border-rose-800/40 hover:border-rose-500 text-rose-400 hover:text-white rounded-xl shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 group" title="Log Out">
+                        <i data-lucide="log-out" class="w-4 h-4 group-hover:translate-x-0.5 transition-transform"></i>
+                    </a>
+                </div>
+
+            </div>
+
+            <!-- نصوص الترحيب بالأسفل مباشرة ومنظمة -->
+            <div class="order-2 mt-1 sm:mt-0">
+                <h1 id="welcome-text" class="text-xl md:text-2xl font-semibold tracking-tight text-white flex items-center gap-2">
+                    Welcome back, Agent! 👋
+                </h1>
+                <p id="welcome-sub" class="text-xs md:text-sm text-gray-400 mt-1">Here's your performance overview and your creators' progress.</p>
+            </div>
+
+        </div>
+
+        <!-- كارت العداد الكلي للألماسات المضيء -->
+        <div class="bg-[#11141a]/90 border border-rose-500/30 rounded-2xl p-6 flex flex-col items-center justify-center text-center relative overflow-hidden glow-diamond">
+            <div class="absolute -right-10 -top-10 w-32 h-32 bg-rose-500/10 rounded-full blur-2xl pointer-events-none"></div>
+            <div class="w-12 h-12 rounded-full bg-rose-500/20 border border-rose-500/40 flex items-center justify-center text-rose-400 mb-3 animate-pulse shadow-[0_0_15px_rgba(244,63,94,0.4)]">
+                <i data-lucide="gem" class="w-6 h-6"></i>
+            </div>
+            <span id="total-diamonds-title" class="text-xs font-bold uppercase tracking-widest text-gray-400">Total Accumulated Diamonds</span>
+            <h2 id="total-diamonds-counter" class="text-5xl md:text-6xl mt-2 luxury-number">0</h2>
+        </div>
+
+        <!-- سياسة الاستحقاق والبونص -->
+        <div class="bg-amber-500/10 border border-amber-500/20 rounded-xl p-4 flex items-start gap-3">
+            <i data-lucide="alert-circle" class="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5"></i>
+            <div>
+                <h4 id="note-title" class="text-xs font-semibold text-amber-400 uppercase tracking-wider">Bonus Eligibility Policy</h4>
+                <p id="note-body" class="text-xs text-gray-400 mt-1 leading-relaxed">
+                    An agent becomes eligible for creators bonuses based on creators active days and live hours. The minimum requirement to unlock individual bonuses is completing at least <strong class="text-white">11 days and 30 hours</strong> within the active month.
+                </p>
+            </div>
+        </div>
+
+        <!-- قسم عناصر التحكم والبحث والجدول الرئيسي -->
+        <div class="bg-[#11141a] border border-gray-800 rounded-xl p-5 md:p-6 transition-all duration-300">
+            <div class="flex flex-col gap-4 mb-6">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <div class="p-1.5 bg-rose-500/10 rounded-lg">
+                            <i data-lucide="users" class="w-4 h-4 text-rose-400"></i>
+                        </div>
+                        <div>
+                            <h2 id="table-title" class="text-sm font-semibold text-white">My Creators</h2>
+                            <p id="table-sub" class="text-xs text-gray-400">Overview of creators you are managing</p>
+                        </div>
+                    </div>
+                    
+                    <button id="export-btn" onclick="exportToGoogleSheetsTable()" class="bg-[#161920] border border-gray-800 text-xs font-medium text-gray-300 px-3 py-1.5 rounded-lg flex items-center gap-2 hover:bg-[#1f242e] transition hover:border-slate-700 cursor-pointer">
+                        <i data-lucide="table" class="w-3.5 h-3.5 text-green-400"></i>
+                        <span id="export-btn-label">Export Report</span>
+                    </button>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-3 w-full border-t border-gray-800/60 pt-4">
+                    <div class="relative flex-grow">
+                        <div class="absolute inset-y-0 left-3 flex items-center pointer-events-none text-gray-500 html-rtl:right-3 html-rtl:left-auto">
+                            <i data-lucide="search" class="w-4 h-4"></i>
+                        </div>
+                        <input type="text" id="search-input" oninput="handleFilterChange()" placeholder="Search creator by name or handle..." class="w-full bg-[#0d0f14] border border-gray-800 focus:border-rose-500/70 rounded-xl pl-9 pr-4 html-rtl:pr-9 html-rtl:pl-4 py-2.5 text-xs text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-rose-500/10 transition-all duration-300">
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <select id="eligibility-filter" onchange="handleFilterChange()" class="bg-[#0d0f14] border border-gray-800 rounded-xl px-4 py-2.5 text-xs text-gray-300 focus:outline-none focus:border-rose-500/50 cursor-pointer transition">
+                            <option value="all">✨ All Status</option>
+                            <option value="eligible">✓ Eligible Only</option>
+                            <option value="not_eligible">✕ Not Eligible Only</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div id="loading-spinner" class="text-center py-8 text-sm text-gray-400">
+                <div class="inline-block animate-spin rounded-full h-6 w-6 border-b-2 border-rose-500 mr-2"></div>
+                Loading performance metrics...
+            </div>
+
+            <div id="table-container" class="overflow-x-auto rounded-lg border border-gray-800/60 bg-[#0f1117] hidden">
+                <table class="w-full text-left html-rtl:text-right border-collapse whitespace-nowrap table-fixed min-w-[850px]">
+                    <thead>
+                        <tr class="bg-[#161920]/80 border-b border-gray-800 text-[10px] font-bold text-gray-400 uppercase tracking-wider">
+                            <th id="th-creator" class="w-[22%] px-4 py-4 font-semibold text-inherit">Creator</th>
+                            <th id="th-diamonds" class="w-[14%] px-4 py-4 font-semibold text-center">Diamonds</th>
+                            <th id="th-hours" class="w-[18%] px-4 py-4 font-semibold text-center">Hours (Target 80h)</th>
+                            <th id="th-days" class="w-[18%] px-4 py-4 font-semibold text-center">Days (Target 22d)</th>
+                            <th id="th-eligibility" class="w-[14%] px-4 py-4 font-semibold text-center">Eligibility Status</th>
+                            <th id="th-bonus" class="w-[14%] px-4 py-4 font-semibold text-center">Individual Bonus</th>
+                        </tr>
+                    </thead>
+                    <tbody id="creators-tbody" class="divide-y divide-gray-800/40 text-xs text-gray-300">
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="flex items-center justify-between border-t border-gray-800 mt-4 pt-4 text-xs text-gray-500">
+                <span id="pagination-text">...</span>
+                <div class="flex items-center gap-1.5">
+                    <button id="prev-btn" onclick="changePage(-1)" class="p-1 rounded bg-[#161920] border border-gray-800 text-gray-400 transition hover:bg-[#1f242e] disabled:opacity-40 disabled:cursor-not-allowed">
+                        <i data-lucide="chevron-left" class="w-3.5 h-3.5 transform html-rtl:rotate-180"></i>
+                    </button>
+                    <span id="page-number" class="px-2 py-0.5 rounded bg-rose-500/10 border border-rose-500/40 text-rose-400 font-medium text-[11px]">1</span>
+                    <button id="next-btn" onclick="changePage(1)" class="p-1 rounded bg-[#161920] border border-gray-800 text-gray-400 transition hover:bg-[#1f242e] disabled:opacity-40 disabled:cursor-not-allowed">
+                        <i data-lucide="chevron-right" class="w-3.5 h-3.5 transform html-rtl:rotate-180"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- قسم كروت شرائح وأرباح الوكالة والنسب المئوية الزجاجية الفاخرة -->
+        <div class="bg-[#11141a] border border-gray-800 rounded-xl p-5 md:p-6">
+            <div class="flex items-center gap-2 mb-2">
+                <i data-lucide="bar-chart-3" class="w-4 h-4 text-purple-400"></i>
+                <h2 id="agency-title" class="text-sm font-semibold text-white">Agency Achieved Percent</h2>
+            </div>
+            <p id="agency-sub1" class="text-xs text-gray-400 mb-1">This determines the commission % you earn from your creators.</p>
+            <p id="agency-sub2" class="text-[11px] text-gray-500 mb-6">Based on Agency's performance this month.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div id="tier-2%" class="bg-[#161920]/80 border border-gray-800 rounded-xl p-6 flex flex-col items-center justify-center text-center relative transition duration-300 hover:border-gray-700">
+                    <div class="check-icon absolute -top-2.5 right-4 html-rtl:left-4 html-rtl:right-auto bg-pink-500 text-white rounded-full p-0.5 shadow-md hidden">
+                        <i data-lucide="check" class="w-3 h-3 stroke-[3]"></i>
+                    </div>
+                    <span class="text-2xl md:text-3xl font-bold text-white mb-1">2%</span>
+                    <span id="tier1-title" class="text-xs font-medium text-gray-300">Standard Rate</span>
+                    <span id="tier1-desc" class="text-[10px] text-gray-500 mt-2">Keep going to reach higher tiers!</span>
+                </div>
+                <div id="tier-5%" class="bg-[#161920]/80 border border-gray-800 rounded-xl p-6 flex flex-col items-center justify-center text-center relative transition duration-300 hover:border-gray-700">
+                    <div class="check-icon absolute -top-2.5 right-4 html-rtl:left-4 html-rtl:right-auto bg-pink-500 text-white rounded-full p-0.5 shadow-md hidden">
+                        <i data-lucide="check" class="w-3 h-3 stroke-[3]"></i>
+                    </div>
+                    <span class="text-2xl md:text-3xl font-bold text-white mb-1">5%</span>
+                    <span id="tier2-title" class="text-xs font-medium text-gray-300">Advanced Rate</span>
+                    <span id="tier2-desc" class="text-[10px] text-gray-500 mt-2">Great job! We're doing well.</span>
+                </div>
+                <div id="tier-7%" class="bg-[#161920]/80 border border-gray-800 rounded-xl p-6 flex flex-col items-center justify-center text-center relative transition duration-300 hover:border-gray-700">
+                    <div class="check-icon absolute -top-2.5 right-4 html-rtl:left-4 html-rtl:right-auto bg-pink-500 text-white rounded-full p-0.5 shadow-md hidden">
+                        <i data-lucide="check" class="w-3 h-3 stroke-[3]"></i>
+                    </div>
+                    <span class="text-2xl md:text-3xl font-bold text-white mb-1">7%</span>
+                    <span id="tier3-title" class="text-xs font-medium text-gray-300">Elite Rate</span>
+                    <span id="tier3-desc" class="text-[10px] text-gray-500 mt-2">Keep pushing to reach the top!</span>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-2 text-[10px] text-gray-500 mt-5 border-t border-gray-800/60 pt-4">
+                <i data-lucide="info" class="w-3.5 h-3.5"></i>
+                <span id="agency-footer">Your achieved percent is updated at the end of each month based on overall agency performance.</span>
+            </div>
+        </div>
+
+        <!-- كارت عرض الأرباح التقديرية الكلية للوكالة -->
+        <div class="gradient-card rounded-xl p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden shadow-xl hover:-translate-y-0.5 transition-all duration-300">
+            <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-white/5 rounded-full blur-2xl pointer-events-none"></div>
+            
+            <div class="space-y-2 z-10">
+                <span id="banner-tag" class="text-[10px] uppercase font-bold tracking-wider text-white/80">Total Bonus</span>
+                <h2 id="banner-title" class="text-xl md:text-2xl font-bold text-white">Total Bonus You Will Earn</h2>
+                <p id="banner-sub" class="text-xs text-white/70">Based on current achieved percent <span id="active-percent-text" class="font-semibold text-white">(-)</span></p>
+            </div>
+
+            <div class="flex items-center gap-4 md:gap-6 z-10 self-start md:self-auto">
+                <div class="text-right html-rtl:text-left">
+                    <div id="total-bonus-display" class="text-3xl md:text-4xl font-extrabold text-white tracking-tight">$0.00</div>
+                    <div id="banner-est" class="text-[11px] text-white/80 mt-1">Estimated Bonus This Month</div>
+                </div>
+                <div class="w-12 h-12 md:w-14 md:h-14 bg-white/10 rounded-full flex items-center justify-center border border-white/20 text-white shadow-inner">
+                    <i data-lucide="dollar-sign" class="w-6 h-6 md:w-7 md:h-7"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- كارت إدارة سحب الأرباح وطلب الكاش أوت المباشر -->
+        <div class="bg-[#11141a] border border-gray-800/80 rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 hover:-translate-y-0.5 transition-all duration-300">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 rounded-xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-400 flex-shrink-0">
+                    <i data-lucide="wallet" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <h3 id="payout-pref-title" class="text-sm font-semibold text-white">Payout Preference</h3>
+                    <p id="payout-pref-sub" class="text-xs text-gray-400 mt-0.5">Choose your preferred monthly payment method</p>
+                </div>
+            </div>
+            <div class="flex items-center self-end sm:self-auto">
+                <button onclick="openPayoutModal()" class="bg-pink-500 hover:bg-pink-600 text-white font-medium text-xs px-5 py-2.5 rounded-xl shadow-[0_0_15px_rgba(236,72,153,0.3)] transition-all flex items-center gap-2 cursor-pointer">
+                    <i data-lucide="banknote" class="w-4 h-4"></i>
+                    <span id="cashout-btn-label">Cash Out Now</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- نافذة السحب والاستلام المنبثقة (Modal) -->
+    <div id="payout-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center z-50 p-4">
+        <div class="bg-[#11141a] border border-gray-800 rounded-2xl w-full max-w-md p-6 relative shadow-2xl space-y-5">
+            
+            <div class="flex items-start justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-400">
+                        <i data-lucide="wallet" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <h3 id="modal-title" class="text-sm font-semibold text-white">Withdrawal Information</h3>
+                        <p id="modal-sub" class="text-[11px] text-gray-400 mt-0.5">Choose your preferred payment method and provide details</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button id="modal-lang-btn" onclick="toggleModalLanguage()" class="bg-gray-800 hover:bg-gray-700 border border-gray-700 text-gray-300 text-[10px] px-2 py-0.5 rounded font-medium">العربية</button>
+                    <button onclick="closePayoutModal()" class="text-gray-400 hover:text-white transition cursor-pointer">
+                        <i data-lucide="x" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <div class="space-y-1.5">
+                    <label id="lbl-method" class="text-xs text-gray-400 font-medium">Payment Method</label>
+                    <div class="relative">
+                        <select id="payout-method" onchange="updateInputPlaceholder()" class="w-full bg-[#161920] border border-gray-800 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-pink-500 appearance-none cursor-pointer">
+                            <option value="Vodafone Cash">🔴 Vodafone Cash</option>
+                            <option value="InstaPay">🟣 InstaPay</option>
+                            <option value="Bank Account">🏦 Bank Account</option>
+                        </select>
+                        <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-gray-400 html-rtl:left-3 html-rtl:right-auto">
+                            <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-1.5">
+                    <label id="lbl-account" class="text-xs text-gray-400 font-medium">Account Number</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-3 flex items-center pointer-events-none text-gray-500 html-rtl:right-3 html-rtl:left-auto">
+                            <i data-lucide="smartphone" id="input-icon" class="w-4 h-4"></i>
+                        </div>
+                        <input type="text" id="payout-account" placeholder="Enter your Vodafone Cash number" class="w-full bg-[#161920] border border-gray-800 rounded-xl pl-10 pr-3 html-rtl:pr-10 html-rtl:pl-3 py-2.5 text-xs text-white placeholder-gray-600 focus:outline-none focus:border-pink-500">
+                    </div>
+                    <p id="lbl-warning" class="text-[10px] text-gray-500">Make sure the number is correct to avoid wrong transfers.</p>
+                </div>
+            </div>
+
+            <div class="space-y-3 pt-2">
+                <button onclick="submitPayoutRequest()" id="btn-submit-payout" class="w-full bg-pink-500 hover:bg-pink-600 text-white font-medium text-xs py-3 rounded-xl shadow-[0_0_15px_rgba(236,72,153,0.2)] transition flex items-center justify-center gap-2 cursor-pointer">
+                    <span>Submit Withdrawal Request</span>
+                </button>
+                <div class="flex items-center justify-center gap-1.5 text-[10px] text-gray-500">
+                    <i data-lucide="lock" class="w-3 h-3"></i>
+                    <span id="lbl-encrypted">Your information is secure and encrypted.</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw3juZSvsBweVrVNR2k2-LnNFjb-RIwt5BXLvMKObqbRsZji8Gko4vZ36veRspvq74/exec";
+        
+        const targetCreators = [
+            'haidysheriff', 'roor.e.33', 'hazemreda6269', 'fz3a_gaming',
+            'peterholom', 'dr.khaloof', 'farawlh77', 'gfx.forex.ku',
+            'xxxsharkx', 'basmalaibrahem8', 'doniadarwishh', 'asma_mohamed62'
+        ];
+
+        let creatorsData = [];
+        let filteredCreatorsData = []; 
+        let currentLang = 'en';
+        let modalLang = 'en';
+        let currentPage = 1;
+        const rowsPerPage = 5;
+        let globalAgencyPercent = ""; 
+
+        const translations = {
+            en: {
+                welcomeText: "Welcome back, Agent! 👋",
+                welcomeSub: "Here's your performance overview and your creators' progress.",
+                tableTitle: "My Creators",
+                tableSub: "Overview of creators you are managing",
+                exportBtn: "Export Report",
+                logoutBtn: "Log Out",
+                thCreator: "Creator",
+                thDiamonds: "Diamonds",
+                thHours: "Hours (Target 80h)",
+                thDays: "Days (Target 22d)",
+                thEligibility: "Eligibility Status",
+                thBonus: "Individual Bonus",
+                agencyTitle: "Agency Achieved Percent",
+                agencySub1: "This determines the commission % you earn from your creators.",
+                agencySub2: "Based on agency's performance this month.",
+                tier1Title: "Standard Rate",
+                tier1Desc: "Keep going to reach higher tiers!",
+                tier2Title: "Advanced Rate",
+                tier2Desc: "Great job! We're doing well.",
+                tier3Title: "Elite Rate",
+                tier3Desc: "Keep pushing to reach the top!",
+                agencyFooter: "Your achieved percent is updated at the end of each month based on overall agency performance.",
+                bannerTag: "Total Bonus",
+                bannerTitle: "Total Bonus You Will Earn",
+                bannerSub: "Based on current achieved percent ",
+                bannerEst: "Estimated Bonus This Month",
+                statusEligible: "✓ Eligible",
+                statusNot: "✕ Not Eligible",
+                langBtn: "العربية",
+                noteTitle: "Bonus Eligibility Policy",
+                noteBody: "An agent becomes eligible for creators bonuses based on creators active days and live hours. The minimum requirement to unlock individual bonuses is completing at least 11 days and 30 hours within the active month.",
+                payoutTitle: "Payout Preference",
+                payoutSub: "Choose your preferred monthly payment method",
+                cashoutBtn: "Cash Out Now",
+                totalDiamondsTitle: "Total Accumulated Diamonds",
+                searchPlaceholder: "Search creator by name or handle...",
+                filterAll: "✨ All Status",
+                filterEligible: "✓ Eligible Only",
+                filterNotEligible: "✕ Not Eligible Only"
+            },
+            ar: {
+                welcomeText: "مرحباً بعودتك! 👋",
+                welcomeSub: "إليك نظرة عامة على أدائك ومدى تقدم صناع المحتوى الخاصين بك.",
+                tableTitle: "صناع المحتوى التابعين لي",
+                tableSub: "نظرة عامة على صناع المحتوى الذين تقوم بإدارتهم",
+                exportBtn: " تصدير التقرير    ",
+                logoutBtn: "تسجيل الخروج",
+                thCreator: "صانع المحتوى",
+                thDiamonds: "الماس",
+                thHours: "الساعات (الهدف 80س)",
+                thDays: "الأيام (الهدف 22ي)",
+                thEligibility: "حالة التأهيل",
+                thBonus: "المكافأة الفردية",
+                agencyTitle: "نسبة إنجاز الوكالة",
+                agencySub1: "تحدد هذه النسبة المئوية للعمولة التي تكسبها من صناع المحتوى.",
+                agencySub2: "بناءً على أداء الوكاله هذا الشهر.",
+                tier1Title: "المعدل القياسي",
+                tier1Desc: "استمر في التقدم للوصول إلى مستويات أعلى!",
+                tier2Title: "المعدل المتقدم",
+                tier2Desc: "عمل رائع! نحن نبلي بلاءً حسناً.",
+                tier3Title: "معدل النخبة",
+                tier3Desc: "واصل الضغط للوصول إلى القمة!",
+                agencyFooter: "يتم تحديث النسبة المئوية المنجزة في نهاية كل شهر بناءً على الأداء العام.",
+                bannerTag: "إجمالي المكافأة",
+                bannerTitle: "إجمالي المكافأة التي ستكسبها",
+                bannerSub: "بناءً على نسبة الانجاز الحالية ",
+                bannerEst: "المكافأة التقديرية لهذا الشهر",
+                statusEligible: "✓ مؤهل",
+                statusNot: "✕ غير مؤهل",
+                langBtn: "English",
+                noteTitle: "سياسة استحقاق البونص",
+                noteBody: "يصبح صانع المحتوى مؤهلاً للحصول على المكافآت بناءً على أيام نشاطه وساعات البث المباشر. الحد الأدنى للمتطلبات لبدء احتساب المكافآت الفردية هو إكمال ما لا يقل عن 11 يومًا و 30 ساعة خلال الشهر الحالي.",
+                payoutTitle: "تفضيلات الدفع",
+                payoutSub: "اختر طريقة استلام مستحقاتك الشهرية",
+                cashoutBtn: "صرف الآن",
+                totalDiamondsTitle: "إجمالي الماس المتراكم",
+                searchPlaceholder: "ابحث عن صانع محتوى بالاسم أو اليوزر...",
+                filterAll: "✨ جميع الحالات",
+                filterEligible: "✓ المؤهلين فقط",
+                filterNotEligible: "✕ غير المؤهلين فقط"
+            }
+        };
+
+        const modalTranslations = {
+            en: {
+                title: "Withdrawal Information",
+                sub: "Choose your preferred payment method and provide details",
+                method: "Payment Method",
+                account: "Account Number",
+                warning: "Make sure the number is correct to avoid wrong transfers.",
+                submit: "Submit Withdrawal Request",
+                encrypted: "Your information is secure and encrypted.",
+                langBtn: "العربية"
+            },
+            ar: {
+                title: "بيانات السحب والاستلام",
+                sub: "اختر طريقة الدفع المفضلة لديك وأدخل البيانات المطلوبة",
+                method: "طريقة الدفع",
+                account: "رقم الحساب / المحفظة",
+                warning: "تأكد من صحة الرقم لتجنب عمليات التحويل الخاطئة.",
+                submit: "إرسال طلب السحب",
+                encrypted: "معلوماتك آمنة ومشفرة تماماً.",
+                langBtn: "English"
+            }
+        };
+
+        function calculateIndividualBonus(diamonds, hours, days, agencyPercent) {
+            if (!agencyPercent || agencyPercent.trim() === "" || agencyPercent === "-") return 0;
+            if (days < 11 || hours < 30) return 0;
+
+            let diamondFactor = 0.00016; 
+            if (agencyPercent === "5%") {
+                diamondFactor = 0.00036;
+            } else if (agencyPercent === "7%") {
+                diamondFactor = 0.00056;
+            }
+
+            let diamondsBonus = diamonds * diamondFactor;
+            let timeBonusFactor = 0;
+
+            if (days >= 11 && days <= 14 && hours >= 30 && hours <= 80) {
+                timeBonusFactor = 0.00008;
+            } else if (days >= 15 && days <= 17 && hours >= 40 && hours <= 80) {
+                timeBonusFactor = 0.00012;
+            } else if (days >= 18 && days <= 22 && hours >= 60 && hours <= 80) {
+                timeBonusFactor = 0.00018;
+            } else if (days >= 22 && hours >= 80) {
+                timeBonusFactor = 0.00022;
+            }
+
+            let timeBonus = diamonds * timeBonusFactor;
+            return diamondsBonus + timeBonus;
+        }
+
+        function updateAgencyPercentUI(percent) {
+            globalAgencyPercent = percent;
+            
+            ['2%', '5%', '7%'].forEach(p => {
+                const card = document.getElementById(`tier-${p}`);
+                if(card) {
+                    card.className = "bg-[#161920]/80 border border-gray-800 rounded-xl p-6 flex flex-col items-center justify-center text-center relative transition duration-300 hover:border-gray-700";
+                    card.querySelector('.check-icon').classList.add('hidden');
+                }
+            });
+
+            const selectedCard = document.getElementById(`tier-${percent}`);
+            if (selectedCard) {
+                selectedCard.className = "bg-[#161920]/90 border-2 border-pink-500 rounded-xl p-6 flex flex-col items-center justify-center text-center relative scale-[1.01] shadow-[0_0_20px_rgba(236,72,153,0.15)]";
+                selectedCard.querySelector('.check-icon').classList.remove('hidden');
+            }
+
+            document.getElementById('active-percent-text').innerText = percent ? `(${percent})` : "(-)";
+        }
+
+        async function fetchLiveSheetData() {
+            try {
+                let totalEstimatedBonus = 0;
+                let detectedPercent = ""; 
+                let globalDiamondsSum = 0; 
+
+                const fetchPromises = targetCreators.map(async (creatorId) => {
+                    try {
+                        const response = await fetch(`${APPS_SCRIPT_URL}?id=${encodeURIComponent(creatorId)}`);
+                        const json = await response.json();
+                        
+                        if (json.status === "success" && json.data) {
+                            return json.data;
+                        }
+                    } catch (e) {
+                        console.error(`Error fetching data for ${creatorId}:`, e);
+                    }
+                    return null;
+                });
+
+                const rawResults = await Promise.all(fetchPromises);
+
+                const validResult = rawResults.find(r => r && r.AgencyPercent);
+                if (validResult) {
+                    detectedPercent = validResult.AgencyPercent;
+                }
+
+                creatorsData = targetCreators.map((creatorId, index) => {
+                    const d = rawResults[index];
+
+                    if (d) {
+                        const rawDiamonds = String(d.Diamonds || "0").replace(/[^0-9kK.]/g, '');
+                        let numericDiamonds = parseFloat(rawDiamonds) || 0;
+                        if (/k/i.test(rawDiamonds)) numericDiamonds *= 1000;
+
+                        globalDiamondsSum += numericDiamonds; 
+
+                        const hoursVal = parseFloat(d.Hours) || 0;
+                        const daysVal = parseInt(d.Days) || 0;
+                        
+                        let individualBonus = calculateIndividualBonus(numericDiamonds, hoursVal, daysVal, detectedPercent);
+                        totalEstimatedBonus += individualBonus;
+
+                        return {
+                            name: d.creator_name || creatorId,
+                            handle: "@" + creatorId,
+                            diamonds: d.Diamonds || "0",
+                            hoursVal: hoursVal,
+                            daysVal: daysVal,
+                            bonus: "$" + individualBonus.toFixed(2),
+                            img: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=80&q=80"
+                        };
+                    }
+
+                    return { name: creatorId, handle: "@" + creatorId, diamonds: "0", hoursVal: 0, daysVal: 0, bonus: "$0.00", img: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=80&q=80" };
+                });
+                
+                updateAgencyPercentUI(detectedPercent);
+
+                document.getElementById('total-diamonds-counter').innerText = globalDiamondsSum.toLocaleString('en-US');
+                document.getElementById('total-bonus-display').innerText = "$" + totalEstimatedBonus.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                
+                document.getElementById('loading-spinner').classList.add('hidden');
+                document.getElementById('table-container').classList.remove('hidden');
+                
+                handleFilterChange(); 
+            } catch (err) {
+                console.error("Global fetch error:", err);
+                document.getElementById('loading-spinner').innerText = "Failed to load live tracking data.";
+            }
+        }
+
+        function handleFilterChange() {
+            const searchQuery = document.getElementById('search-input').value.toLowerCase().trim();
+            const filterValue = document.getElementById('eligibility-filter').value;
+
+            filteredCreatorsData = creatorsData.filter(creator => {
+                const matchesSearch = creator.name.toLowerCase().includes(searchQuery) || creator.handle.toLowerCase().includes(searchQuery);
+                const isEligible = (creator.hoursVal >= 30) && (creator.daysVal >= 11);
+                
+                let matchesFilter = true;
+                if (filterValue === "eligible") matchesFilter = isEligible;
+                if (filterValue === "not_eligible") matchesFilter = !isEligible;
+
+                return matchesSearch && matchesFilter;
+            });
+
+            currentPage = 1; 
+            renderTable();
+        }
+
+        function updateAutomaticDateBadge() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const monthIndex = now.getMonth();
+            const lastDay = new Date(year, monthIndex + 1, 0).getDate();
+
+            const monthNamesEn = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            const monthNamesAr = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"];
+
+            if (currentLang === 'en') {
+                document.getElementById('date-range').innerText = `${monthNamesEn[monthIndex]} 01 – ${monthNamesEn[monthIndex]} ${lastDay}, ${year}`;
+            } else {
+                document.getElementById('date-range').innerText = `١ ${monthNamesAr[monthIndex]} – ${lastDay} ${monthNamesAr[monthIndex]}، ${year}`;
+            }
+        }
+
+        function exportToGoogleSheetsTable() {
+            const newWindow = window.open();
+            if (!newWindow) return;
+
+            let tableHtml = `
+                <html>
+                <head>
+                    <title>Report Data Grid Export</title>
+                    <style>
+                        body { font-family: sans-serif; padding: 20px; background-color: #f8f9fa; color: #333; }
+                        h3 { color: #111; margin-bottom: 5px; }
+                        table { border-collapse: collapse; width: 100%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+                        th, td { border: 1px solid #ddd; padding: 10px 12px; text-align: left; font-size: 13px; }
+                        th { background-color: #f1f3f4; font-weight: bold; }
+                        tr:nth-child(even) { background-color: #f9f9f9; }
+                    </style>
+                </head>
+                <body>
+                    <h3>Creator Performance Table Grid</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Creator Name</th>
+                                <th>Handle</th>
+                                <th>Diamonds</th>
+                                <th>Live Hours</th>
+                                <th>Live Days</th>
+                                <th>Eligibility Status</th>
+                                <th>Individual Bonus</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+
+            creatorsData.forEach(c => {
+                const isEligible = (c.hoursVal >= 30) && (c.daysVal >= 11) ? "Eligible" : "Not Eligible";
+                tableHtml += `
+                    <tr>
+                        <td><b>${c.name}</b></td>
+                        <td>${c.handle}</td>
+                        <td>${c.diamonds}</td>
+                        <td>${c.hoursVal}h</td>
+                        <td>${c.daysVal} Days</td>
+                        <td>${isEligible}</td>
+                        <td>${c.bonus}</td>
+                    </tr>
+                `;
+            });
+
+            tableHtml += `
+                        </tbody>
+                    </table>
+                </body>
+                </html>
+            `;
+
+            newWindow.document.write(tableHtml);
+            newWindow.document.close();
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('creators-tbody');
+            tbody.innerHTML = '';
+
+            const dataToRender = filteredCreatorsData;
+            const startIndex = (currentPage - 1) * rowsPerPage;
+            const endIndex = Math.min(startIndex + rowsPerPage, dataToRender.length);
+            const pageData = dataToRender.slice(startIndex, endIndex);
+
+            // لستة تحديد البنات لتوزيع الألوان تلقائياً
+            const femaleCreators = ['roor.e.33', 'haidysheriff', 'basmalaibrahem8', 'doniadarwishh', 'farawlh77', 'asma_mohamed62'];
+
+            pageData.forEach(creator => {
+                const isEligible = (creator.hoursVal >= 30) && (creator.daysVal >= 11);
+
+                let hoursFormatted = currentLang === 'en' ? `${creator.hoursVal}h` : `${creator.hoursVal}س`;
+                let daysFormatted = currentLang === 'en' ? `${creator.daysVal} Days` : `${creator.daysVal} يوم`;
+                
+                if (currentLang === 'ar' && creator.daysVal >= 3 && creator.daysVal <= 10) {
+                    daysFormatted = `${creator.daysVal} أيام`;
+                }
+
+                const hoursPercent = Math.min((creator.hoursVal / 80) * 100, 100).toFixed(0);
+                const daysPercent = Math.min((creator.daysVal / 22) * 100, 100).toFixed(0);
+
+                const statusText = isEligible ? translations[currentLang].statusEligible : translations[currentLang].statusNot;
+                const statusClass = isEligible ? 'text-emerald-400 bg-emerald-500/5 border-emerald-500/20 shadow-[0_0_12px_rgba(16,185,129,0.05)]' : 'text-rose-400 bg-rose-500/5 border-rose-500/20';
+
+                const cleanHandle = creator.handle.replace('@', '').trim();
+                const isFemale = femaleCreators.includes(cleanHandle);
+
+                // صناعة الأيقونة المخصصة نيون (بنت بالوردي والأبيض / ولد بالأزرق والأبيض)
+                let avatarHtml = "";
+                if (isFemale) {
+                    avatarHtml = `
+                        <div class="w-9 h-9 rounded-full bg-pink-500/10 border border-pink-400/40 flex items-center justify-center text-pink-400 shadow-[0_0_10px_rgba(244,114,182,0.15)] flex-shrink-0">
+                            <i data-lucide="user-round" class="w-4 h-4 stroke-[2.5]"></i>
+                        </div>
+                    `;
+                } else {
+                    avatarHtml = `
+                        <div class="w-9 h-9 rounded-full bg-blue-500/10 border border-blue-400/40 flex items-center justify-center text-blue-400 shadow-[0_0_10px_rgba(96,165,250,0.15)] flex-shrink-0">
+                            <i data-lucide="user" class="w-4 h-4 stroke-[2.5]"></i>
+                        </div>
+                    `;
+                }
+
+                const row = `
+                    <tr class="hover:bg-gray-800/30 border-b border-gray-800/30 transition-all duration-300 hover:-translate-y-0.5 group">
+                        <td class="px-4 py-4 flex items-center gap-3 overflow-hidden">
+                            ${avatarHtml}
+                            <div class="truncate">
+                                <div class="font-semibold text-white tracking-wide truncate group-hover:text-rose-400 transition-colors">${creator.name}</div>
+                                <div class="text-[10px] text-gray-500 font-mono mt-0.5 truncate">${creator.handle}</div>
+                            </div>
+                        </td>
+                        <td class="px-4 py-4 text-center font-bold text-gray-200 truncate"><span class="text-rose-400 mr-1 html-rtl:ml-1 html-rtl:mr-0">💎</span>${creator.diamonds}</td>
+                        
+                        <td class="px-4 py-4 text-center text-gray-300 font-medium">
+                            <div class="flex flex-col items-center gap-1 w-full max-w-[120px] mx-auto">
+                                <span class="text-xs font-semibold">${hoursFormatted}</span>
+                                <div class="w-full bg-gray-800 rounded-full h-1.5 overflow-hidden border border-gray-700/40">
+                                    <div class="bg-gradient-to-r from-pink-500 to-rose-500 h-1.5 rounded-full transition-all duration-500 neon-bar-pink" style="width: ${hoursPercent}%"></div>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td class="px-4 py-4 text-center text-gray-300 font-medium">
+                            <div class="flex flex-col items-center gap-1 w-full max-w-[120px] mx-auto">
+                                <span class="text-xs font-semibold">${daysFormatted}</span>
+                                <div class="w-full bg-gray-800 rounded-full h-1.5 overflow-hidden border border-gray-700/40">
+                                    <div class="bg-gradient-to-r from-purple-500 to-indigo-500 h-1.5 rounded-full transition-all duration-500 neon-bar-purple" style="width: ${daysPercent}%"></div>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td class="px-4 py-4 text-center">
+                            <span class="inline-flex items-center text-[10px] px-2.5 py-1 rounded border font-semibold tracking-wide uppercase ${statusClass}">
+                                ${statusText}
+                            </span>
+                        </td>
+                        <td class="px-4 py-4 text-center font-semibold text-gray-400 tracking-wide truncate">${creator.bonus}</td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+
+            const total = dataToRender.length;
+            if (currentLang === 'en') {
+                document.getElementById('pagination-text').innerText = total > 0 ? `Showing ${startIndex + 1} to ${endIndex} of ${total} creators` : "No creators match your filters";
+            } else {
+                document.getElementById('pagination-text').innerText = total > 0 ? `عرض ${startIndex + 1} إلى ${endIndex} من أصل ${total} من صناع المحتوى` : "لا يوجد صناع محتوى يطابقون خيارات البحث الحالية";
+            }
+
+            document.getElementById('page-number').innerText = currentPage;
+            document.getElementById('prev-btn').disabled = currentPage === 1;
+            document.getElementById('next-btn').disabled = currentPage === Math.ceil(total / rowsPerPage) || total === 0;
+            
+            // تحديث الأيقونات
+            lucide.createIcons();
+        }
+
+        function changePage(direction) {
+            currentPage += direction;
+            renderTable();
+        }
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'ar' : 'en';
+            const htmlTag = document.getElementById('dashboard-html');
+            const data = translations[currentLang];
+
+            htmlTag.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
+
+            document.getElementById('welcome-text').childNodes[0].nodeValue = data.welcomeText + " ";
+            document.getElementById('welcome-sub').innerText = data.welcomeSub;
+            document.getElementById('table-title').innerText = data.tableTitle;
+            document.getElementById('table-sub').innerText = data.tableSub;
+            document.getElementById('export-btn').querySelector('span').innerText = data.exportBtn;
+            
+            document.getElementById('th-creator').innerText = data.thCreator;
+            document.getElementById('th-diamonds').innerText = data.thDiamonds;
+            document.getElementById('th-hours').innerText = data.thHours;
+            document.getElementById('th-days').innerText = data.thDays;
+            document.getElementById('th-eligibility').innerText = data.thEligibility;
+            document.getElementById('th-bonus').innerText = data.thBonus;
+            
+            document.getElementById('agency-title').innerText = data.agencyTitle;
+            document.getElementById('agency-sub1').innerText = data.agencySub1;
+            document.getElementById('agency-sub2').innerText = data.agencySub2;
+            
+            document.getElementById('tier1-title').innerText = data.tier1Title;
+            document.getElementById('tier1-desc').innerText = data.tier1Desc;
+            document.getElementById('tier2-title').innerText = data.tier2Title;
+            document.getElementById('tier2-desc').innerText = data.tier2Desc;
+            document.getElementById('tier3-title').innerText = data.tier3Title;
+            document.getElementById('tier3-desc').innerText = data.tier3Desc;
+            
+            document.getElementById('agency-footer').innerText = data.agencyFooter;
+            document.getElementById('banner-tag').innerText = data.bannerTag;
+            document.getElementById('banner-title').innerText = data.bannerTitle;
+            document.getElementById('banner-sub').innerHTML = data.bannerSub + `<span id="active-percent-text" class="font-semibold text-white">(${globalAgencyPercent || "-"})</span>`;
+            document.getElementById('banner-est').innerText = data.bannerEst;
+            document.getElementById('lang-btn-text').innerText = data.langBtn;
+            
+            document.getElementById('note-title').innerText = data.noteTitle;
+            document.getElementById('note-body').innerHTML = currentLang === 'ar' ? 'يصبح الوكيل مؤهلاً للحصول على المكافآت من المبدع بناءً على أيام نشاط المبدع وساعات البث المباشر. الحد الأدنى للمتطلبات لبدء احتساب المكافآت الفردية هو إكمال ما لا يقل عن <strong class="text-white">11 يومًا و 30 ساعة</strong> خلال الشهر الحالي.' : 'An agent becomes eligible for creators bonuses based on creators active days and live hours. The minimum requirement to unlock individual bonuses is completing at least <strong class="text-white">11 days and 30 hours</strong> within the active month.';
+
+            document.getElementById('payout-pref-title').innerText = data.payoutTitle;
+            document.getElementById('payout-pref-sub').innerText = data.payoutSub;
+            document.getElementById('cashout-btn-label').innerText = data.cashoutBtn;
+
+            document.getElementById('total-diamonds-title').innerText = data.totalDiamondsTitle;
+            document.getElementById('search-input').placeholder = data.searchPlaceholder;
+            
+            const selectFilter = document.getElementById('eligibility-filter');
+            selectFilter.options[0].text = data.filterAll;
+            selectFilter.options[1].text = data.filterEligible;
+            selectFilter.options[2].text = data.filterNotEligible;
+
+            updateAutomaticDateBadge();
+            renderTable();
+        }
+
+        function openPayoutModal() {
+            document.getElementById('payout-modal').classList.remove('hidden');
+            updateInputPlaceholder();
+        }
+
+        function closePayoutModal() {
+            document.getElementById('payout-modal').classList.add('hidden');
+        }
+
+        function toggleModalLanguage() {
+            modalLang = modalLang === 'en' ? 'ar' : 'en';
+            const mData = modalTranslations[modalLang];
+            
+            document.getElementById('modal-title').innerText = mData.title;
+            document.getElementById('modal-sub').innerText = mData.sub;
+            document.getElementById('lbl-method').innerText = mData.method;
+            document.getElementById('lbl-account').innerText = mData.account;
+            document.getElementById('lbl-warning').innerText = mData.warning;
+            document.getElementById('btn-submit-payout').querySelector('span').innerText = mData.submit;
+            document.getElementById('lbl-encrypted').innerText = mData.encrypted;
+            document.getElementById('modal-lang-btn').innerText = mData.langBtn;
+            
+            updateInputPlaceholder();
+        }
+
+        function updateInputPlaceholder() {
+            const method = document.getElementById('payout-method').value;
+            const input = document.getElementById('payout-account');
+            const icon = document.getElementById('input-icon');
+            
+            if (method === "Vodafone Cash") {
+                input.placeholder = modalLang === 'en' ? "Enter your Vodafone Cash number" : "أدخل رقم فودافون كاش الخاص بك";
+                icon.setAttribute('data-lucide', 'smartphone');
+            } else if (method === "InstaPay") {
+                input.placeholder = modalLang === 'en' ? "Enter your InstaPay IPA Address" : "أدخل عنوان أو رقم انستا باي الخاص بك";
+                icon.setAttribute('data-lucide', 'at-sign');
+            } else {
+                input.placeholder = modalLang === 'en' ? "Enter IBAN or Bank Account Details" : "أدخل رقم الحساب البنكي أو الآيبان الآمن";
+                icon.setAttribute('data-lucide', 'landmark');
+            }
+            lucide.createIcons();
+        }
+
+        async function submitPayoutRequest() {
+            const method = document.getElementById('payout-method').value;
+            const account = document.getElementById('payout-account').value.trim();
+            const submitBtn = document.getElementById('btn-submit-payout');
+
+            if (!account) {
+                alert(modalLang === 'en' ? "Please fill out your account information details first!" : "يرجى ملء بيانات تفاصيل الحساب أولاً قبل الإرسال!");
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.style.opacity = "0.6";
+            submitBtn.querySelector('span').innerText = modalLang === 'en' ? "Sending..." : "جاري الإرسال المأمن...";
+
+            try {
+                const payload = {
+                    action: "payout",
+                    agentRepresentative: targetCreators[0],
+                    paymentMethod: method,
+                    accountNumber: account
+                };
+
+                const response = await fetch(APPS_SCRIPT_URL, {
+                    method: "POST",
+                    mode: "no-cors", 
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+
+                alert(modalLang === 'en' ? "Your withdrawal information was submitted successfully!" : "تم إرسال واستلام بيانات السحب بنجاح وأمان!");
+                document.getElementById('payout-account').value = "";
+                closePayoutModal();
+            } catch (error) {
+                console.error("Payout Submission Error:", error);
+                alert("Failed to submit payout information.");
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.style.opacity = "1";
+                submitBtn.querySelector('span').innerText = modalTranslations[modalLang].submit;
+            }
+        }
+
+        updateAutomaticDateBadge();
+        fetchLiveSheetData();
+        lucide.createIcons();
+    </script>
+</body>
+</html>
