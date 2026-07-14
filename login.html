@@ -64,6 +64,7 @@
             font-size: 13px;
             z-index: 10;
             backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             transition: all 0.3s ease;
             text-decoration: none;
         }
@@ -86,6 +87,7 @@
             font-size: 13px;
             z-index: 10;
             backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             transition: all 0.3s ease;
             text-decoration: none;
             display: flex;
@@ -97,7 +99,6 @@
             box-shadow: 0 0 10px rgba(255, 107, 157, 0.3);
         }
 
-        /* دعم قلب الاتجاهات بشكل صحيح بدون تداخل */
         body[dir="rtl"] .lang-switch {
             right: auto;
             left: 25px;
@@ -259,17 +260,18 @@
             box-shadow: 0 6px 20px rgba(255, 107, 157, 0.45);
         }
 
-        .contact-admin {
+        .contact-admin, .agent-toggle-row {
             margin-top: 25px;
             font-size: 12px;
             color: var(--text-muted);
         }
-        .contact-admin a {
+        .contact-admin a, .agent-toggle-row span.toggle-link {
             color: var(--primary);
             text-decoration: none;
             font-weight: 600;
+            cursor: pointer;
         }
-        .contact-admin a:hover { text-decoration: underline; }
+        .contact-admin a:hover, .agent-toggle-row span.toggle-link:hover { text-decoration: underline; }
 
         .error { color: #ff4d4d; margin-top: 15px; font-size: 12px; min-height: 15px; font-weight: 500; }
         .success-msg { color: #00ffa2; margin-top: 15px; font-size: 12px; min-height: 15px; font-weight: 500; }
@@ -303,17 +305,15 @@
 
 <img src="images/loginback1.JPEG" alt="Background" class="full-screen-bg">
 
-<!-- زرار الـ Home (تم وضعه مرة واحدة في مكان صحيح) -->
-<a href="index.html" class="home-switch">
+<a href="dashboard.html" class="home-switch">
     <i class="fas fa-home"></i> <span id="homeText">Home</span>
 </a>
 
-<!-- زرار تغيير اللغة (مرة واحدة فقط لتجنب الجليتش) -->
 <button class="lang-switch" id="langBtn" onclick="toggleLanguage()">العربية</button>
 
 <div class="login-wrapper">
    <div class="top-header">
-    <a href="index.html" style="text-decoration: none; cursor: pointer;">
+    <a href="dashboard.html" style="text-decoration: none; cursor: pointer;">
         <img src="images/loginicon.PNG" alt="Stars Zone Logo">
     </a>
     <h1 id="brandName">Stars Zone Media</h1>
@@ -321,10 +321,10 @@
 </div>
 
     <div class="login-container">
-        <a href="index.html" class="portal-icon" style="text-decoration: none; display: block;">
+        <a href="dashboard.html" class="portal-icon" style="text-decoration: none; display: block;">
             <i class="fab fa-tiktok"></i>
         </a>
-        <h2>Creator <span>Portal</span></h2>
+        <h2 id="portalTitle">Creator <span>Portal</span></h2>
         <div class="subtitle" id="loginSubtitle">Stars Zone Media Dashboard</div>
         
         <div class="input-row">
@@ -348,7 +348,11 @@
         <button class="submit-btn" id="loginBtn" onclick="login()">Sign In</button>
         <div id="errorMessage" class="error"></div>
         
-        <div class="contact-admin" id="lblAdmin">Don't have an account? <a href="https://www.tiktok.com/@starszonemedia" target="_blank">Contact Admin</a></div>
+        <div class="agent-toggle-row" id="lblAgentToggle">
+            Are you an agent? <span class="toggle-link" onclick="togglePortalMode()">Login Here</span>
+        </div>
+
+        <div class="contact-admin" id="lblAdmin" style="margin-top: 15px;">Don't have an account? <a href="https://www.tiktok.com/@starszonemedia" target="_blank">Contact Admin</a></div>
     </div>
 
     <div class="footer-banner">
@@ -364,6 +368,8 @@
     const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     let currentLang = 'en';
+    let currentMode = 'creator';
+
     const translations = {
         en: {
             home: "Home",
@@ -374,7 +380,11 @@
             err: "Invalid email or password.", langBtn: "العربية",
             emailRequired: "Please enter your email address first",
             resetSuccess: "Password reset link has been sent to your email!",
-            resetError: "Error sending reset link. Please verify your email."
+            resetError: "Error sending reset link. Please verify your email.",
+            creatorTitle: "Creator <span>Portal</span>",
+            agentTitle: "Agent <span>Portal</span>",
+            toAgent: "Are you an agent? <span class='toggle-link' onclick='togglePortalMode()'>Login Here</span>",
+            toCreator: "Are you a creator? <span class='toggle-link' onclick='togglePortalMode()'>Login Here</span>"
         },
         ar: {
             home: "الصفحة الرئيسية",
@@ -385,9 +395,31 @@
             err: "بريد إلكتروني أو كلمة مرور خاطئة.", langBtn: "English",
             emailRequired: "الرجاء كتابة البريد الإلكتروني أولاً   ",
             resetSuccess: "تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني بنجاح!",
-            resetError: "حدث خطأ أثناء إرسال الرابط، يرجى التأكد من البريد الإلكتروني."
+            resetError: "حدث خطأ أثناء إرسال الرابط، يرجى التأكد من البريد الإلكتروني.",
+            creatorTitle: "بوابة <span>المبدعين</span>",
+            agentTitle: "بوابة <span>الوكلاء</span>",
+            toAgent: "هل أنت وكيل؟ <span class='toggle-link' onclick='togglePortalMode()'>سجل الدخول هنا</span>",
+            toCreator: "هل أنت منشئ محتوى؟ <span class='toggle-link' onclick='togglePortalMode()'>سجل الدخول هنا</span>"
         }
     };
+
+    function togglePortalMode() {
+        currentMode = currentMode === 'creator' ? 'agent' : 'creator';
+        updatePortalUI();
+    }
+
+    function updatePortalUI() {
+        const titleEl = document.getElementById('portalTitle');
+        const toggleEl = document.getElementById('lblAgentToggle');
+        
+        if (currentMode === 'agent') {
+            titleEl.innerHTML = translations[currentLang].agentTitle;
+            toggleEl.innerHTML = translations[currentLang].toCreator;
+        } else {
+            titleEl.innerHTML = translations[currentLang].creatorTitle;
+            toggleEl.innerHTML = translations[currentLang].toAgent;
+        }
+    }
 
     function toggleLanguage() {
         currentLang = currentLang === 'en' ? 'ar' : 'en';
@@ -404,6 +436,8 @@
         document.getElementById('ftPartner').innerText = translations[currentLang].partner;
         document.getElementById('ftEmpower').innerText = translations[currentLang].empower;
         document.getElementById('langBtn').innerText = translations[currentLang].langBtn;
+        
+        updatePortalUI();
     }
 
     function togglePasswordVisibility() {
@@ -471,7 +505,13 @@
             } else {
                 localStorage.removeItem('rememberedEmail');
             }
-            window.location.href = `dashboard.html?lang=${currentLang}`;
+            
+            // التوجيه الصحيح بناءً على أسماء الملفات الفعلية عندك في الفولدر
+            if (currentMode === 'agent') {
+                window.location.href = `agentdashboard.html?lang=${currentLang}`;
+            } else {
+                window.location.href = `dashboard.html?lang=${currentLang}`;
+            }
         }
     }
 
