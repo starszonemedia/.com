@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en" id="dashboard-html" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -384,7 +384,8 @@
             creatorTitle: "Creator <span>Portal</span>",
             agentTitle: "Agent <span>Portal</span>",
             toAgent: "Are you an agent? <span class='toggle-link' onclick='togglePortalMode()'>Login Here</span>",
-            toCreator: "Are you a creator? <span class='toggle-link' onclick='togglePortalMode()'>Login Here</span>"
+            toCreator: "Are you a creator? <span class='toggle-link' onclick='togglePortalMode()'>Login Here</span>",
+            roleMismatch: "Access Denied: Your account role does not match this portal selection."
         },
         ar: {
             home: "الصفحة الرئيسية",
@@ -393,13 +394,14 @@
             admin: "ليس لديك حساب؟ <a href='https://www.tiktok.com/@starszonemedia' target='_blank'>تواصل مع الإدارة</a>",
             partner: "شريك تيك توك لايف الرسمي", empower: "تمكين المبدعين في منطقة الشرق الأوسط",
             err: "بريد إلكتروني أو كلمة مرور خاطئة.", langBtn: "English",
-            emailRequired: "الرجاء كتابة البريد الإلكتروني أولاً   ",
+            emailRequired: "الرجاء كتابة البريد الإلكتروني أولاً    ",
             resetSuccess: "تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني بنجاح!",
             resetError: "حدث خطأ أثناء إرسال الرابط، يرجى التأكد من البريد الإلكتروني.",
             creatorTitle: "بوابة <span>المبدعين</span>",
             agentTitle: "بوابة <span>الوكلاء</span>",
             toAgent: "هل أنت وكيل؟ <span class='toggle-link' onclick='togglePortalMode()'>سجل الدخول هنا</span>",
-            toCreator: "هل أنت منشئ محتوى؟ <span class='toggle-link' onclick='togglePortalMode()'>سجل الدخول هنا</span>"
+            toCreator: "هل أنت منشئ محتوى؟ <span class='toggle-link' onclick='togglePortalMode()'>سجل الدخول هنا</span>",
+            roleMismatch: "خطأ في الصلاحية: دور حسابك الحالي لا يتطابق مع البوابة المختارة."
         }
     };
 
@@ -423,6 +425,7 @@
 
     function toggleLanguage() {
         currentLang = currentLang === 'en' ? 'ar' : 'en';
+        document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
         document.body.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
         
         document.getElementById('homeText').innerText = translations[currentLang].home;
@@ -493,25 +496,76 @@
         btn.innerText = currentLang === 'en' ? "Connecting..." : "جاري الاتصال...";
         btn.style.opacity = "0.7";
 
-        const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+        // 1. تسجيل الدخول الأساسي عبر الإيميل والباسورد
+        const { data: authData, error: authError } = await supabaseClient.auth.signInWithPassword({ email, password });
 
-        if (error) {
+        if (authError) {
             errorDiv.innerText = translations[currentLang].err;
             btn.innerText = translations[currentLang].btn;
             btn.style.opacity = "1";
-        } else {
+            return;
+        }
+
+        try {
+            const user = authData.user;
+
+            // 2. جلب الـ Role المخزن بداخل جدول الـ user_profiles الجديد الخاص بنا
+            const { data: profileData, error: profileError } = await supabaseClient
+                .from('user_profiles')
+                .select('role')
+                .eq('id', user.id)
+                .single();
+
+            // فحص وجود البروفايل والدور
+            if (profileError || !profileData) {
+                errorDiv.innerText = currentLang === 'en' ? "Error fetching account configuration permissions." : "حدث خطأ أثناء جلب صلاحيات الحساب المأمن.";
+                btn.innerText = translations[currentLang].btn;
+                btn.style.opacity = "1";
+                await supabaseClient.auth.signOut();
+                return;
+            }
+
+            // 3. التحقق الذكي من تطابق وضع بوابة الدخول المختارة مع حقيقة دور الحساب الفعلي
+            const dbRole = profileData.role; // ستكون إما 'Agent' أو 'Creator'
+            
+            if (currentMode === 'agent' && dbRole !== 'Agent') {
+                errorDiv.innerText = translations[currentLang].roleMismatch;
+                btn.innerText = translations[currentLang].btn;
+                btn.style.opacity = "1";
+                await supabaseClient.auth.signOut();
+                return;
+            }
+            
+            if (currentMode === 'creator' && dbRole !== 'Creator') {
+                errorDiv.innerText = translations[currentLang].roleMismatch;
+                btn.innerText = translations[currentLang].btn;
+                btn.style.opacity = "1";
+                await supabaseClient.auth.signOut();
+                return;
+            }
+
+            // 4. حفظ البيانات بأمان لحقن الحماية والـ Middleware داخل الجداول واللوحات
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('userRole', dbRole);
+
             if (rememberMe) {
                 localStorage.setItem('rememberedEmail', email);
             } else {
                 localStorage.removeItem('rememberedEmail');
             }
             
-            // التوجيه الصحيح بناءً على أسماء الملفات الفعلية عندك في الفولدر
-            if (currentMode === 'agent') {
+            // 5. التوجيه الفوري والآمن للمكان الصحيح والمطابق
+            if (dbRole === 'Agent') {
                 window.location.href = `agentdashboard.html?lang=${currentLang}`;
             } else {
                 window.location.href = `dashboard.html?lang=${currentLang}`;
             }
+
+        } catch (globalErr) {
+            console.error("Global Login Role Handler Exception: ", globalErr);
+            errorDiv.innerText = "Internal secure verification error occurred.";
+            btn.innerText = translations[currentLang].btn;
+            btn.style.opacity = "1";
         }
     }
 
