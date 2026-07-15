@@ -719,7 +719,7 @@ body {
 }
 #sound-toggle-btn {
     position: absolute !important;
-    bottom: 30px !important;
+    bottom: 80px !important; /* رفعت الزرار لفوق شوية عشان يكون في متناول اليد على الموبايل */
     left: 50% !important;
     transform: translateX(-50%) !important;
     background: rgba(255, 255, 255, 0.08) !important;
