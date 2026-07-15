@@ -86,7 +86,6 @@ body {
     align-items: center;
 }
 
-/* فلتر كحلي متوهج ذكي لحماية وإبراز لوجو تيك توك */
 /* Premium Animated Logo */
 .nav-logo img {
     height: 42px;
@@ -175,7 +174,6 @@ body {
     align-items: center;
 }
 
-/* تعديل محاذاة ومسافات قسم البداية (Hero) */
 .hero-container {
     display: flex;
     align-items: center;
@@ -397,7 +395,7 @@ body {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    min-height: 340px; /* طول موحد مناسب للكروت بعد إضافة الزر */
+    min-height: 340px;
 }
 
 .icon-box {
@@ -613,6 +611,175 @@ body {
     font-size: 0.9rem;
 }
 
+/* ==========================================================================
+   GLOBAL SPLASH SCREEN STYLING (Fixed For All Screens)
+   ========================================================================== */
+#splash-screen {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background-color: #090a0c  !important; /* درجة الرمادي الداكنة الفخمة من خلفية لوجو الشركة */
+    z-index: 9999999 !important;
+    overflow: hidden !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    transition: opacity 0.5s ease-out, visibility 0.5s ease-out !important;
+}
+
+.splash-content {
+    position: relative !important;
+    width: 100% !important;
+    height: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    background-color: #0c0c0e !important; /* توحيد الخلفية تماماً */
+}
+
+#splash-video {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important; /* يضمن ظهور كادر الفيديو بالكامل بدون أي قص للأطراف */
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    background-color: #0c0c0e !important;
+}
+
+#skip-splash {
+    position: absolute !important;
+    bottom: 40px !important;
+    right: 40px !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    padding: 12px 24px !important;
+    border-radius: 30px !important;
+    cursor: pointer !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    letter-spacing: 1px !important;
+    text-decoration: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    z-index: 10000000 !important;
+    transition: all 0.3s ease !important;
+}
+
+#skip-splash:hover {
+    background: #ffffff !important;
+    color: #000000 !important;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.6) !important;
+    transform: translateY(-2px) !important;
+}
+
+#splash-screen.fade-out {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+/* ==========================================================================
+   Services Video Buttons & Modal System (Fixed & Enhanced)
+   ========================================================================== */
+
+/* تنسيق زر Watch Video الفاخر */
+.watch-btn {
+    background: linear-gradient(135deg, var(--primary-glow), var(--secondary-glow));
+    color: var(--text-pure);
+    border: none;
+    padding: 12px 24px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    font-family: var(--font-body);
+    border-radius: 30px;
+    cursor: pointer;
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition-smooth);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.watch-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 242, 254, 0.4);
+    filter: brightness(1.1);
+}
+
+.watch-btn i {
+    font-size: 1.1rem;
+}
+
+.video-modal {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.modal-content {
+    position: relative;
+    background-color: #111115;
+    padding: 15px;
+    border-radius: 24px;
+    width: 100%;
+    max-width: 420px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 0 40px rgba(0, 242, 254, 0.25);
+}
+
+.close-modal {
+    position: absolute;
+    right: -15px;
+    top: -45px;
+    color: #fff;
+    font-size: 38px;
+    font-weight: 300;
+    cursor: pointer;
+    z-index: 10010;
+    transition: var(--transition-smooth);
+}
+
+.close-modal:hover {
+    color: var(--primary-glow);
+    transform: scale(1.1);
+}
+
+.video-container {
+    width: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #000;
+    aspect-ratio: 9 / 16;
+}
+
+.video-container video {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
 /* Fully Fluid Responsive Design */
 @media (max-width: 768px) {
     .hero {
@@ -693,99 +860,6 @@ body {
     }
 }
 
-/* ==========================================================================
-   Services Video Buttons & Modal System (Fixed & Enhanced)
-   ========================================================================== */
-
-/* تنسيق زر Watch Video الفاخر */
-.watch-btn {
-    background: linear-gradient(135deg, var(--primary-glow), var(--secondary-glow));
-    color: var(--text-pure);
-    border: none;
-    padding: 12px 24px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    font-family: var(--font-body);
-    border-radius: 30px;
-    cursor: pointer;
-    margin-top: auto; /* يضمن بقاء الأزرار في محاذاة واحدة أسفل الكارت */
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    transition: var(--transition-smooth);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-.watch-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(0, 242, 254, 0.4);
-    filter: brightness(1.1);
-}
-
-.watch-btn i {
-    font-size: 1.1rem;
-}
-
-/* نافذة البوب اب (Modal) خارج الميديا كويري لتعمل بكفاءة على جميع الشاشات */
-.video-modal {
-    display: none;
-    position: fixed;
-    z-index: 10000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-}
-
-.modal-content {
-    position: relative;
-    background-color: #111115;
-    padding: 15px;
-    border-radius: 24px;
-    width: 100%;
-    max-width: 420px; /* حجم مثالي ومريح ومخصص لعرض فيديوهات تيك توك الطولية */
-    border: 1px solid var(--border-color);
-    box-shadow: 0 0 40px rgba(0, 242, 254, 0.25);
-}
-
-.close-modal {
-    position: absolute;
-    right: -15px;
-    top: -45px;
-    color: #fff;
-    font-size: 38px;
-    font-weight: 300;
-    cursor: pointer;
-    z-index: 10001;
-    transition: var(--transition-smooth);
-}
-
-.close-modal:hover {
-    color: var(--primary-glow);
-    transform: scale(1.1);
-}
-
-.video-container {
-    width: 100%;
-    border-radius: 16px;
-    overflow: hidden;
-    background: #000;
-    aspect-ratio: 9 / 16; /* أبعاد شاشات الموبايل (TikTok Vertical Style) */
-}
-
-.video-container video {
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: cover; /* ملء كامل المساحة بشكل جمالي سلس */
-}
-
 /* توافق إضافي للهواتف الصغيرة جدًا */
 @media (max-width: 480px) {
     .modal-content {
@@ -797,4 +871,5 @@ body {
         top: -40px;
         font-size: 32px;
     }
+    
 }
