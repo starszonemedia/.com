@@ -96,124 +96,88 @@ if (joinForm) {
     });
 }
 
-
-
-// 5. --- كود الـ Service Pop-up المطور والـ Fix الكامل للصوت والنهاية ---
 // 5. Service Video Modal
-
 const watchButtons = document.querySelectorAll('.watch-btn');
 const modal = document.getElementById('video-modal');
 const video = document.getElementById('service-video');
 const closeModal = document.querySelector('.close-modal');
 
 watchButtons.forEach(button => {
-
     button.addEventListener('click', (e) => {
-
         e.stopPropagation();
-
         const videoSrc = button.dataset.video;
-
         if (videoSrc && modal && video) {
-
             video.pause();
-
             video.currentTime = 0;
-
             video.src = videoSrc;
-
             video.load();
-
             video.muted = false;
-
             video.volume = 1;
-
             modal.style.display = "flex";
-
             video.play().catch(err => console.log(err));
-
         }
-
     });
-
 });
 
 if (video) {
-
     video.addEventListener("ended", closeModalFunction);
-
 }
 
 function closeModalFunction() {
-
     modal.style.display = "none";
-
     video.pause();
-
     video.currentTime = 0;
-
     video.removeAttribute("src");
-
     video.load();
-
 }
 
 if (closeModal) {
-
     closeModal.addEventListener("click", closeModalFunction);
-
 }
 
 window.addEventListener("click", function(e){
-
     if(e.target === modal){
-
         closeModalFunction();
-
     }
-
 });
 
-
-
 // ================= Splash Screen =================
-
 document.addEventListener("DOMContentLoaded", function () {
-
     const splashScreen = document.getElementById("splash-screen");
-
     const splashVideo = document.getElementById("splash-video");
-
+    const soundBtn = document.getElementById("sound-toggle-btn");
 
     if(!splashScreen || !splashVideo) return;
 
     if(sessionStorage.getItem("splashScreenShown")){
-
         splashScreen.remove();
-
         return;
-
     }
 
     splashVideo.loop = false;
-
     splashVideo.play().catch(()=>{});
+
+    // التحكم في زر الصوت للفيديو الترحيبي
+   // استبدل جزء الـ soundBtn في ملف الـ JS بالآتي:
+if (soundBtn) {
+    soundBtn.addEventListener("click", () => {
+        if (splashVideo.muted) {
+            splashVideo.muted = false;
+            soundBtn.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+        } else {
+            splashVideo.muted = true;
+            soundBtn.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
+        }
+    });
+}
 
     splashVideo.addEventListener("ended", hideSplash);
 
-
     function hideSplash(){
-
         splashScreen.classList.add("fade-out");
-
         sessionStorage.setItem("splashScreenShown","true");
-
         setTimeout(()=>{
-
             splashScreen.remove();
-
         },500);
-
     }
-
 });
