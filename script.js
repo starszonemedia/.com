@@ -180,4 +180,15 @@ if (soundBtn) {
             splashScreen.remove();
         },500);
     }
+    document.addEventListener('click', function() {
+    const splashVideo = document.getElementById("splash-video");
+    const soundBtn = document.getElementById("sound-toggle-btn");
+    
+    if (splashVideo && splashVideo.muted) {
+        splashVideo.muted = false;
+        if (soundBtn) {
+            soundBtn.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+        }
+    }
+}, { once: true }); // بتشتغل أول ضغطة بس وتتقفل لوحدها
 });
