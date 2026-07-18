@@ -1074,19 +1074,25 @@ protectCreatorPage();
             globalLiveHours = parseFloat(currentRawHoursText.replace(/[^0-9.]/g, '')) || 0;
             globalLiveDays = parseFloat(currentRawDaysText.replace(/[^0-9.]/g, '')) || 0;
             // دالة داخلية سريعة لتحويل أي رقم فيه K أو k إلى القيمة الحقيقية بالأصفار
-            function parseDiamondsText(rawText) {
-                if (!rawText) return 0;
-                let text = String(rawText).trim().toLowerCase();
-                
-                // لو النص يحتوي على حرف k، نضرب الرقم الصافي في 1000
-                if (text.includes('k')) {
-                    let numPart = parseFloat(text.replace(/[^0-9.]/g, '')) || 0;
-                    return numPart * 1000;
-                }
-                
-                // لو رقم عادي بدون k، نمسح الفواصل ونرجعه طبيعي
-                return parseFloat(text.replace(/[^0-9.]/g, '')) || 0;
-            }
+           function parseDiamondsText(rawText) {
+    if (!rawText) return 0;
+    let text = String(rawText).trim().toLowerCase();
+    
+    // لو النص يحتوي على حرف m، نضرب الرقم الصافي في مليون
+    if (text.includes('m')) {
+        let numPart = parseFloat(text.replace(/[^0-9.]/g, '')) || 0;
+        return numPart * 1000000;
+    }
+
+    // لو النص يحتوي على حرف k، نضرب الرقم الصافي في 1000
+    if (text.includes('k')) {
+        let numPart = parseFloat(text.replace(/[^0-9.]/g, '')) || 0;
+        return numPart * 1000;
+    }
+    
+    // لو رقم عادي بدون k أو m، نمسح الفواصل ونرجعه طبيعي
+    return parseFloat(text.replace(/[^0-9.]/g, '')) || 0;
+}
 
             // فلترة النصوص في الخلفية واستخراج الأرقام بدقة (الآن تدعم الـ K)
             globalLiveHours = parseFloat(currentRawHoursText.replace(/[^0-9.]/g, '')) || 0;
