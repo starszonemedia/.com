@@ -141,54 +141,126 @@ window.addEventListener("click", function(e){
     }
 });
 
-// ================= Splash Screen =================
+// ================= Luxury Preloader (6s), Ambient Audio, Light/Dark Theme & Back-to-Top =================
 document.addEventListener("DOMContentLoaded", function () {
-    const splashScreen = document.getElementById("splash-screen");
-    const splashVideo = document.getElementById("splash-video");
+    const preloader = document.getElementById("luxury-preloader");
+    const progressFill = document.getElementById("progress-fill");
+    const progressCounter = document.getElementById("progress-counter");
+    const bgSound = document.getElementById("bg-ambient-sound");
     const soundBtn = document.getElementById("sound-toggle-btn");
+    const themeModeBtn = document.getElementById("theme-mode-btn");
+    const backToTopBtn = document.getElementById("back-to-top-btn");
 
-    if(!splashScreen || !splashVideo) return;
+    // 1. شاشة التحميل (6 ثوانٍ بدقة تامة)
+    const startTime = Date.now();
+    const duration = 1200; 
 
-    if(sessionStorage.getItem("splashScreenShown")){
-        splashScreen.remove();
-        return;
-    }
+    const preloaderInterval = setInterval(() => {
+        const elapsed = Date.now() - startTime;
+        let progress = Math.min(Math.floor((elapsed / duration) * 100), 100);
 
-    splashVideo.loop = false;
-    splashVideo.play().catch(()=>{});
+        if (progressFill) progressFill.style.width = progress + "%";
+        if (progressCounter) progressCounter.innerText = progress + "%";
 
-    // التحكم في زر الصوت للفيديو الترحيبي
-   // استبدل جزء الـ soundBtn في ملف الـ JS بالآتي:
-if (soundBtn) {
-    soundBtn.addEventListener("click", () => {
-        if (splashVideo.muted) {
-            splashVideo.muted = false;
-            soundBtn.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
-        } else {
-            splashVideo.muted = true;
-            soundBtn.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
+        if (progress >= 100) {
+            clearInterval(preloaderInterval);
+            if (preloader) {
+                preloader.classList.add("fade-out");
+                setTimeout(() => {
+                    preloader.remove();
+                }, 600);
+            }
         }
-    });
+    }, 50);
+if (bgSound) {
+    bgSound.volume = 0;
+
+    bgSound.play().then(() => {
+        let volume = 0;
+
+        const fade = setInterval(() => {
+            volume += 0.01;
+            bgSound.volume = Math.min(volume, 0.08); // أقصى صوت 8%
+
+            if (volume >= 0.08) {
+                clearInterval(fade);
+            }
+        }, 120);
+
+    }).catch(() => {});
 }
+    // 2. إدارة الصوت مع ضمان التفعيل المباشر
+    if (bgSound && soundBtn) {
+        bgSound.volume = 0.4;
 
-    splashVideo.addEventListener("ended", hideSplash);
+        soundBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            if (bgSound.paused) {
+                bgSound.play().then(() => {
+                    soundBtn.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+                }).catch(err => {
+                    console.log("Audio play error:", err);
+                });
+            } else {
+                bgSound.pause();
+                soundBtn.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
+            }
+        });
 
-    function hideSplash(){
-        splashScreen.classList.add("fade-out");
-        sessionStorage.setItem("splashScreenShown","true");
-        setTimeout(()=>{
-            splashScreen.remove();
-        },500);
+        const unlockAudio = () => {
+            if (bgSound.paused) {
+                bgSound.play().then(() => {
+                    soundBtn.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+                    window.removeEventListener('click', unlockAudio);
+                    window.removeEventListener('touchstart', unlockAudio);
+                }).catch(() => {});
+            }
+        };
+        window.addEventListener('click', unlockAudio, { once: true });
+        window.addEventListener('touchstart', unlockAudio, { once: true });
     }
-    document.addEventListener('click', function() {
-    const splashVideo = document.getElementById("splash-video");
-    const soundBtn = document.getElementById("sound-toggle-btn");
-    
-    if (splashVideo && splashVideo.muted) {
-        splashVideo.muted = false;
-        if (soundBtn) {
-            soundBtn.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+
+    // 3. زر البرق (Dark / Bright Light Mode Switcher)
+    if (themeModeBtn) {
+        const currentMode = localStorage.getItem("szm_theme_mode");
+        if (currentMode === "light") {
+            document.body.classList.add("light-mode");
+            themeModeBtn.innerHTML = '<i class="fa-solid fa-moon"></i>';
         }
+
+        themeModeBtn.addEventListener("click", () => {
+            document.body.classList.toggle("light-mode");
+            
+            if (document.body.classList.contains("light-mode")) {
+                localStorage.setItem("szm_theme_mode", "light");
+                themeModeBtn.innerHTML = '<i class="fa-solid fa-moon"></i>';
+            } else {
+                localStorage.setItem("szm_theme_mode", "dark");
+                themeModeBtn.innerHTML = '<i class="fa-solid fa-bolt"></i>';
+            }
+
+            themeModeBtn.style.transform = "scale(1.15) rotate(15deg)";
+            setTimeout(() => {
+                themeModeBtn.style.transform = "scale(1) rotate(0deg)";
+            }, 300);
+        });
     }
-}, { once: true }); // بتشتغل أول ضغطة بس وتتقفل لوحدها
+
+    // 4. زر العودة لأعلى الصفحة (Back to Top)
+    if (backToTopBtn) {
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 400) {
+                backToTopBtn.classList.add("show");
+            } else {
+                backToTopBtn.classList.remove("show");
+            }
+        });
+
+        backToTopBtn.addEventListener("click", () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
 });
