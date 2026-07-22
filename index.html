@@ -10,13 +10,14 @@
     <meta name="robots" content="index, follow">
     <meta name="language" content="English">
     <meta property="og:type" content="website">
+    <meta property="og:title" content="Stars Zone Media | TikTok Creator Network Agency">
     <meta property="og:description" content="Join Stars Zone Media and grow your TikTok Live presence">
     <meta property="og:image" content="https://media.licdn.com/dms/image/v2/D4D03AQFKP42dPjF2Mw/profile-displayphoto-shrink_200_200/B4DZdZeT1qGUAY-/0/1749552808247?e=2147483647&v=beta&t=SfHC8u0kyc8D03xx17aTocbpOFfZE3t_4zu2LM-YdHc">
+    <meta property="og:url" content="https://www.starszonemedia.com">
 
     <title>Stars Zone Media | TikTok Creator Network Agency</title>
 
-    <link rel="icon" href="images/loginicon.PNG">
-    <link rel="preload" as="image" href="images/icon-old.webp" fetchpriority="high">
+    <link rel="icon" href="images/webicon.webp">
     <link rel="stylesheet" href="styles.css">
 
     <!-- Google Fonts -->
@@ -43,319 +44,325 @@
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     </noscript>
-
-    <link rel="icon" href="images/webicon.webp">
 </head>
 <body>
-<!-- الواجهة الترحيبية (Splash Screen) -->
-<div id="splash-screen">
-    <div class="splash-content">
 
-        <video id="splash-video" autoplay muted playsinline preload="auto">
-            <source src="videos/welcome.mp4" type="video/mp4">
-        </video>
-        <button id="sound-toggle-btn" class="sound-btn">
-            <i class="fa-solid fa-volume-xmark"></i>
-        </button>
+<audio id="bg-ambient-sound" loop preload="auto">
+    <source src="music/home.mp3" type="audio/mpeg">
+</audio>
+
+<!-- أزرار التحكم العلوية الثابتة (الصوت + زر البرق للوضع المضيء والمظلم) -->
+<div class="global-controls-wrapper">
+    <button id="sound-toggle-btn" class="global-control-btn" title="Toggle Sound">
+        <i class="fa-solid fa-volume-xmark"></i>
+    </button>
+    <button id="theme-mode-btn" class="global-control-btn" title="Toggle Bright/Dark Mode">
+        <i class="fa-solid fa-bolt"></i>
+    </button>
+</div>
+
+<!-- زر السهم العائم للصعود لأول الصفحة -->
+<button id="back-to-top-btn" class="back-to-top-btn" title="Back to Top">
+    <i class="fa-solid fa-arrow-up"></i>
+</button>
+
+<!-- 🌟 شاشة التحميل الفاخرة (6 ثوانٍ كاملة) 🌟 -->
+<div id="luxury-preloader">
+    <div class="preloader-content">
+        <div class="brand-logo-container">
+            <div class="glow-ring"></div>
+            <img src="images/tiklogo.webp" alt="Stars Zone Media" class="preloader-logo">
+        </div>
+        
+        <h2 class="preloader-title">STARS ZONE <span class="gradient-text">MEDIA</span></h2>
+        <p class="preloader-tagline">Where Creativity Meets Results</p>
+        
+        <div class="progress-box">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <span class="progress-counter" id="progress-counter">0%</span>
+        </div>
     </div>
 </div>
-    <div class="bg-glow glow-1"></div>
-    <div class="bg-glow glow-2"></div>
 
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <img src="images/tiklogo.webp" alt="Stars Zone Media Logo" loading="eager">
-            </div>
-            <button class="menu-toggle" aria-label="Toggle navigation">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </button>
-            <ul class="nav-menu">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#creators">Creators</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#feedback">Feedback</a></li>
-                <li><a href="#join">Join Us</a></li>
-                <li><a href="login.html" class="creator-login-btn"> Login</a></li>
-            </ul>
+<div class="bg-glow glow-1"></div>
+<div class="bg-glow glow-2"></div>
+
+<nav class="navbar">
+    <div class="nav-container">
+        <div class="nav-logo">
+            <img src="images/tiklogo.webp" alt="Stars Zone Media Logo" loading="eager">
         </div>
-        <div class="menu-overlay"></div>
-    </nav>
+        <button class="menu-toggle" aria-label="Toggle navigation">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+        <ul class="nav-menu">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#creators">Creators</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#feedback">Feedback</a></li>
+            <li><a href="#join">Join Us</a></li>
+            <li><a href="login.html" class="creator-login-btn">Creators Login</a></li>
+        </ul>
+    </div>
+    <div class="menu-overlay"></div>
+</nav>
 
-    <section id="home" class="hero">
-        <div class="hero-container">
-            <div class="hero-content">
-                <div class="hero-badge">💎 Premium TikTok Live Network</div>
-                <h1>Stars Zone Media:<br>Where Creativity Meets <span class="gradient-text">Results.</span></h1>
-                <p>Your talent deserves to be seen. Stars Zone Media is the premium space where creators grow faster, earn smarter, and go further on TikTok Live. Your success starts here!</p>
-                <div class="hero-button">
-                    <a href="https://www.tiktok.com/tcn/scout_creators?use_spark=1&agency_scout_source=qr_code_leads&ShareLinkID=7499157794223770423" class="cta-button" target="_blank">Get Started <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-                </div>
-            </div>
-            <div class="hero-image">
-                <a href="https://www.tiktok.com/@starszonemedia"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   title="Visit @starszonemedia's TikTok Profile">
-                    <div class="image-wrapper">
-                        <img src="images/icon-old.webp"
-                             alt="SZM Logo"
-                             loading="eager"
-                             fetchpriority="high"
-                             decoding="async"
-                             width="280"
-                             height="280">
-                    </div>
-                </a>
+<section id="home" class="hero">
+    <div class="hero-container">
+        <div class="hero-content">
+            <div class="hero-badge">💎 Premium TikTok Live Network</div>
+            <h1>Stars Zone Media:<br>Where Creativity Meets <span class="gradient-text">Results.</span></h1>
+            <p>Your talent deserves to be seen. Stars Zone Media is the premium space where creators grow faster, earn smarter, and go further on TikTok Live. Your success starts here!</p>
+            <div class="hero-button">
+                <a href="https://www.tiktok.com/tcn/scout_creators?use_spark=1&agency_scout_source=qr_code_leads&ShareLinkID=7499157794223770423" class="cta-button" target="_blank">Get Started <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
             </div>
         </div>
-    </section>
-
-    <section id="creators" class="section creators-section">
-        <div class="container">
-            <h2 class="section-title">Our Elite Creators</h2>
-            <p class="section-subtitle">Meet the stars shaping TikTok trends.</p>
-            <div class="creators-grid">
-                <div class="creator-card">
-                    <span class="card-badge">The One and Only 🎮</span>
-                    <div class="creator-img-frame">
-                        <a href="https://www.tiktok.com/@sa3dollaa" target="_blank" rel="noopener noreferrer">
-                            <img src="images/sa3dola.webp" alt="@sa3dollaa" loading="lazy">
-                        </a>
-                    </div>
-                    <h3>@sa3dollaa</h3>
-                    <p class="creator-bio">Gaming Royalty | 2M+ Followers On Platforms</p>
+        <div class="hero-image">
+            <a href="https://www.tiktok.com/@starszonemedia" target="_blank" rel="noopener noreferrer" title="Visit @starszonemedia's TikTok Profile">
+                <div class="image-wrapper">
+                    <img src="images/icon-old.webp" alt="SZM Logo" loading="eager" decoding="async" width="280" height="280">
                 </div>
-                
-                <div class="creator-card">
-                    <span class="card-badge">The Face of Female Gaming 👑</span>
-                    <div class="creator-img-frame">
-                        <a href="https://www.tiktok.com/@rimastars_98" target="_blank" rel="noopener noreferrer">
-                            <img src="images/rima.webp" alt="@rimastars_98" loading="lazy">
-                        </a>
-                    </div>
-                    <h3>@rimastars_98</h3>
-                    <p class="creator-bio">Gaming creator and esports caster, recognized as one of the first female pioneers in the regional esports community.</p>
-                </div>
-
-                <div class="creator-card">
-                    <span class="card-badge">Cinematic Vision 🎬</span>
-                    <div class="creator-img-frame">
-                        <a href="https://www.tiktok.com/@haidysheriff" target="_blank" rel="noopener noreferrer">
-                            <img src="images/haidy.webp" alt="@haidysheriff" loading="lazy">
-                        </a>
-                    </div>
-                    <h3>@haidysheriff</h3>
-                    <p class="creator-bio">A passionate filmmaker and Assistant Director who contributed to the iconic Egyptian comedy film “Seko Seko.”</p>
-                </div>
-
-                <div class="creator-card">
-                    <span class="card-badge">The Music Diva 🎤</span>
-                    <div class="creator-img-frame">
-                        <a href="https://www.tiktok.com/@malaykamusic" target="_blank" rel="noopener noreferrer">
-                            <img src="images/malayka.webp" alt="@malaykamusic" loading="lazy">
-                        </a>
-                    </div>
-                    <h3>@malaykamusic</h3>
-                    <p class="creator-bio">Singing Royalty | The Voice Arabia S5</p>
-                </div>
-
-                <div class="creator-card">
-                    <span class="card-badge">Empress of PK 💎</span>
-                    <div class="creator-img-frame">
-                        <a href="https://www.tiktok.com/@hams.ashraff" target="_blank" rel="noopener noreferrer">
-                            <img src="images/hams.webp" alt="@hams.ashraff" loading="lazy">
-                        </a>
-                    </div>
-                    <h3>@hams.ashraff</h3>
-                    <p class="creator-bio">Royalty of PK Battles | Beauty Icon | Entertainment</p>
-                </div>
-
-                <div class="creator-card">
-                    <span class="card-badge">The Glam Queen 💅</span>
-                    <div class="creator-img-frame">
-                        <a href="https://www.tiktok.com/@salma_salama78" target="_blank" rel="noopener noreferrer">
-                            <img src="images/salma.webp" alt="@salma_salama78" loading="lazy">
-                        </a>
-                    </div>
-                    <h3>@salma_salama78</h3>
-                    <p class="creator-bio">A beauty and lifestyle creator known for her authentic Khaleeji dialect and elegant fashion sense.</p>
-                </div>
-            </div>
+            </a>
         </div>
-    </section>
+    </div>
+</section>
 
-  
-  <section id="services" class="section services-section">
-        <div class="container">
-            <h2 class="section-title">Our Services</h2>
-            <p class="section-subtitle">Grow, Engage, Thrive — Agency Backed 🌱</p>
-            <div class="services-grid">
-                <!-- الخدمة 1 -->
-                <div class="service-card">
-                    <div class="icon-box"><i class="fas fa-chart-line"></i></div>
-                    <h3>5%–10% Revenue Growth</h3>
-                    <p>Boost your TikTok Live income by up to 10% as a monthly bonus when you hit your diamond target.</p>
-                    <button class="watch-btn" data-video="videos/bonus.mp4"><i class="fas fa-play-circle"></i> Watch Video</button>
+<section id="creators" class="section creators-section">
+    <div class="container">
+        <h2 class="section-title">Our Elite Creators</h2>
+        <p class="section-subtitle">Meet the stars shaping TikTok trends.</p>
+        <div class="creators-grid">
+            <div class="creator-card">
+                <span class="card-badge">The One and Only 🎮</span>
+                <div class="creator-img-frame">
+                    <a href="https://www.tiktok.com/@sa3dollaa" target="_blank" rel="noopener noreferrer">
+                        <img src="images/sa3dola.webp" alt="@sa3dollaa" loading="lazy">
+                    </a>
                 </div>
-                <!-- الخدمة 2 -->
-                <div class="service-card">
-                    <div class="icon-box"><i class="fas fa-chalkboard-teacher"></i></div>
-                    <h3>Live Coaching & Training</h3>
-                    <p>Receive expert, one-on-one guidance to refine your on-camera confidence and audience interaction.</p>
-                    <button class="watch-btn" data-video="videos/train.mp4"><i class="fas fa-play-circle"></i> Watch Video</button>
-                </div>
-                <!-- الخدمة 3 -->
-                <div class="service-card">
-                    <div class="icon-box"><i class="fas fa-rocket"></i></div>
-                    <h3>Monetization & Strategy</h3>
-                    <p>We build a personalized roadmap to help you increase engagement and scale your earnings.</p>
-                    <button class="watch-btn" data-video="videos/mns.mp4"><i class="fas fa-play-circle"></i> Watch Video</button>
-                </div>
-                <!-- الخدمة 4 -->
-                <div class="service-card">
-                    <div class="icon-box"><i class="fas fa-chart-bar"></i></div>
-                    <h3>Analytics Reporting</h3>
-                    <p>Gain access to detailed reports that track your progress and identify improvement opportunities.</p>
-                    <button class="watch-btn" data-video="videos/analytics.mp4"><i class="fas fa-play-circle"></i> Watch Video</button>
-                </div>
-                <!-- الخدمة 5 -->
-                <div class="service-card">
-                    <div class="icon-box"><i class="fas fa-clock"></i></div>
-                    <h3>24/7 Fast Support</h3>
-                    <p>Enjoy peace of mind with our around-the-clock support team ready to solve issues anytime.</p>
-                    <button class="watch-btn" data-video="videos/support.mp4"><i class="fas fa-play-circle"></i> Watch Video</button>
-                </div>
-                <!-- الخدمة 6 -->
-                <div class="service-card">
-                    <div class="icon-box"><i class="fas fa-laptop-code"></i></div>
-                    <h3>PC Live Apps Workshops</h3>
-                    <p>Interactive sessions to help you master TikTok’s PC live-streaming tools for professional broadcasts.</p>
-                    <button class="watch-btn" data-video="videos/obs.mp4"><i class="fas fa-play-circle"></i> Watch Video</button>
-                </div>
-                <!-- الخدمة 7 -->
-                <div class="service-card">
-                    <div class="icon-box"><i class="fas fa-bell"></i></div>
-                    <h3>Engagement Tools</h3>
-                    <p>Boost interaction with custom alerts and pop-ups designed to keep your live sessions lively.</p>
-                    <button class="watch-btn" data-video="videos/boost.mp4"><i class="fas fa-play-circle"></i> Watch Video</button>
-                </div>
-                <!-- الخدمة 8 -->
-                <div class="service-card">
-                    <div class="icon-box"><i class="fas fa-check-circle"></i></div>
-                    <h3>Verification Assistance</h3>
-                    <p>We handle the technical details helping you meet all TikTok advanced features requirements.</p>
-                    <button class="watch-btn" data-video="videos/verify.mp4"><i class="fas fa-play-circle"></i> Watch Video</button>
-                </div>
-                <!-- الخدمة 9 -->
-                <div class="service-card">
-                    <div class="icon-box"><i class="fas fa-unlock"></i></div>
-                    <h3>Ban & Restriction Removal</h3>
-                    <p>Our team assists in reviewing, appealing, and restoring your account through direct TikTok contact.</p>
-                    <button class="watch-btn" data-video="videos/bans.mp4"><i class="fas fa-play-circle"></i> Watch Video</button>
-                </div>
-                <!-- الخدمة 10 -->
-                <div class="service-card">
-                    <div class="icon-box"><i class="fas fa-trophy"></i></div>
-                    <h3>Prize-Pool Events</h3>
-                    <p>Join agency-hosted competitions with real cash rewards that recognize top performers monthly.</p>
-                    <button class="watch-btn" data-video="videos/gifts.mp4"><i class="fas fa-play-circle"></i> Watch Video</button>
-                </div>
+                <h3>@sa3dollaa</h3>
+                <p class="creator-bio">Gaming Royalty | 2M+ Followers On Platforms</p>
             </div>
-        </div>
-    </section>
+            
+            <div class="creator-card">
+                <span class="card-badge">The Face of Female Gaming 👑</span>
+                <div class="creator-img-frame">
+                    <a href="https://www.tiktok.com/@rimastars_98" target="_blank" rel="noopener noreferrer">
+                        <img src="images/rima.webp" alt="@rimastars_98" loading="lazy">
+                    </a>
+                </div>
+                <h3>@rimastars_98</h3>
+                <p class="creator-bio">Gaming creator and esports caster, recognized as one of the first female pioneers in the regional esports community.</p>
+            </div>
 
-    <section id="feedback" class="section feedback-section">
-        <div class="container">
-            <h2 class="section-title">Creators Feedback</h2>
-            <p class="section-subtitle">Hear directly from our creators about their experience with Stars Zone Media</p>
-            <div class="feedback-buttons">
-                <a href="https://www.tiktok.com/@starszonemedia/video/7514737182465166600" target="_blank" class="feedback-btn"><i class="fa-brands fa-tiktok"></i> PK Creator Feedback</a>
-                  <a href="https://www.tiktok.com/@starszonemedia/video/7657298636149214485" target="_blank" class="feedback-btn"><i class="fa-brands fa-tiktok"></i> Music Artist Feedback</a>
-                <a href="https://www.tiktok.com/@starszonemedia/video/7548454106042584338" target="_blank" class="feedback-btn"><i class="fa-brands fa-tiktok"></i> Ban & Restriction Issue</a>
-                <a href="https://www.tiktok.com/@starszonemedia/video/7511310521975590151" target="_blank" class="feedback-btn"><i class="fa-brands fa-tiktok"></i> Gaming Creator Feedback</a>
-                <a href="https://www.tiktok.com/@starszonemedia/video/7649488412336016660" target="_blank" class="feedback-btn"><i class="fa-brands fa-tiktok"></i> Account Suspension & Strikes Issue</a>
-                <a href="https://www.tiktok.com/@starszonemedia/video/7649699708394425620" target="_blank" class="feedback-btn"><i class="fa-brands fa-tiktok"></i> Malekt Al Raw2an Shares Her Experience</a>
-                <a href="https://www.tiktok.com/@starszonemedia/video/7611931656718470420" target="_blank" class="feedback-btn"><i class="fa-brands fa-tiktok"></i> Our Creators Experience On TikTok Live MENA</a>
+            <div class="creator-card">
+                <span class="card-badge">Cinematic Vision 🎬</span>
+                <div class="creator-img-frame">
+                    <a href="https://www.tiktok.com/@haidysheriff" target="_blank" rel="noopener noreferrer">
+                        <img src="images/haidy.webp" alt="@haidysheriff" loading="lazy">
+                    </a>
+                </div>
+                <h3>@haidysheriff</h3>
+                <p class="creator-bio">A passionate filmmaker and Assistant Director who contributed to the iconic Egyptian comedy film “Seko Seko.”</p>
             </div>
-        </div>
-    </section>
 
-    <section id="join" class="section join-section">
-        <div class="container">
-            <h2 class="section-title">Join The Zone</h2>
-            <p class="section-subtitle">Ready to level up? Fill out the exclusive application form below.</p>
-            <div class="form-wrapper">
-                <form id="join-form" class="join-form">
-                    <div class="input-group">
-                        <input type="text" id="name" placeholder="Your Name" required>
-                    </div>
-                    <div class="input-group">
-                        <input type="text" id="tiktok" placeholder="TikTok Handle" required>
-                    </div>
-                    <div class="input-group">
-                        <input type="number" id="whatsApp" placeholder="WhatsApp Number">
-                    </div>
-                    <div class="input-group">
-                        <textarea id="message" placeholder="Tell us how do you expect Stars Zone Media to assist you ..." required></textarea>
-                    </div>
-                    <button type="submit" class="cta-button full-width">Submit Application</button>
-                </form>
+            <div class="creator-card">
+                <span class="card-badge">The Music Diva 🎤</span>
+                <div class="creator-img-frame">
+                    <a href="https://www.tiktok.com/@malaykamusic" target="_blank" rel="noopener noreferrer">
+                        <img src="images/malayka.webp" alt="@malaykamusic" loading="lazy">
+                    </a>
+                </div>
+                <h3>@malaykamusic</h3>
+                <p class="creator-bio">Singing Royalty | The Voice Arabia S5</p>
             </div>
-        </div>
-    </section>
 
-    <section id="visit" class="section visit-section">
-        <div class="container">
-            <h2 class="section-title">Visit Our HQ</h2>
-            <p class="section-subtitle">Drop by our office — we’d love to meet you in person!</p>
-            <div class="location-info">
-                <p><i class="fa-solid fa-location-dot"></i> El-Sheikh Zayed City, El Hay 7, El-Safa, Giza, Egypt</p>
+            <div class="creator-card">
+                <span class="card-badge">Empress of PK 💎</span>
+                <div class="creator-img-frame">
+                    <a href="https://www.tiktok.com/@hams.ashraff" target="_blank" rel="noopener noreferrer">
+                        <img src="images/hams.webp" alt="@hams.ashraff" loading="lazy">
+                    </a>
+                </div>
+                <h3>@hams.ashraff</h3>
+                <p class="creator-bio">Royalty of PK Battles | Beauty Icon | Entertainment</p>
             </div>
-            <div class="map-container">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3454.4690623945767!2d30.98049007538997!3d30.023398174934137!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x145859000b7eb0f9%3A0xcb406f21dcdd0873!2sStars%20zone%20media!5e0!3m2!1sen!2seg!4v1759796907129!5m2!1sen!2seg" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-            </div>
-        </div>
-    </section>
 
-    <section id="career" class="section career-section">
-        <div class="container">
-            <div class="career-box">
-                <h2>Need a Career?</h2>
-                <p><b>We want you in our team!</b><br>Join Stars Zone Media and work with us to connect talented creators with opportunities, helping them reach their dreams — all while earning amazing rewards!</p>
-            </div>
-        </div>
-    </section>
-
-    <footer class="footer">
-        <div class="container">
-            <h2 class="footer-title">Connect With Us</h2>
-            <div class="footer-icons">
-                <a href="https://www.tiktok.com/@starszonemedia" target="_blank" rel="noopener noreferrer" class="footer-icon" title="Follow Us on TikTok">
-                    <i class="fa-brands fa-tiktok"></i>
-                </a>
-                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=starszonemedia@gmail.com&su=Collaboration%20Request" target="_blank" rel="noopener noreferrer" class="footer-icon" title="Email Us">
-                    <i class="fas fa-envelope"></i>
-                </a>
-            </div>
-            <p class="footer-copy">© 2026 Stars Zone Media. Crafted for Luxury & Impact.</p>
-        </div>
-    </footer>
-
-    <!-- Pop-up Video Modal -->
-    <div id="video-modal" class="video-modal" style="display: none;">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <div class="video-container">
-                <video id="service-video" controls autoplay muted>
-                    Your browser does not support the video tag.
-                </video>
+            <div class="creator-card">
+                <span class="card-badge">The Glam Queen 💅</span>
+                <div class="creator-img-frame">
+                    <a href="https://www.tiktok.com/@salma_salama78" target="_blank" rel="noopener noreferrer">
+                        <img src="images/salma.webp" alt="@salma_salama78" loading="lazy">
+                    </a>
+                </div>
+                <h3>@salma_salama78</h3>
+                <p class="creator-bio">A beauty and lifestyle creator known for her authentic Khaleeji dialect and elegant fashion sense.</p>
             </div>
         </div>
     </div>
+</section>
 
-    <script src="script.js" defer></script>
+<section id="services" class="section services-section">
+    <div class="container">
+        <h2 class="section-title">Our Services</h2>
+        <p class="section-subtitle">Grow, Engage, Thrive — Agency Backed 🌱</p>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="icon-box"><i class="fas fa-chart-line"></i></div>
+                <h3>5%–10% Revenue Growth</h3>
+                <p>Boost your TikTok Live income by up to 10% as a monthly bonus when you hit your diamond target.</p>
+                <button class="watch-btn" data-video="videos/bonus.mp4"><i class="fas fa-play-circle"></i> Watch Video</button>
+            </div>
+            <div class="service-card">
+                <div class="icon-box"><i class="fas fa-chalkboard-teacher"></i></div>
+                <h3>Live Coaching & Training</h3>
+                <p>Receive expert, one-on-one guidance to refine your on-camera confidence and audience interaction.</p>
+                <button class="watch-btn" data-video="videos/train.mp4"><i class="fas fa-play-circle"></i> Watch Video</button>
+            </div>
+            <div class="service-card">
+                <div class="icon-box"><i class="fas fa-rocket"></i></div>
+                <h3>Monetization & Strategy</h3>
+                <p>We build a personalized roadmap to help you increase engagement and scale your earnings.</p>
+                <button class="watch-btn" data-video="videos/mns.mp4"><i class="fas fa-play-circle"></i> Watch Video</button>
+            </div>
+            <div class="service-card">
+                <div class="icon-box"><i class="fas fa-chart-bar"></i></div>
+                <h3>Analytics Reporting</h3>
+                <p>Gain access to detailed reports that track your progress and identify improvement opportunities.</p>
+                <button class="watch-btn" data-video="videos/analytics.mp4"><i class="fas fa-play-circle"></i> Watch Video</button>
+            </div>
+            <div class="service-card">
+                <div class="icon-box"><i class="fas fa-clock"></i></div>
+                <h3>24/7 Fast Support</h3>
+                <p>Enjoy peace of mind with our around-the-clock support team ready to solve issues anytime.</p>
+                <button class="watch-btn" data-video="videos/support.mp4"><i class="fas fa-play-circle"></i> Watch Video</button>
+            </div>
+            <div class="service-card">
+                <div class="icon-box"><i class="fas fa-laptop-code"></i></div>
+                <h3>PC Live Apps Workshops</h3>
+                <p>Interactive sessions to help you master TikTok’s PC live-streaming tools for professional broadcasts.</p>
+                <button class="watch-btn" data-video="videos/obs.mp4"><i class="fas fa-play-circle"></i> Watch Video</button>
+            </div>
+            <div class="service-card">
+                <div class="icon-box"><i class="fas fa-bell"></i></div>
+                <h3>Engagement Tools</h3>
+                <p>Boost interaction with custom alerts and pop-ups designed to keep your live sessions lively.</p>
+                <button class="watch-btn" data-video="videos/boost.mp4"><i class="fas fa-play-circle"></i> Watch Video</button>
+            </div>
+            <div class="service-card">
+                <div class="icon-box"><i class="fas fa-check-circle"></i></div>
+                <h3>Verification Assistance</h3>
+                <p>We handle the technical details helping you meet all TikTok advanced features requirements.</p>
+                <button class="watch-btn" data-video="videos/verify.mp4"><i class="fas fa-play-circle"></i> Watch Video</button>
+            </div>
+            <div class="service-card">
+                <div class="icon-box"><i class="fas fa-unlock"></i></div>
+                <h3>Ban & Restriction Removal</h3>
+                <p>Our team assists in reviewing, appealing, and restoring your account through direct TikTok contact.</p>
+                <button class="watch-btn" data-video="videos/bans.mp4"><i class="fas fa-play-circle"></i> Watch Video</button>
+            </div>
+            <div class="service-card">
+                <div class="icon-box"><i class="fas fa-trophy"></i></div>
+                <h3>Prize-Pool Events</h3>
+                <p>Join agency-hosted competitions with real cash rewards that recognize top performers monthly.</p>
+                <button class="watch-btn" data-video="videos/gifts.mp4"><i class="fas fa-play-circle"></i> Watch Video</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="feedback" class="section feedback-section">
+    <div class="container">
+        <h2 class="section-title">Creators Feedback</h2>
+        <p class="section-subtitle">Hear directly from our creators about their experience with Stars Zone Media</p>
+        <div class="feedback-buttons">
+            <a href="https://www.tiktok.com/@starszonemedia/video/7514737182465166600" target="_blank" class="feedback-btn"><i class="fa-brands fa-tiktok"></i> PK Creator Feedback</a>
+            <a href="https://www.tiktok.com/@starszonemedia/video/7657298636149214485" target="_blank" class="feedback-btn"><i class="fa-brands fa-tiktok"></i> Music Artist Feedback</a>
+            <a href="https://www.tiktok.com/@starszonemedia/video/7548454106042584338" target="_blank" class="feedback-btn"><i class="fa-brands fa-tiktok"></i> Ban & Restriction Issue</a>
+            <a href="https://www.tiktok.com/@starszonemedia/video/7511310521975590151" target="_blank" class="feedback-btn"><i class="fa-brands fa-tiktok"></i> Gaming Creator Feedback</a>
+            <a href="https://www.tiktok.com/@starszonemedia/video/7649488412336016660" target="_blank" class="feedback-btn"><i class="fa-brands fa-tiktok"></i> Account Suspension & Strikes Issue</a>
+            <a href="https://www.tiktok.com/@starszonemedia/video/7649699708394425620" target="_blank" class="feedback-btn"><i class="fa-brands fa-tiktok"></i> Malekt Al Raw2an Shares Her Experience</a>
+            <a href="https://www.tiktok.com/@starszonemedia/video/7611931656718470420" target="_blank" class="feedback-btn"><i class="fa-brands fa-tiktok"></i> Our Creators Experience On TikTok Live MENA</a>
+        </div>
+    </div>
+</section>
+
+<section id="join" class="section join-section">
+    <div class="container">
+        <h2 class="section-title">Join The Zone</h2>
+        <p class="section-subtitle">Ready to level up? Fill out the exclusive application form below.</p>
+        <div class="form-wrapper">
+            <form id="join-form" class="join-form">
+                <div class="input-group">
+                    <input type="text" id="name" placeholder="Your Name" aria-label="Your Name" required>
+                </div>
+                <div class="input-group">
+                    <input type="text" id="tiktok" placeholder="TikTok Handle" aria-label="TikTok Handle" required>
+                </div>
+                <div class="input-group">
+                    <input type="tel" id="whatsApp" placeholder="WhatsApp Number" aria-label="WhatsApp Number">
+                </div>
+                <div class="input-group">
+                    <textarea id="message" placeholder="Tell us how do you expect Stars Zone Media to assist you ..." aria-label="Message" required></textarea>
+                </div>
+                <button type="submit" class="cta-button full-width">Submit Application</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<section id="visit" class="section visit-section">
+    <div class="container">
+        <h2 class="section-title">Visit Our HQ</h2>
+        <p class="section-subtitle">Drop by our office — we’d love to meet you in person!</p>
+        <div class="location-info">
+            <p><i class="fa-solid fa-location-dot"></i> El-Sheikh Zayed City, El Hay 7, El-Safa, Giza, Egypt</p>
+        </div>
+        <div class="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3454.4690623945767!2d30.98049007538997!3d30.023398174934137!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x145859000b7eb0f9%3A0xcb406f21dcdd0873!2sStars%20zone%20media!5e0!3m2!1sen!2seg!4v1759796907129!5m2!1sen!2seg" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </div>
+</section>
+
+<section id="career" class="section career-section">
+    <div class="container">
+        <div class="career-box">
+            <h2>Need a Career?</h2>
+            <p><b>We want you in our team!</b><br>Join Stars Zone Media and work with us to connect talented creators with opportunities, helping them reach their dreams — all while earning amazing rewards!</p>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="container">
+        <h2 class="footer-title">Connect With Us</h2>
+        <div class="footer-icons">
+            <a href="https://www.tiktok.com/@starszonemedia" target="_blank" rel="noopener noreferrer" class="footer-icon" title="Follow Us on TikTok">
+                <i class="fa-brands fa-tiktok"></i>
+            </a>
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=starszonemedia@gmail.com&su=Collaboration%20Request" target="_blank" rel="noopener noreferrer" class="footer-icon" title="Email Us">
+                <i class="fas fa-envelope"></i>
+            </a>
+        </div>
+        <p class="footer-copy">© 2026 Stars Zone Media. Crafted for Luxury & Impact.</p>
+    </div>
+</footer>
+
+<!-- Pop-up Video Modal -->
+<div id="video-modal" class="video-modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <div class="video-container">
+            <video id="service-video" controls autoplay muted>
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </div>
+</div>
+
+<script src="script.js" defer></script>
 </body>
 </html>
