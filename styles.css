@@ -18,6 +18,111 @@
     --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* ==========================================================================
+   Luxury Day Mode (Clean White & Brand Pink Theme)
+   ========================================================================== */
+body.light-mode {
+    --bg-dark: #ffffff !important; /* خلفية بيضاء نقية وفخمة */
+    --bg-surface: rgba(255, 240, 245, 0.6) !important; /* خلفية كارتات بدرجة بينك خفيفة جداً وراقية */
+    --border-color: rgba(255, 0, 80, 0.15) !important; /* حواف بلون البينك الخاص باللوجو */
+    --primary-glow: #ff0050 !important; /* لون البينك الأساسي للـ Logo */
+    --secondary-glow: #00f2fe !important;
+    --text-pure: #0f172a !important; 
+    --text-muted: #475569 !important;
+}
+
+body.light-mode .navbar {
+    background: rgba(255, 255, 255, 0.85) !important;
+}
+
+body.light-mode .nav-menu {
+    background: #ffffff !important;
+    border-right: 1px solid var(--border-color) !important;
+}
+
+body.light-mode .nav-menu a {
+    color: var(--text-muted) !important;
+}
+
+body.light-mode .nav-menu a:hover:not(.creator-login-btn) {
+    color: var(--primary-glow) !important;
+    text-shadow: none !important;
+}
+
+body.light-mode .creator-card,
+body.light-mode .service-card,
+body.light-mode .form-wrapper,
+body.light-mode .career-box {
+    background: #ffffff !important;
+    box-shadow: 0 10px 30px rgba(255, 0, 80, 0.06) !important; /* ظل خفيف بلون البينك الفاخر */
+    border: 1px solid rgba(255, 0, 80, 0.12) !important;
+}
+
+/* بادجات الكرييتورز في وضع النهار بلون البينك */
+body.light-mode .creator-card .card-badge {
+    background: rgba(255, 0, 80, 0.06) !important;
+    color: #ff0050 !important;
+    border-color: rgba(255, 0, 80, 0.2) !important;
+}
+
+body.light-mode .creator-card h3,
+body.light-mode .service-card h3,
+body.light-mode .career-box h2,
+body.light-mode .footer-title,
+body.light-mode .section-title {
+    color: #0f172a !important;
+}
+
+body.light-mode .creator-bio,
+body.light-mode .service-card p,
+body.light-mode .career-box p,
+body.light-mode .section-subtitle,
+body.light-mode .location-info,
+body.light-mode .footer-copy {
+    color: #475569 !important;
+}
+
+body.light-mode .creator-card img {
+    border-color: #fce7f3 !important;
+}
+
+body.light-mode .join-form input, 
+body.light-mode .join-form textarea {
+    background: #fff5f7 !important;
+    color: #0f172a !important;
+    border-color: rgba(255, 0, 80, 0.2) !important;
+}
+
+body.light-mode .join-form input::placeholder,
+body.light-mode .join-form textarea::placeholder {
+    color: #94a3b8 !important;
+}
+
+body.light-mode .global-control-btn,
+body.light-mode .back-to-top-btn,
+body.light-mode .feedback-btn {
+    background: #fff5f7 !important;
+    color: #0f172a !important;
+    border-color: rgba(255, 0, 80, 0.2) !important;
+}
+
+body.light-mode .global-control-btn:hover,
+body.light-mode .back-to-top-btn:hover {
+    background: #ff0050 !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 20px rgba(255, 0, 80, 0.4) !important;
+}
+
+body.light-mode .footer-icon {
+    background: #fff5f7 !important;
+    color: #0f172a !important;
+    border-color: rgba(255, 0, 80, 0.2) !important;
+}
+
+body.light-mode .footer-icon:hover {
+    background: #ff0050 !important;
+    color: #ffffff !important;
+}
 html {
     scroll-behavior: smooth;
 }
@@ -29,6 +134,7 @@ body {
     line-height: 1.7;
     overflow-x: hidden;
     position: relative;
+    transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 /* Ambient Background Lights (Glow System) */
@@ -93,7 +199,7 @@ body {
     display: block;
     filter: drop-shadow(0 0 8px rgba(0,242,254,.45)) drop-shadow(0 0 14px rgba(255,0,80,.25));
     transition: transform .4s ease, filter .4s ease;
-    animation: logoFloat 4s ease-in-out infinite;
+    animation: logoFloat 4s ease-in-out infinite, logoGlow 3s ease-in-out infinite;
 }
 
 .nav-logo img:hover {
@@ -110,8 +216,9 @@ body {
     }
 }
 
-.nav-logo img{
-    animation: logoFloat 4s ease-in-out infinite, logoGlow 3s ease-in-out infinite;
+@keyframes logoFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
 }
 
 .nav-menu {
@@ -206,7 +313,7 @@ body {
 
 .hero h1 {
     font-family: var(--font-heading);
-    font-size: 2rem;
+    font-size: 3rem;
     line-height: 1.15;
     color: var(--text-pure);
     margin-bottom: 22px;
@@ -259,13 +366,13 @@ body {
     transform: scale(1.05) rotate(2deg);
 }
 
-/* Master Premium Buttons */
+/* Master Premium Buttons (تثبيت لون النص أبيض دائماً في الأزرار مثل Get Started و Submit Application) */
 .cta-button {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    background: var(--text-pure);
-    color: #000;
+    background: #000000 !important;
+    color: #ffffff !important;
     padding: 16px 40px;
     text-decoration: none;
     border-radius: 40px;
@@ -276,9 +383,14 @@ body {
     cursor: pointer;
 }
 
+body.light-mode .cta-button {
+    background: #0f172a !important;
+    color: #ffffff !important;
+}
+
 .cta-button:hover {
     transform: translateY(-4px);
-    box-shadow: 0 15px 30px rgba(255, 255, 255, 0.15);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
 }
 
 /* Base Sections layout */
@@ -612,144 +724,224 @@ body {
 }
 
 /* ==========================================================================
-   GLOBAL SPLASH SCREEN STYLING (Fixed For All Screens)
+   🌟 Luxury Preloader Screen (6 Seconds Duration)
    ========================================================================== */
-#splash-screen {
+#luxury-preloader {
     position: fixed !important;
     top: 0 !important;
     left: 0 !important;
     width: 100vw !important;
     height: 100vh !important;
-    background-color: #090a0c  !important; /* درجة الرمادي الداكنة الفخمة من خلفية لوجو الشركة */
+    background-color: var(--bg-dark) !important;
     z-index: 9999999 !important;
-    overflow: hidden !important;
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    transition: opacity 0.5s ease-out, visibility 0.5s ease-out !important;
+    transition: opacity 0.6s ease-out, visibility 0.6s ease-out !important;
 }
 
-.splash-content {
-    position: relative !important;
-    width: 100% !important;
-    height: 100% !important;
+#luxury-preloader.fade-out {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+.preloader-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.brand-logo-container {
+    position: relative;
+    width: 90px;
+    height: 90px;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.glow-ring {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-glow), var(--secondary-glow));
+    filter: blur(12px);
+    opacity: 0.6;
+    animation: pulseGlow 2s infinite alternate;
+}
+
+@keyframes pulseGlow {
+    0% { transform: scale(0.9); opacity: 0.4; }
+    100% { transform: scale(1.15); opacity: 0.8; }
+}
+
+.preloader-logo {
+    width: 65px;
+    height: 65px;
+    object-fit: contain;
+    position: relative;
+    z-index: 2;
+    filter: drop-shadow(0 0 10px rgba(255,255,255,0.4));
+}
+
+.preloader-title {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    color: var(--text-pure);
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+}
+
+.preloader-tagline {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    margin-bottom: 40px;
+}
+
+.progress-box {
+    width: 240px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-glow), var(--secondary-glow));
+    transition: width 0.1s linear;
+}
+
+.progress-counter {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+/* ==========================================================================
+   Global Controls Wrapper (Fixed & Visible)
+   ========================================================================== */
+.global-controls-wrapper {
+    position: fixed !important;
+    top: 22px !important;
+    right: 75px !important; /* مسافة آمنة جداً تخليهم ظاهرين وواضحين وقبل زرار المنيو مباشرة */
     display: flex !important;
-    justify-content: center !important;
     align-items: center !important;
-    background-color: #0c0c0e !important; /* توحيد الخلفية تماماً */
+    gap: 10px !important;
+    z-index: 99999 !important;
 }
 
-#splash-video {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: contain !important; /* يضمن ظهور كادر الفيديو بالكامل بدون أي قص للأطراف */
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    background-color: #0c0c0e !important;
-}
-
-#skip-splash {
-    position: absolute !important;
-    bottom: 40px !important;
-    right: 40px !important;
+.global-control-btn {
     background: rgba(255, 255, 255, 0.08) !important;
     color: #ffffff !important;
     border: 1px solid rgba(255, 255, 255, 0.2) !important;
-    padding: 12px 24px !important;
-    border-radius: 30px !important;
+    width: 38px !important;
+    height: 38px !important;
+    border-radius: 50% !important;
     cursor: pointer !important;
-    font-family: 'Inter', sans-serif !important;
-    font-size: 14px !important;
-    font-weight: 500 !important;
-    letter-spacing: 1px !important;
-    text-decoration: none !important;
     display: inline-flex !important;
     align-items: center !important;
-    gap: 8px !important;
+    justify-content: center !important;
+    font-size: 14px !important;
     backdrop-filter: blur(10px) !important;
     -webkit-backdrop-filter: blur(10px) !important;
-    z-index: 10000000 !important;
     transition: all 0.3s ease !important;
 }
 
-#skip-splash:hover {
+body.light-mode .global-control-btn {
+    background: #fff5f7 !important;
+    color: #0f172a !important;
+    border-color: rgba(255, 0, 80, 0.2) !important;
+}
+
+.global-control-btn:hover {
+    background: #ffffff !important;
+    color: #000000 !important;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* تنسيق الموبايل لضمان ظهورهم بشكل ممتاز */
+@media (max-width: 768px) {
+    .global-controls-wrapper {
+        right: 65px !important;
+        top: 25px !important;
+        gap: 8px !important;
+    }
+    .global-control-btn {
+        width: 35px !important;
+        height: 35px !important;
+        font-size: 13px !important;
+    }
+}
+
+.global-control-btn:hover {
     background: #ffffff !important;
     color: #000000 !important;
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.6) !important;
     transform: translateY(-2px) !important;
 }
 
-#splash-screen.fade-out {
-    opacity: 0 !important;
-    visibility: hidden !important;
-    pointer-events: none !important;
-}
-.splash-content {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.sound-btn {
-    position: absolute;
-    bottom: 20px;
-    background: rgba(0, 0, 0, 0.7);
-    color: #fff;
-    border: 2px solid #fff;
-    padding: 10px 20px;
-    border-radius: 30px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.3s ease;
-    z-index: 10;
-}
-
-.sound-btn:hover {
-    background: #fff;
-    color: #000;
-}
-#sound-toggle-btn {
-    position: absolute !important;
-    bottom: 80px !important; /* رفعت الزرار لفوق شوية عشان يكون في متناول اليد على الموبايل */
-    left: 50% !important;
-    transform: translateX(-50%) !important;
+/* ==========================================================================
+   Back To Top Floating Button (سهم الصعود لأعلى)
+   ========================================================================== */
+.back-to-top-btn {
+    position: fixed !important;
+    bottom: 35px !important;
+    right: 35px !important;
     background: rgba(255, 255, 255, 0.08) !important;
     color: #ffffff !important;
     border: 1px solid rgba(255, 255, 255, 0.2) !important;
-    width: 45px !important;
-    height: 45px !important;
+    width: 46px !important;
+    height: 46px !important;
     border-radius: 50% !important;
     cursor: pointer !important;
-    display: inline-flex !important;
+    display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     font-size: 16px !important;
     backdrop-filter: blur(10px) !important;
     -webkit-backdrop-filter: blur(10px) !important;
-    z-index: 10000000 !important;
-    transition: all 0.3s ease !important;
+    z-index: 99999 !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transform: translateY(20px) !important;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
 }
 
-#sound-toggle-btn:hover {
-    background: #ffffff !important;
+.back-to-top-btn.show {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) !important;
+}
+
+.back-to-top-btn:hover {
+    background: var(--text-pure) !important;
     color: #000000 !important;
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.6) !important;
-    transform: translateX(-50%) translateY(-2px) !important;
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.5) !important;
+    transform: translateY(-4px) !important;
 }
-/* ==========================================================================
-   Services Video Buttons & Modal System (Fixed & Enhanced)
-   ========================================================================== */
 
-/* تنسيق زر Watch Video الفاخر */
+/* ==========================================================================
+   Services Video Buttons & Modal System
+   ========================================================================== */
 .watch-btn {
     background: linear-gradient(135deg, var(--primary-glow), var(--secondary-glow));
     color: var(--text-pure);
@@ -917,7 +1109,6 @@ body {
     }
 }
 
-/* توافق إضافي للهواتف الصغيرة جدًا */
 @media (max-width: 480px) {
     .modal-content {
         max-width: 90%;
@@ -928,5 +1119,4 @@ body {
         top: -40px;
         font-size: 32px;
     }
-    
 }
