@@ -1,0 +1,789 @@
+<!-- Luxury version placeholder: apply premium UI refinements -->
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dashboard.html</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#0b0f19',
+                        cardBg: '#131b2e',
+                        cardHover: '#1a243f',
+                        brandPink: '#ec4899',
+                        brandPinkHover: '#db2777',
+                        customBorder: '#1e293b'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        /* Default Dark Mode Styling (Night Mode) */
+        body:not(.light) {
+            background-color: #0b0f19;
+            color: #f8fafc;
+        }
+        body:not(.light) select, 
+        body:not(.light) input, 
+        body:not(.light) textarea {
+            background-color: #0b0f19 !important;
+            color: #f8fafc !important;
+            border-color: #1e293b !important;
+        }
+        body:not(.light) ::-webkit-scrollbar-track { background: #0b0f19; }
+        body:not(.light) ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
+        body:not(.light) ::-webkit-scrollbar-thumb:hover { background: #334155; }
+
+        /* Day / Light Mode Styling */
+        body.light {
+            background-color: #f8fafc;
+            color: #0f172a;
+        }
+        body.light .bg-\[\#0b0f19\] { background-color: #ffffff !important; }
+        body.light .bg-\[\#131b2e\] { background-color: #ffffff !important; }
+        body.light .bg-cardBg { background-color: #ffffff !important; border-color: #e2e8f0 !important; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
+        body.light .bg-\[\#0e1424\] { background-color: #f1f5f9 !important; }
+        body.light .border-\[\#1e293b\], body.light .border-customBorder { border-color: #e2e8f0 !important; }
+        body.light .text-white { color: #0f172a !important; }
+      body.light .text-slate-300,
+body.light .text-slate-400 {
+   color: #6b7280 !important;
+}
+        body.light input, body.light select, body.light textarea { background-color: #f8fafc !important; color: #0f172a !important; border-color: #cbd5e1 !important; }
+        
+        body.light ::-webkit-scrollbar-track { background: #f8fafc; }
+        body.light ::-webkit-scrollbar-thumb { background: #cbd5e1; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <div class="flex flex-1">
+        <!-- Main Content Wrapper -->
+        <main class="flex-1 flex flex-col min-w-0">
+            <!-- Top Navbar -->
+            <header class="bg-[#0e1424] border-b border-[#1e293b] px-3 sm:px-6 py-3 flex items-center justify-between sticky top-0 z-40 transition-colors duration-300 gap-2">
+                <!-- Exact Stars Zone Media Logo matching attached picture with custom subtitle -->
+                <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+                    <div class="text-brandPink text-xl sm:text-2xl font-black flex-shrink-0">
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <div class="flex flex-col min-w-0">
+                        <span class="text-white font-black text-xs sm:text-sm tracking-wider truncate">STARS ZONE MEDIA</span>
+                        <span class="text-[8px] sm:text-[9px] tracking-[0.05em] text-slate-400 font-semibold truncate" data-en="Track, Analyze & Reactivate" data-ar="تتبع، تحليل وإعادة تنشيط">Track, Analyze & Reactivate</span>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
+                    <!-- Luxury Day/Night Theme Toggle Button -->
+                    <button onclick="toggleTheme()" id="themeToggleBtn" class="bg-[#131b2e] hover:bg-[#1a243f] border border-[#1e293b] text-xs font-semibold text-slate-300 px-2 sm:px-3 py-2 rounded-xl transition shadow-sm flex items-center gap-1.5 sm:gap-2">
+                        <i id="themeIcon" class="fa-solid fa-sun text-brandPink"></i>
+                        <span id="themeText" class="hidden xs:inline sm:inline" data-en="Day" data-ar="نهاري">Day</span>
+                    </button>
+
+                    <!-- Language Toggle Button -->
+                    <button onclick="toggleLanguage()" id="langToggleBtn" class="bg-[#131b2e] hover:bg-[#1a243f] border border-[#1e293b] text-xs font-semibold text-slate-300 px-2 sm:px-3 py-2 rounded-xl transition flex items-center gap-1.5 sm:gap-2">
+                        <i class="fa-solid fa-globe text-brandPink"></i>
+                        <span id="langText">العربية</span>
+                    </button>
+
+                    <!-- Calendar Date Indicator -->
+                    <div class="hidden lg:flex items-center gap-2 bg-[#131b2e] border border-[#1e293b] px-3 py-2 rounded-xl text-xs text-slate-300">
+                        <i class="fa-regular fa-calendar text-brandPink"></i>
+                        <span id="currentDateDisplay">23 July 2026</span>
+                    </div>
+
+                    <!-- Logout Button -->
+                    <a href="login.html" class="flex items-center gap-1.5 sm:gap-2 bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-red-400 text-xs font-semibold px-2.5 sm:px-3 py-2 rounded-xl transition">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <span class="hidden md:inline" data-en="Logout" data-ar="تسجيل الخروج">Logout</span>
+                    </a>
+
+                    <!-- User Profile -->
+                    <div class="flex items-center gap-2 pl-1.5 sm:pl-2 border-l border-[#1e293b] rtl:pl-0 rtl:pr-1.5 rtl:sm:pr-2 rtl:border-l-0 rtl:border-r">
+                        <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-tr from-pink-500 to-purple-600 flex items-center justify-center font-bold text-white text-xs sm:text-sm shadow-md flex-shrink-0">
+                            AH
+                        </div>
+                        <div class="hidden sm:block text-left rtl:text-right">
+                            <div class="text-xs font-bold text-white">Agent Hamsa</div>
+                            <div class="text-[10px] text-slate-400" data-en="Operations" data-ar="العمليات">Operations</div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content Container -->
+            <div class="p-6 space-y-6">
+                <!-- Page Title Section -->
+                <div>
+                    <h1 class="text-2xl font-black text-white flex items-center gap-2" data-en="Inactive Creators Dashboard" data-ar="لوحة تحكم المنشئين غير النشطين">
+                        Inactive Creators Dashboard
+                    </h1>
+                    <p class="text-xs text-slate-400 mt-1" data-en="Track, Analyze & Reactivate your network creators seamlessly." data-ar="تتبع، تحليل وإعادة تنشيط منشئي الشبكة الخاصة بك بسلاسة.">Track, Analyze & Reactivate your network creators seamlessly.</p>
+                </div>
+
+                <!-- Top Statistics Cards -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                    <!-- Total Gzero Creators -->
+                    <div class="bg-cardBg border border-customBorder rounded-2xl p-4 relative overflow-hidden">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="w-9 h-9 rounded-xl bg-pink-500/10 text-brandPink flex items-center justify-center text-base">
+                                <i class="fa-solid fa-users"></i>
+                            </div>
+                        </div>
+                        <div class="text-2xl font-black text-white" id="statGoCreators">55</div>
+                        <div class="text-xs text-slate-400 mt-0.5" data-en="Total Gzero Creators" data-ar="إجمالي منشئي Gzero">Total Gzero Creators</div>
+                    </div>
+
+                    <!-- Opened Live -->
+                    <div class="bg-cardBg border border-customBorder rounded-2xl p-4 relative overflow-hidden">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="w-9 h-9 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-base">
+                                <i class="fa-solid fa-tower-broadcast"></i>
+                            </div>
+                        </div>
+                        <div class="text-2xl font-black text-white" id="statOpenedLive">0</div>
+                        <div class="text-xs text-slate-400 mt-0.5"><span data-en="Opened Live" data-ar="فتح بث مباشر">Opened Live</span> <span class="text-[10px] text-slate-500" data-en="" data-ar=""></span></div>
+                    </div>
+
+                    <!-- Replied to Agent  -->
+                    <div class="bg-cardBg border border-customBorder rounded-2xl p-4 relative overflow-hidden">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="w-9 h-9 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-base">
+                                <i class="fa-solid fa-comment-sms"></i>
+                            </div>
+                        </div>
+                        <div class="text-2xl font-black text-white" id="statRepliedAgent">0</div>
+                        <div class="text-xs text-slate-400 mt-0.5"><span data-en="Replied to Agent" data-ar="الرد على الوكيل">Replied to Agent</span> <span class="text-[10px] text-slate-500" data-en="" data-ar=""></span></div>
+                    </div>
+
+                    <!-- High Potential -->
+                    <div class="bg-cardBg border border-customBorder rounded-2xl p-4 relative overflow-hidden">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="w-9 h-9 rounded-xl bg-pink-500/10 text-brandPink flex items-center justify-center text-base">
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                        </div>
+                        <div class="text-2xl font-black text-white" id="statHighPotential">0</div>
+                        <div class="text-xs text-slate-400 mt-0.5" data-en="High Potential" data-ar="إمكانيات عالية">High Potential</div>
+                    </div>
+
+                    <!-- Need Equipment Upgrade -->
+                    <div class="bg-cardBg border border-customBorder rounded-2xl p-4 relative overflow-hidden sm:col-span-2 lg:col-span-1">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="w-9 h-9 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center text-base">
+                                <i class="fa-solid fa-screwdriver-wrench"></i>
+                            </div>
+                        </div>
+                        <div class="text-2xl font-black text-white" id="statEquipmentUpgrade">0</div>
+                        <div class="text-xs text-slate-400 mt-0.5" data-en="Need Equipment Upgrade" data-ar="بحاجة ترقية معدات">Need Equipment Upgrade</div>
+                    </div>
+                </div>
+
+                <!-- Search Bar & Table Controls -->
+                <div class="bg-cardBg border border-customBorder p-4 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div class="relative w-full md:w-96">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 rtl:left-auto rtl:right-3 top-3 text-slate-500 text-xs"></i>
+                        <input type="text" id="creatorSearchInput" oninput="filterCreators()" placeholder="Search creator by name..." data-en-placeholder="Search creator by name..." data-ar-placeholder="البحث عن منشئ بالاسم..." class="w-full bg-[#0b0f19] border border-customBorder rounded-xl pl-9 pr-4 rtl:pl-4 rtl:pr-9 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brandPink transition">
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="text-xs text-slate-400" id="paginationInfo">Showing 1-5 of 55 creators</div>
+                        <!-- Submit All Button on the Right Side -->
+                        <button onclick="submitAllData(this)" id="submitAllBtn" class="bg-brandPink hover:bg-brandPinkHover text-white font-bold text-xs px-4 py-2.5 rounded-xl transition shadow-lg shadow-pink-500/20 whitespace-nowrap flex items-center gap-2">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                            <span data-en="Submit All" data-ar="إرسال الكل">Submit All</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Main Data Table Container -->
+                <div class="bg-cardBg border border-customBorder rounded-2xl overflow-hidden shadow-xl">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left rtl:text-right border-collapse" id="creatorsTable">
+                            <thead>
+                                <tr id="tableHeaderRow" class="border-b border-customBorder text-[11px] font-semibold text-slate-400 uppercase tracking-wider bg-[#ff69b4]/50">
+                                    <!-- Populated dynamically by renderTable() -->
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-customBorder text-xs" id="creatorsTableBody">
+                                <!-- Dynamic rows populated via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Pagination Controls -->
+                    <div class="p-4 bg-[#0e1424] border-t border-customBorder flex items-center justify-between">
+                        <button onclick="changePage(-1)" id="prevBtn" class="bg-[#ff69b4] border border-customBorder text-slate-300 px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-cardHover transition" data-en="Previous" data-ar="السابق">Previous</button>
+                        <span class="text-xs text-slate-400" id="pageIndicator">Page 1 of 11</span>
+                        <button onclick="changePage(1)" id="nextBtn" class="bg-[#ff69b4] border border-customBorder text-slate-300 px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-cardHover transition" data-en="Next" data-ar="التالي">Next</button>
+                    </div>
+                </div>
+
+                <!-- Bottom Grid Section -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 pb-6">
+                    <!-- Potential Distribution Card -->
+                    <div class="bg-cardBg border border-customBorder rounded-2xl p-5 flex flex-col justify-between">
+                        <h3 class="text-sm font-bold text-white mb-4" data-en="Potential Distribution" data-ar="توزيع الإمكانيات">Potential Distribution</h3>
+                        <div class="flex flex-col sm:flex-row items-center gap-6 my-auto">
+                            <!-- SVG Donut Chart -->
+                            <div class="relative w-36 h-36 flex-shrink-0 flex items-center justify-center">
+                                <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                                    <circle cx="50" cy="50" r="40" fill="transparent" stroke="#1e293b" stroke-width="14"></circle>
+                                    <circle id="donut-low" cx="50" cy="50" r="40" fill="transparent" stroke="#ef4444" stroke-width="14" stroke-dasharray="251.2" stroke-dashoffset="0" class="transition-all duration-500"></circle>
+                                    <circle id="donut-medium" cx="50" cy="50" r="40" fill="transparent" stroke="#f59e0b" stroke-width="14" stroke-dasharray="251.2" stroke-dashoffset="251.2" class="transition-all duration-500"></circle>
+                                    <circle id="donut-high" cx="50" cy="50" r="40" fill="transparent" stroke="#22c55e" stroke-width="14" stroke-dasharray="251.2" stroke-dashoffset="251.2" class="transition-all duration-500"></circle>
+                                </svg>
+                                <div class="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
+                                    <span class="text-lg font-black text-white" id="donut-total-count">55</span>
+                                    <span class="text-[9px] text-slate-400 uppercase tracking-widest" data-en="Total" data-ar="الإجمالي">Total</span>
+                                </div>
+                            </div>
+
+                            <!-- Guide / Legend -->
+                            <div class="space-y-2 text-xs w-full">
+                                <div class="flex items-center justify-between bg-[#0b0f19] px-3 py-2 rounded-xl border border-customBorder">
+                                    <span class="flex items-center gap-2 text-slate-300"><span class="w-2.5 h-2.5 rounded-full bg-green-500"></span> <span data-en="High" data-ar="عالية">High</span></span>
+                                    <span class="font-bold text-white" id="dist-high">0%</span>
+                                </div>
+                                <div class="flex items-center justify-between bg-[#0b0f19] px-3 py-2 rounded-xl border border-customBorder">
+                                    <span class="flex items-center gap-2 text-slate-300"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> <span data-en="Medium" data-ar="متوسطة">Medium</span></span>
+                                    <span class="font-bold text-white" id="dist-medium">0%</span>
+                                </div>
+                                <div class="flex items-center justify-between bg-[#0b0f19] px-3 py-2 rounded-xl border border-customBorder">
+                                    <span class="flex items-center gap-2 text-slate-300"><span class="w-2.5 h-2.5 rounded-full bg-red-500"></span> <span data-en="Low" data-ar="منخفضة">Low</span></span>
+                                    <span class="font-bold text-white" id="dist-low">100%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Top Equipment Needs Card -->
+                    <div class="bg-cardBg border border-customBorder rounded-2xl p-5 flex flex-col justify-between">
+                        <h3 class="text-sm font-bold text-white mb-4" data-en="Top Equipment Needs" data-ar="أبرز المعدات المطلوبة">Top Equipment Needs</h3>
+                        <div class="space-y-3.5 text-xs">
+                            <div>
+                                <div class="flex justify-between mb-1 text-slate-300"><span data-en="Ring Light" data-ar="إضاءة دائرية">Ring Light</span> <span class="font-bold text-white" id="eq-ring">0</span></div>
+                                <div class="w-full bg-[#0b0f19] h-2 rounded-full overflow-hidden"><div class="bg-brandPink h-full rounded-full transition-all duration-300" id="bar-ring" style="width: 0%"></div></div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1 text-slate-300"><span data-en="Microphone" data-ar="ميكروفون">Microphone</span> <span class="font-bold text-white" id="eq-mic">0</span></div>
+                                <div class="w-full bg-[#0b0f19] h-2 rounded-full overflow-hidden"><div class="bg-brandPink h-full rounded-full transition-all duration-300" id="bar-mic" style="width: 0%"></div></div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1 text-slate-300"><span data-en="Phone Stand" data-ar="حامل هاتف">Phone Stand</span> <span class="font-bold text-white" id="eq-phone">0</span></div>
+                                <div class="w-full bg-[#0b0f19] h-2 rounded-full overflow-hidden"><div class="bg-brandPink h-full rounded-full transition-all duration-300" id="bar-phone" style="width: 0%"></div></div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1 text-slate-300"><span data-en="Clean Background" data-ar="خلفية نظيفة">Clean Background</span> <span class="font-bold text-white" id="eq-bg">0</span></div>
+                                <div class="w-full bg-[#0b0f19] h-2 rounded-full overflow-hidden"><div class="bg-brandPink h-full rounded-full transition-all duration-300" id="bar-bg" style="width: 0%"></div></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Agent To-Do (Today) with dynamic percentage -->
+                    <div class="bg-cardBg border border-customBorder rounded-2xl p-5 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-sm font-bold text-white" data-en="Agent To-Do" data-ar="مهام الوكيل ">Agent To-Do</h3>
+                                <div class="w-10 h-10 rounded-full border-2 border-brandPink flex items-center justify-center text-xs font-black text-brandPink" id="todoPercentage">75%</div>
+                            </div>
+                            <div class="space-y-2.5 text-xs text-slate-300">
+                                <label class="flex items-center gap-3 bg-[#0b0f19] p-2.5 rounded-xl border border-customBorder cursor-pointer">
+                                    <input type="checkbox" checked class="accent-brandPink w-4 h-4 rounded todo-checkbox" onchange="updateTodoPercentage()"> 
+                                    <span class="todo-text line-through text-slate-500" data-en="Follow up with creators & Live Entery" data-ar="المتابعة مع المنشئين و دخول البث ">Follow up with creators & Live Entery</span>
+                                </label>
+                                <label class="flex items-center gap-3 bg-[#0b0f19] p-2.5 rounded-xl border border-customBorder cursor-pointer">
+                                    <input type="checkbox" checked class="accent-brandPink w-4 h-4 rounded todo-checkbox" onchange="updateTodoPercentage()"> 
+                                    <span class="todo-text line-through text-slate-500" data-en="Send motivation messages" data-ar="إرسال رسائل تحفيزية">Send motivation messages</span>
+                                </label>
+                                                                    <label class="flex items-center gap-3 bg-[#0b0f19] p-2.5 rounded-xl border border-customBorder cursor-pointer">
+                                    <input type="checkbox" checked class="accent-brandPink w-4 h-4 rounded todo-checkbox" onchange="updateTodoPercentage()"> 
+                                    <span class="todo-text line-through text-slate-500" data-en="Schedule coaching calls" data-ar="جدولة مكالمات التوجيه">Schedule coaching calls</span>
+                                </label>
+                                <label class="flex items-center gap-3 bg-[#0b0f19] p-2.5 rounded-xl border border-customBorder cursor-pointer">
+                                    <input type="checkbox" checked class="accent-brandPink w-4 h-4 rounded todo-checkbox" onchange="updateTodoPercentage()"> 
+                                    <span class="todo-text line-through text-slate-500" data-en="Submit Data For All Managed Creators Daily" data-ar="إرسال بيانات جميع صناع المحتوي المُدارين يومياً">Submit Data For All Managed Creators Daily</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scroll to Top Button -->
+    <button onclick="scrollToTop()" id="scrollToTopBtn" class="fixed bottom-6 right-6 z-50 bg-brandPink hover:bg-brandPinkHover text-white w-10 h-10 rounded-full shadow-lg shadow-pink-500/30 flex items-center justify-center transition-all duration-300 opacity-0 pointer-events-none">
+        <i class="fa-solid fa-arrow-up text-sm"></i>
+    </button>
+
+    <!-- Screenshot Modal for Uploading Proof when Replied is NO -->
+    <div id="screenshotModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-cardBg border border-customBorder rounded-2xl w-full max-w-md p-6 space-y-4 shadow-2xl">
+            <div class="flex items-center justify-between border-b border-customBorder pb-3">
+                <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-cloud-arrow-up text-brandPink"></i>
+                    <span data-en="Upload Communication trial Screenshot" data-ar="رفع لقطة شاشة عدم الرد">Upload Reply Proof Screenshot</span>
+                </h3>
+                <button onclick="closeScreenshotModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-base"></i></button>
+            </div>
+            <p class="text-xs text-slate-400" data-en="Please upload the screenshot proving the creator's status response or interaction." data-ar="الرجاء رفع لقطة الشاشة التي توضح عدم رد المنشئ.">Please upload the screenshot proving the creator's status response.</p>
+            
+            <div class="border-2 border-dashed border-customBorder hover:border-brandPink rounded-xl p-6 text-center cursor-pointer transition bg-[#0b0f19]" onclick="document.getElementById('modalFileField').click()">
+                <i class="fa-solid fa-image text-brandPink text-2xl mb-2"></i>
+                <div class="text-xs font-semibold text-slate-300" data-en="Click to browse screenshot file" data-ar="انقر لاستعراض ملف لقطة الشاشة">Click to browse screenshot file</div>
+                <div class="text-[10px] text-slate-500 mt-1">PNG, JPG, WEBP up to 5MB</div>
+                <input type="file" id="modalFileField" class="hidden" accept="image/*" onchange="handleFileSelected(event)">
+            </div>
+
+            <div id="selectedFileName" class="text-xs text-emerald-400 font-medium hidden"></div>
+
+            <div class="flex justify-end gap-2 pt-2">
+                <button onclick="closeScreenshotModal()" class="bg-[#1e293b] hover:bg-slate-700 text-slate-300 px-4 py-2 rounded-xl text-xs font-semibold transition" data-en="Cancel" data-ar="إلغاء">Cancel</button>
+                <button onclick="confirmScreenshotUpload()" class="bg-brandPink hover:bg-brandPinkHover text-white px-4 py-2 rounded-xl text-xs font-semibold transition shadow-md shadow-pink-500/20" data-en="Upload & Confirm" data-ar="رفع وتأكيد">Upload & Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Handling All Automated Rules & Submit All Google Sheets Integration -->
+    <script>
+        const creatorUsernames = [
+            "elmafia128", "hadyadell", "iambaraissa", "5_6_9", "lc4k__", "zdecq", "aanter62", "ziadzoka111", ".okbr2", "ziot.l3", "tawfeeqalbaik", "mosa5rsh", "vortex6246", "ali_amasha", "hsso_515", "anubis..gaming", "gemaa343", "safa7_valo", "al_rubaie506", "yasser_atef_sharaf", "superplayer.pg", "3._lnm", "k8u2r", "330fx3", "23rng_", "forkaneac", "youneskh48", "iiixzeus", "mr.eyad24", "9o_dl8", "boda3_up", "mohamed.reda6169", "yosseftawfik.official", "hon_daa3", "beboabdullah", "azyz_01", "kandilpop", "m3tz_10", "aflah.xv", "h.ithem", "8zvvx", "p3jc", "kawtherrr6", "husseinsherifofficial", "rayen_messadek", "h.hayek06", "483l", "_m.e.d.o_122", "aiadelnegm", "maryambel25", "dr.saif_salah", "trolleee0", "talalle6", "ma_khatab1", "chahdhosni4", "farrouk_", "800xx1", "i6xqkk", "am2r4", "e_ik8", "lunvr.28", "neldaechoudekh", "f5c55", "badr.mazktli", "ranse070", "_xxy.39", ".zayed999", "wardaia3", "ahmed.al.eleme", "bouamra137", "elgeka01"
+        ];
+
+        // Google Sheet Web App Deployment URL
+        const GOOGLE_SHEET_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbzJbU4XGguRSnbBzi0QlvYkJb7tG8spBkCz1Z-59tI_KH-cxcm2fHzcxv2R4v17IQ/exec";
+
+        let creatorsData = creatorUsernames.map((username, index) => ({
+            id: index + 1,
+            name: "@" + username.toLowerCase(),
+            handle: "@" + username.toLowerCase(),
+            contacted: "",
+            replied: "",
+            liveStatus: "",
+            visuals: [false, false, false, false, false, false],
+            equipment: [false, false, false, false],
+            feedback: "",
+            screenshotName: ""
+        }));
+
+        let currentPage = 1;
+        const itemsPerPage = 5;
+        let filteredData = [...creatorsData];
+        let pendingScreenshotIndex = null;
+        let isArabic = false;
+        let isLightMode = false;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const options = { day: 'numeric', month: 'long', year: 'numeric' };
+            document.getElementById('currentDateDisplay').innerText = new Date().toLocaleDateString('en-US', options);
+            renderTable();
+            recalculateAllMetrics();
+        });
+
+        // Scroll to Top visibility logic
+        window.addEventListener('scroll', () => {
+            const scrollBtn = document.getElementById('scrollToTopBtn');
+            if (window.scrollY > 300) {
+                scrollBtn.classList.remove('opacity-0', 'pointer-events-none');
+            } else {
+                scrollBtn.classList.add('opacity-0', 'pointer-events-none');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        function toggleTheme() {
+            isLightMode = !isLightMode;
+            document.body.classList.toggle('light', isLightMode);
+            const icon = document.getElementById('themeIcon');
+            const text = document.getElementById('themeText');
+            if (isLightMode) {
+                icon.className = "fa-solid fa-moon text-brandPink";
+                text.setAttribute('data-en', 'Night');
+                text.setAttribute('data-ar', 'ليلي');
+                text.innerText = isArabic ? 'ليلي' : 'Night';
+            } else {
+                icon.className = "fa-solid fa-sun text-brandPink";
+                text.setAttribute('data-en', 'Day');
+                text.setAttribute('data-ar', 'نهاري');
+                text.innerText = isArabic ? 'نهاري' : 'Day';
+            }
+        }
+
+        function filterCreators() {
+            const query = document.getElementById('creatorSearchInput').value.toLowerCase().trim();
+            filteredData = creatorsData.filter(c => c.name.toLowerCase().includes(query));
+            currentPage = 1;
+            renderTable();
+        }
+
+        function renderTable() {
+            // Render Dynamic Table Header
+            const headerRow = document.getElementById('tableHeaderRow');
+            headerRow.innerHTML = `
+                <th class="py-4 px-4 text-left rtl:text-right">${isArabic ? 'المنشئ' : 'Creator'}</th>
+                <th class="py-4 px-3 text-center">${isArabic ? 'تم التواصل؟' : 'Contacted?'}</th>
+                <th class="py-4 px-3 text-center">${isArabic ? 'تم الرد؟' : 'Replied?'}</th>
+                <th class="py-4 px-3 text-center">${isArabic ? 'حالة البث' : 'Live Status'}</th>
+                <th class="py-4 px-3 text-center">${isArabic ? 'حالة الإمكانيات' : 'Potential Status'}</th>
+                <th class="py-4 px-3 text-center">${isArabic ? 'قائمة التحقق البصري ' : 'Visual Checklist'}</th>
+                <th class="py-4 px-3 text-center">${isArabic ? 'المعدات المطلوبة ' : 'Equipment Needed'}</th>
+                <th class="py-4 px-3 text-center">${isArabic ? 'ملاحظات الوكيل' : 'Agent Feedback'}</th>
+            `;
+
+            const tbody = document.getElementById('creatorsTableBody');
+            tbody.innerHTML = '';
+
+            const start = (currentPage - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            const paginatedItems = filteredData.slice(start, end);
+
+            const totalText = isArabic ? `عرض ${filteredData.length > 0 ? start + 1 : 0}-${Math.min(end, filteredData.length)} من ${filteredData.length} منشئ` : `Showing ${filteredData.length > 0 ? start + 1 : 0}-${Math.min(end, filteredData.length)} of ${filteredData.length} creators`;
+            document.getElementById('paginationInfo').innerText = totalText;
+            
+            const totalPages = Math.ceil(filteredData.length / itemsPerPage) || 1;
+            document.getElementById('pageIndicator').innerText = isArabic ? `الصفحة ${currentPage} من ${totalPages}` : `Page ${currentPage} of ${totalPages}`;
+
+            paginatedItems.forEach((creator, idx) => {
+                const globalIdx = start + idx;
+                const avatarIcon = `<div class="w-full h-full bg-[#1e293b] text-slate-400 flex items-center justify-center text-sm"><i class="fa-solid fa-user-secret"></i></div>`;
+                
+                const visualCheckedCount = creator.visuals.filter(Boolean).length;
+                let potentialText = isArabic ? "منخفضة" : "Low";
+                let potentialClass = "bg-red-500/20 text-red-400";
+                if (visualCheckedCount === 3) {
+                    potentialText = isArabic ? "متوسطة" : "Medium";
+                    potentialClass = "bg-amber-500/20 text-amber-400";
+                } else if (visualCheckedCount > 3) {
+                    potentialText = isArabic ? "عالية" : "High";
+                    potentialClass = "bg-green-500/20 text-green-400";
+                }
+
+                const row = document.createElement('tr');
+                row.className = "hover:bg-cardHover/50 transition";
+                row.innerHTML = `
+                    <td class="py-4 px-4 text-left rtl:text-right">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-slate-700 overflow-hidden border border-brandPink/40 flex items-center justify-center flex-shrink-0">
+                                ${avatarIcon}
+                            </div>
+                            <div>
+                                <div class="font-bold text-white">${creator.name}</div>
+                                <div class="text-[11px] text-slate-400">${creator.handle}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="py-4 px-3 text-center">
+                        <select class="border border-customBorder rounded-lg px-2.5 py-1.5 text-xs font-semibold focus:outline-none focus:border-brandPink ${creator.contacted === 'yes' ? 'text-emerald-400' : creator.contacted === 'no' ? 'text-red-400' : 'text-slate-500'}" onchange="updateCreatorField(${globalIdx}, 'contacted', this.value)">
+                            <option value="" disabled ${creator.contacted === '' ? 'selected' : ''}>${isArabic ? 'اختر...' : 'Select...'}</option>
+                            <option value="yes" ${creator.contacted === 'yes' ? 'selected' : ''}>${isArabic ? 'نعم' : 'Yes'}</option>
+                            <option value="no" ${creator.contacted === 'no' ? 'selected' : ''}>${isArabic ? 'لا' : 'No'}</option>
+                        </select>
+                    </td>
+                    <td class="py-4 px-3 text-center">
+                        <div class="space-y-1 inline-block text-left rtl:text-right">
+                            <select class="border border-customBorder rounded-lg px-2.5 py-1.5 text-xs font-semibold focus:outline-none focus:border-brandPink ${creator.replied === 'yes' ? 'text-emerald-400' : creator.replied === 'no' ? 'text-red-400' : 'text-slate-500'}" onchange="handleRepliedChange(${globalIdx}, this.value)">
+                                <option value="" disabled ${creator.replied === '' ? 'selected' : ''}>${isArabic ? 'اختر...' : 'Select...'}</option>
+                                <option value="yes" ${creator.replied === 'yes' ? 'selected' : ''}>${isArabic ? 'نعم' : 'Yes'}</option>
+                                <option value="no" ${creator.replied === 'no' ? 'selected' : ''}>${isArabic ? 'لا' : 'No'}</option>
+                            </select>
+                            ${creator.replied === 'no' ? `
+                                <div>
+                                    <button onclick="openScreenshotModal(${globalIdx})" class="text-[10px] text-brandPink hover:underline flex items-center gap-1 font-medium whitespace-nowrap">
+                                        <i class="fa-solid fa-upload"></i> ${creator.screenshotName ? (isArabic ? 'تم رفع لقطة الشاشة' : 'Screenshot Uploaded') : (isArabic ? 'رفع لقطة الشاشة' : 'Upload Screenshot')}
+                                    </button>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </td>
+                    <td class="py-4 px-3 text-center">
+                        <select class="border border-customBorder rounded-lg px-2.5 py-1.5 text-xs text-slate-300 font-medium focus:outline-none focus:border-brandPink" onchange="updateCreatorField(${globalIdx}, 'liveStatus', this.value)">
+                            <option value="" disabled ${creator.liveStatus === '' ? 'selected' : ''}>${isArabic ? 'اختر الحالة...' : 'Select status...'}</option>
+                            <option value="went_live" ${creator.liveStatus === 'went_live' ? 'selected' : ''}>• ${isArabic ? 'فتح بث مباشر' : 'went live'}</option>
+                            <option value="didnt_go_live" ${creator.liveStatus === 'didnt_go_live' ? 'selected' : ''}>• ${isArabic ? 'لم يفتح بث' : 'didnt go live'}</option>
+                            <option value="busy" ${creator.liveStatus === 'busy' ? 'selected' : ''}>• ${isArabic ? 'مشغول' : 'busy'}</option>
+                            <option value="vacation" ${creator.liveStatus === 'vacation' ? 'selected' : ''}>• ${isArabic ? 'إجازة' : 'vacation'}</option>
+                            <option value="refusing" ${creator.liveStatus === 'refusing' ? 'selected' : ''}>• ${isArabic ? 'رفض البث مجدداً' : 'refusing to go live'}</option>
+                        </select>
+                    </td>
+                    <td class="py-4 px-3 text-center">
+                        <span class="px-2.5 py-1 rounded-lg text-xs font-bold ${potentialClass}">${potentialText}</span>
+                    </td>
+                    <td class="py-4 px-3 text-center">
+                        <div class="space-y-1 text-[11px] text-slate-300 inline-block text-left rtl:text-right">
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" ${creator.visuals[0] ? 'checked' : ''} onchange="updateVisual(${globalIdx}, 0, this.checked)" class="accent-brandPink rounded"> <span>${isArabic ? 'جودة البث' : 'Live Quality'}</span></label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" ${creator.visuals[1] ? 'checked' : ''} onchange="updateVisual(${globalIdx}, 1, this.checked)" class="accent-brandPink rounded"> <span>${isArabic ? 'جودة الصوت' : 'Voice Quality'}</span></label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" ${creator.visuals[2] ? 'checked' : ''} onchange="updateVisual(${globalIdx}, 2, this.checked)" class="accent-brandPink rounded"> <span>${isArabic ? 'إنترنت مستقر' : 'Stable Internet'}</span></label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" ${creator.visuals[3] ? 'checked' : ''} onchange="updateVisual(${globalIdx}, 3, this.checked)" class="accent-brandPink rounded"> <span>${isArabic ? 'خلفية نظيفة' : 'Clean Background'}</span></label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" ${creator.visuals[4] ? 'checked' : ''} onchange="updateVisual(${globalIdx}, 4, this.checked)" class="accent-brandPink rounded"> <span>${isArabic ? 'ظهور الوجه' : 'Face Visibility'}</span></label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" ${creator.visuals[5] ? 'checked' : ''} onchange="updateVisual(${globalIdx}, 5, this.checked)" class="accent-brandPink rounded"> <span>${isArabic ? 'زاوية كاميرا جيدة' : 'Good Camera Angle'}</span></label>
+                        </div>
+                    </td>
+                    <td class="py-4 px-3 text-center">
+                        <div class="space-y-1 text-[11px] text-slate-300 inline-block text-left rtl:text-right">
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" ${creator.equipment[0] ? 'checked' : ''} onchange="updateEquipment(${globalIdx}, 0, this.checked)" class="accent-brandPink rounded"> <span>${isArabic ? 'إضاءة دائرية' : 'Ring Light'}</span></label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" ${creator.equipment[1] ? 'checked' : ''} onchange="updateEquipment(${globalIdx}, 1, this.checked)" class="accent-brandPink rounded"> <span>${isArabic ? 'ميكروفون' : 'Mic'}</span></label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" ${creator.equipment[2] ? 'checked' : ''} onchange="updateEquipment(${globalIdx}, 2, this.checked)" class="accent-brandPink rounded"> <span>${isArabic ? 'حامل هاتف' : 'Phone Stand'}</span></label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" ${creator.equipment[3] ? 'checked' : ''} onchange="updateEquipment(${globalIdx}, 3, this.checked)" class="accent-brandPink rounded"> <span>${isArabic ? 'خلفية نظيفة' : 'Clean Background'}</span></label>
+                        </div>
+                    </td>
+                    <td class="py-4 px-3 text-center">
+                        <textarea placeholder="${isArabic ? 'اكتب ملاحظة...' : 'Write feedback...'}" rows="2" oninput="creatorsData[${globalIdx}].feedback = this.value" class="border border-customBorder rounded-xl p-2 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-brandPink resize-none w-full">${creator.feedback}</textarea>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function changePage(direction) {
+            const totalPages = Math.ceil(filteredData.length / itemsPerPage) || 1;
+            currentPage += direction;
+            if (currentPage < 1) currentPage = 1;
+            if (currentPage > totalPages) currentPage = totalPages;
+            renderTable();
+        }
+
+        function updateCreatorField(index, field, value) {
+            creatorsData[index][field] = value;
+            recalculateAllMetrics();
+            renderTable();
+        }
+
+        function handleRepliedChange(index, value) {
+            creatorsData[index].replied = value;
+            if (value === 'yes') {
+                creatorsData[index].screenshotName = "";
+            }
+            recalculateAllMetrics();
+            renderTable();
+        }
+
+        function openScreenshotModal(index) {
+            pendingScreenshotIndex = index;
+            document.getElementById('selectedFileName').classList.add('hidden');
+            document.getElementById('modalFileField').value = '';
+            document.getElementById('screenshotModal').classList.remove('hidden');
+        }
+
+        function closeScreenshotModal() {
+            document.getElementById('screenshotModal').classList.add('hidden');
+            pendingScreenshotIndex = null;
+        }
+
+        function handleFileSelected(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const nameDiv = document.getElementById('selectedFileName');
+                nameDiv.innerText = `${isArabic ? 'الملف المحدد:' : 'Selected file:'} ${file.name}`;
+                nameDiv.classList.remove('hidden');
+            }
+        }
+
+        function confirmScreenshotUpload() {
+            const fileInput = document.getElementById('modalFileField');
+            if (pendingScreenshotIndex !== null && fileInput.files.length > 0) {
+                creatorsData[pendingScreenshotIndex].screenshotName = fileInput.files[0].name;
+                renderTable();
+            }
+            closeScreenshotModal();
+        }
+
+        function updateVisual(index, pos, val) {
+            creatorsData[index].visuals[pos] = val;
+            recalculateAllMetrics();
+            renderTable();
+        }
+
+        function updateEquipment(index, pos, val) {
+            creatorsData[index].equipment[pos] = val;
+            recalculateAllMetrics();
+        }
+
+        function recalculateAllMetrics() {
+            document.getElementById('statGoCreators').innerText = creatorsData.length;
+
+            const openedLiveCount = creatorsData.filter(c => c.liveStatus === 'went_live').length;
+            document.getElementById('statOpenedLive').innerText = openedLiveCount;
+
+            const repliedYes = creatorsData.filter(c => c.replied === 'yes').length;
+            document.getElementById('statRepliedAgent').innerText = repliedYes;
+
+            let counts = { High: 0, Medium: 0, Low: 0 };
+            creatorsData.forEach(c => {
+                const count = c.visuals.filter(Boolean).length;
+                if (count > 3) counts.High++;
+                else if (count === 3) counts.Medium++;
+                else counts.Low++;
+            });
+            document.getElementById('statHighPotential').innerText = counts.High;
+
+            const total = creatorsData.length;
+            const pctHigh = Math.round((counts.High / total) * 100);
+            const pctMedium = Math.round((counts.Medium / total) * 100);
+            const pctLow = Math.round((counts.Low / total) * 100);
+
+            document.getElementById('dist-high').innerText = pctHigh + '%';
+            document.getElementById('dist-medium').innerText = pctMedium + '%';
+            document.getElementById('dist-low').innerText = pctLow + '%';
+            document.getElementById('donut-total-count').innerText = total;
+
+            const circ = 251.2;
+            document.getElementById('donut-low').style.strokeDasharray = `${(counts.Low / total) * circ} ${circ}`;
+            document.getElementById('donut-low').style.strokeDashoffset = `0`;
+
+            document.getElementById('donut-medium').style.strokeDasharray = `${(counts.Medium / total) * circ} ${circ}`;
+            document.getElementById('donut-medium').style.strokeDashoffset = `-${(counts.Low / total) * circ}`;
+
+            document.getElementById('donut-high').style.strokeDasharray = `${(counts.High / total) * circ} ${circ}`;
+            document.getElementById('donut-high').style.strokeDashoffset = `- ${((counts.Low + counts.Medium) / total) * circ}`;
+
+            let ring = 0, mic = 0, phone = 0, bg = 0;
+            let upgradeCreators = 0;
+            creatorsData.forEach(c => {
+                let hasEq = false;
+                if (c.equipment[0]) { ring++; hasEq = true; }
+                if (c.equipment[1]) { mic++; hasEq = true; }
+                if (c.equipment[2]) { phone++; hasEq = true; }
+                if (c.equipment[3]) { bg++; hasEq = true; }
+                if (hasEq) upgradeCreators++;
+            });
+
+            document.getElementById('statEquipmentUpgrade').innerText = upgradeCreators;
+            document.getElementById('eq-ring').innerText = ring;
+            document.getElementById('eq-mic').innerText = mic;
+            document.getElementById('eq-phone').innerText = phone;
+            document.getElementById('eq-bg').innerText = bg;
+
+            document.getElementById('bar-ring').style.width = Math.min(ring * 10, 100) + '%';
+            document.getElementById('bar-mic').style.width = Math.min(mic * 10, 100) + '%';
+            document.getElementById('bar-phone').style.width = Math.min(phone * 10, 100) + '%';
+            document.getElementById('bar-bg').style.width = Math.min(bg * 10, 100) + '%';
+        }
+
+        function updateTodoPercentage() {
+            const checkboxes = document.querySelectorAll('.todo-checkbox');
+            let checked = 0;
+            checkboxes.forEach(cb => {
+                if (cb.checked) checked++;
+                const span = cb.parentElement.querySelector('.todo-text');
+                if (cb.checked) {
+                    span.classList.add('line-through', 'text-slate-500');
+                    span.classList.remove('text-slate-300');
+                } else {
+                    span.classList.remove('line-through', 'text-slate-500');
+                    span.classList.add('text-slate-300');
+                }
+            });
+            const pct = Math.round((checked / checkboxes.length) * 100);
+            document.getElementById('todoPercentage').innerText = pct + '%';
+        }
+
+      function toggleLanguage() {
+    isArabic = !isArabic;
+
+    document.getElementById('langText').textContent =
+        isArabic ? 'English' : 'العربية';
+
+    document.documentElement.dir = isArabic ? 'rtl' : 'ltr';
+    document.documentElement.lang = isArabic ? 'ar' : 'en';
+
+    // Translate normal text
+    document.querySelectorAll('[data-en]').forEach(el => {
+        if (el.children.length === 0) {
+            el.textContent = isArabic
+                ? el.dataset.ar
+                : el.dataset.en;
+        }
+    });
+
+    // Translate placeholders
+    document.querySelectorAll('[data-en-placeholder]').forEach(el => {
+        el.placeholder = isArabic
+            ? el.dataset.arPlaceholder
+            : el.dataset.enPlaceholder;
+    });
+
+    // Theme button text
+    document.getElementById('themeText').textContent =
+        isLightMode
+            ? (isArabic ? 'ليلي' : 'Night')
+            : (isArabic ? 'نهاري' : 'Day');
+
+    // Date
+    const options = {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+    };
+
+    document.getElementById('currentDateDisplay').textContent =
+        new Date().toLocaleDateString(
+            isArabic ? 'ar-EG' : 'en-US',
+            options
+        );
+
+    renderTable();
+}
+
+        function submitAllData(button) {
+            button.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+            button.disabled = true;
+
+            const payload = {
+                action: "submitAll",
+                timestamp: new Date().toISOString(),
+                creators: creatorsData.map(c => ({
+                    name: c.name,
+                    handle: c.handle,
+                    contacted: c.contacted,
+                    replied: c.replied,
+                    liveStatus: c.liveStatus,
+                    visuals: c.visuals.join(', '),
+                    equipment: c.equipment.join(', '),
+                    feedback: c.feedback,
+                    screenshot: c.screenshotName || 'None'
+                }))
+            };
+
+            fetch(GOOGLE_SHEET_WEBHOOK_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            }).then(() => {
+                button.innerHTML = '<i class="fa-solid fa-check"></i>';
+                button.className = button.className.replace('bg-brandPink hover:bg-brandPinkHover', 'bg-emerald-600');
+                setTimeout(() => {
+                    button.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i> <span data-en="Submit All" data-ar="إرسال الكل">${isArabic ? 'إرسال الكل' : 'Submit All'}</span>`;
+                    button.className = button.className.replace('bg-emerald-600', 'bg-brandPink hover:bg-brandPinkHover');
+                    button.disabled = false;
+                }, 1500);
+            }).catch(err => {
+                console.error("Submission error:", err);
+                button.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i>';
+                setTimeout(() => {
+                    button.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i> <span data-en="Submit All" data-ar="إرسال الكل">${isArabic ? 'إرسال الكل' : 'Submit All'}</span>`;
+                    button.disabled = false;
+                }, 1500);
+            });
+        }
+    </script>
+</body>
+</html>
