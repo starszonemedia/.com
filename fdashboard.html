@@ -459,8 +459,9 @@ body.light .text-slate-400 {
             const totalPages = Math.ceil(filteredData.length / itemsPerPage) || 1;
             document.getElementById('pageIndicator').innerText = isArabic ? `الصفحة ${currentPage} من ${totalPages}` : `Page ${currentPage} of ${totalPages}`;
 
-            paginatedItems.forEach((creator, idx) => {
-                const globalIdx = start + idx;
+            paginatedItems.forEach((creator) => {
+                // Find correct global index in the main creatorsData array using the unique name/handle
+                const globalIdx = creatorsData.findIndex(c => c.name === creator.name);
                 const avatarIcon = `<div class="w-full h-full bg-[#1e293b] text-slate-400 flex items-center justify-center text-sm"><i class="fa-solid fa-user-secret"></i></div>`;
                 
                 const visualCheckedCount = creator.visuals.filter(Boolean).length;
@@ -561,6 +562,13 @@ body.light .text-slate-400 {
         function updateCreatorField(index, field, value) {
             creatorsData[index][field] = value;
             recalculateAllMetrics();
+            // Preserve search query state when updating data
+            const query = document.getElementById('creatorSearchInput').value.toLowerCase().trim();
+            if (query) {
+                filteredData = creatorsData.filter(c => c.name.toLowerCase().includes(query));
+            } else {
+                filteredData = [...creatorsData];
+            }
             renderTable();
         }
 
@@ -570,6 +578,12 @@ body.light .text-slate-400 {
                 creatorsData[index].screenshotName = "";
             }
             recalculateAllMetrics();
+            const query = document.getElementById('creatorSearchInput').value.toLowerCase().trim();
+            if (query) {
+                filteredData = creatorsData.filter(c => c.name.toLowerCase().includes(query));
+            } else {
+                filteredData = [...creatorsData];
+            }
             renderTable();
         }
 
@@ -598,6 +612,12 @@ body.light .text-slate-400 {
             const fileInput = document.getElementById('modalFileField');
             if (pendingScreenshotIndex !== null && fileInput.files.length > 0) {
                 creatorsData[pendingScreenshotIndex].screenshotName = fileInput.files[0].name;
+                const query = document.getElementById('creatorSearchInput').value.toLowerCase().trim();
+                if (query) {
+                    filteredData = creatorsData.filter(c => c.name.toLowerCase().includes(query));
+                } else {
+                    filteredData = [...creatorsData];
+                }
                 renderTable();
             }
             closeScreenshotModal();
@@ -606,6 +626,12 @@ body.light .text-slate-400 {
         function updateVisual(index, pos, val) {
             creatorsData[index].visuals[pos] = val;
             recalculateAllMetrics();
+            const query = document.getElementById('creatorSearchInput').value.toLowerCase().trim();
+            if (query) {
+                filteredData = creatorsData.filter(c => c.name.toLowerCase().includes(query));
+            } else {
+                filteredData = [...creatorsData];
+            }
             renderTable();
         }
 
