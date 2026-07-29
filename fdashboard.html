@@ -1,10 +1,9 @@
-<!-- Luxury version placeholder: apply premium UI refinements -->
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>dashboard.html</title>
+    <title>Stars Zone Media - Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
@@ -29,7 +28,6 @@
             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
-        /* Default Dark Mode Styling (Night Mode) */
         body:not(.light) {
             background-color: #0b0f19;
             color: #f8fafc;
@@ -45,7 +43,6 @@
         body:not(.light) ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
         body:not(.light) ::-webkit-scrollbar-thumb:hover { background: #334155; }
 
-        /* Day / Light Mode Styling */
         body.light {
             background-color: #f8fafc;
             color: #0f172a;
@@ -56,24 +53,16 @@
         body.light .bg-\[\#0e1424\] { background-color: #f1f5f9 !important; }
         body.light .border-\[\#1e293b\], body.light .border-customBorder { border-color: #e2e8f0 !important; }
         body.light .text-white { color: #0f172a !important; }
-      body.light .text-slate-300,
-body.light .text-slate-400 {
-   color: #6b7280 !important;
-}
+        body.light .text-slate-300, body.light .text-slate-400 { color: #6b7280 !important; }
         body.light input, body.light select, body.light textarea { background-color: #f8fafc !important; color: #0f172a !important; border-color: #cbd5e1 !important; }
-        
-        body.light ::-webkit-scrollbar-track { background: #f8fafc; }
-        body.light ::-webkit-scrollbar-thumb { background: #cbd5e1; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
 
     <div class="flex flex-1">
-        <!-- Main Content Wrapper -->
         <main class="flex-1 flex flex-col min-w-0">
-            <!-- Top Navbar -->
-            <header class="bg-[#0e1424] border-b border-[#1e293b] px-3 sm:px-6 py-3 flex items-center justify-between sticky top-0 z-40 transition-colors duration-300 gap-2">
-                <!-- Exact Stars Zone Media Logo matching attached picture with custom subtitle -->
+            <!-- Top Navbar with Centered Tabs -->
+            <header class="bg-[#0e1424] border-b border-[#1e293b] px-3 sm:px-6 py-3 grid grid-cols-2 lg:grid-cols-3 items-center sticky top-0 z-40 transition-colors duration-300 gap-2">
                 <div class="flex items-center gap-2 sm:gap-3 min-w-0">
                     <div class="text-brandPink text-xl sm:text-2xl font-black flex-shrink-0">
                         <i class="fa-solid fa-star"></i>
@@ -84,47 +73,54 @@ body.light .text-slate-400 {
                     </div>
                 </div>
 
-                <div class="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
-                    <!-- Luxury Day/Night Theme Toggle Button -->
+                <div class="col-span-2 lg:col-span-1 flex justify-center order-last lg:order-none mt-2 lg:mt-0">
+                    <div class="flex items-center bg-[#0b0f19] border border-customBorder p-1 rounded-xl shadow-inner">
+                        <button onclick="switchTab('operations')" id="tabOperations" class="px-3 sm:px-4 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-2 bg-brandPink text-white shadow-md shadow-pink-500/20">
+                            <i class="fa-solid fa-chart-line"></i>
+                            <span data-en="Operations" data-ar="العمليات">Operations</span>
+                        </button>
+                        <button onclick="switchTab('recruitment')" id="tabRecruitment" class="px-3 sm:px-4 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-2 text-slate-400 hover:text-white">
+                            <i class="fa-solid fa-user-plus"></i>
+                            <span data-en="Recruitment" data-ar="التوظيف">Recruitment</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-end gap-1.5 sm:gap-3 flex-shrink-0">
                     <button onclick="toggleTheme()" id="themeToggleBtn" class="bg-[#131b2e] hover:bg-[#1a243f] border border-[#1e293b] text-xs font-semibold text-slate-300 px-2 sm:px-3 py-2 rounded-xl transition shadow-sm flex items-center gap-1.5 sm:gap-2">
                         <i id="themeIcon" class="fa-solid fa-sun text-brandPink"></i>
                         <span id="themeText" class="hidden xs:inline sm:inline" data-en="Day" data-ar="نهاري">Day</span>
                     </button>
 
-                    <!-- Language Toggle Button -->
                     <button onclick="toggleLanguage()" id="langToggleBtn" class="bg-[#131b2e] hover:bg-[#1a243f] border border-[#1e293b] text-xs font-semibold text-slate-300 px-2 sm:px-3 py-2 rounded-xl transition flex items-center gap-1.5 sm:gap-2">
                         <i class="fa-solid fa-globe text-brandPink"></i>
                         <span id="langText">العربية</span>
                     </button>
 
-                    <!-- Calendar Date Indicator -->
-                    <div class="hidden lg:flex items-center gap-2 bg-[#131b2e] border border-[#1e293b] px-3 py-2 rounded-xl text-xs text-slate-300">
+                    <div class="hidden xl:flex items-center gap-2 bg-[#131b2e] border border-[#1e293b] px-3 py-2 rounded-xl text-xs text-slate-300">
                         <i class="fa-regular fa-calendar text-brandPink"></i>
-                        <span id="currentDateDisplay">23 July 2026</span>
+                        <span id="currentDateDisplay">28 July 2026</span>
                     </div>
 
-                    <!-- Logout Button -->
                     <a href="login.html" class="flex items-center gap-1.5 sm:gap-2 bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-red-400 text-xs font-semibold px-2.5 sm:px-3 py-2 rounded-xl transition">
                         <i class="fa-solid fa-right-from-bracket"></i>
                         <span class="hidden md:inline" data-en="Logout" data-ar="تسجيل الخروج">Logout</span>
                     </a>
 
-                    <!-- User Profile -->
-                    <div class="flex items-center gap-2 pl-1.5 sm:pl-2 border-l border-[#1e293b] rtl:pl-0 rtl:pr-1.5 rtl:sm:pr-2 rtl:border-l-0 rtl:border-r">
+                    <div class="flex items-center gap-2 pl-1.5 sm:pl-2 border-l border-[#1e293b]">
                         <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-tr from-pink-500 to-purple-600 flex items-center justify-center font-bold text-white text-xs sm:text-sm shadow-md flex-shrink-0">
-                            AH
+                            M
                         </div>
                         <div class="hidden sm:block text-left rtl:text-right">
-                            <div class="text-xs font-bold text-white">Agent Hamsa</div>
-                            <div class="text-[10px] text-slate-400" data-en="Operations" data-ar="العمليات">Operations</div>
+                            <div class="text-xs font-bold text-white">Masy</div>
+                            <div class="text-[10px] text-slate-400" data-en="Operations Agent" data-ar="وكيل عمليات">Operations Agent</div>
                         </div>
                     </div>
                 </div>
             </header>
 
-            <!-- Dashboard Content Container -->
-            <div class="p-6 space-y-6">
-                <!-- Page Title Section -->
+            <!-- ================= PAGE 1: OPERATIONS ================= -->
+            <div id="pageOperations" class="p-4 sm:p-6 space-y-6">
                 <div>
                     <h1 class="text-2xl font-black text-white flex items-center gap-2" data-en="Inactive Creators Dashboard" data-ar="لوحة تحكم المنشئين غير النشطين">
                         Inactive Creators Dashboard
@@ -132,73 +128,51 @@ body.light .text-slate-400 {
                     <p class="text-xs text-slate-400 mt-1" data-en="Track, Analyze & Reactivate your network creators seamlessly." data-ar="تتبع، تحليل وإعادة تنشيط منشئي الشبكة الخاصة بك بسلاسة.">Track, Analyze & Reactivate your network creators seamlessly.</p>
                 </div>
 
-                <!-- Top Statistics Cards -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-                    <!-- Total Gzero Creators -->
                     <div class="bg-cardBg border border-customBorder rounded-2xl p-4 relative overflow-hidden">
                         <div class="flex items-center justify-between mb-2">
-                            <div class="w-9 h-9 rounded-xl bg-pink-500/10 text-brandPink flex items-center justify-center text-base">
-                                <i class="fa-solid fa-users"></i>
-                            </div>
+                            <div class="w-9 h-9 rounded-xl bg-pink-500/10 text-brandPink flex items-center justify-center text-base"><i class="fa-solid fa-users"></i></div>
                         </div>
                         <div class="text-2xl font-black text-white" id="statGoCreators">55</div>
                         <div class="text-xs text-slate-400 mt-0.5" data-en="Total Gzero Creators" data-ar="إجمالي منشئي Gzero">Total Gzero Creators</div>
                     </div>
-
-                    <!-- Opened Live -->
                     <div class="bg-cardBg border border-customBorder rounded-2xl p-4 relative overflow-hidden">
                         <div class="flex items-center justify-between mb-2">
-                            <div class="w-9 h-9 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-base">
-                                <i class="fa-solid fa-tower-broadcast"></i>
-                            </div>
+                            <div class="w-9 h-9 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-base"><i class="fa-solid fa-tower-broadcast"></i></div>
                         </div>
                         <div class="text-2xl font-black text-white" id="statOpenedLive">0</div>
-                        <div class="text-xs text-slate-400 mt-0.5"><span data-en="Opened Live" data-ar="فتح بث مباشر">Opened Live</span> <span class="text-[10px] text-slate-500" data-en="" data-ar=""></span></div>
+                        <div class="text-xs text-slate-400 mt-0.5"><span data-en="Opened Live" data-ar="فتح بث مباشر">Opened Live</span></div>
                     </div>
-
-                    <!-- Replied to Agent  -->
                     <div class="bg-cardBg border border-customBorder rounded-2xl p-4 relative overflow-hidden">
                         <div class="flex items-center justify-between mb-2">
-                            <div class="w-9 h-9 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-base">
-                                <i class="fa-solid fa-comment-sms"></i>
-                            </div>
+                            <div class="w-9 h-9 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-base"><i class="fa-solid fa-comment-sms"></i></div>
                         </div>
                         <div class="text-2xl font-black text-white" id="statRepliedAgent">0</div>
-                        <div class="text-xs text-slate-400 mt-0.5"><span data-en="Replied to Agent" data-ar="الرد على الوكيل">Replied to Agent</span> <span class="text-[10px] text-slate-500" data-en="" data-ar=""></span></div>
+                        <div class="text-xs text-slate-400 mt-0.5"><span data-en="Replied to Agent" data-ar="الرد على الوكيل">Replied to Agent</span></div>
                     </div>
-
-                    <!-- High Potential -->
                     <div class="bg-cardBg border border-customBorder rounded-2xl p-4 relative overflow-hidden">
                         <div class="flex items-center justify-between mb-2">
-                            <div class="w-9 h-9 rounded-xl bg-pink-500/10 text-brandPink flex items-center justify-center text-base">
-                                <i class="fa-solid fa-star"></i>
-                            </div>
+                            <div class="w-9 h-9 rounded-xl bg-pink-500/10 text-brandPink flex items-center justify-center text-base"><i class="fa-solid fa-star"></i></div>
                         </div>
                         <div class="text-2xl font-black text-white" id="statHighPotential">0</div>
                         <div class="text-xs text-slate-400 mt-0.5" data-en="High Potential" data-ar="إمكانيات عالية">High Potential</div>
                     </div>
-
-                    <!-- Need Equipment Upgrade -->
                     <div class="bg-cardBg border border-customBorder rounded-2xl p-4 relative overflow-hidden sm:col-span-2 lg:col-span-1">
                         <div class="flex items-center justify-between mb-2">
-                            <div class="w-9 h-9 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center text-base">
-                                <i class="fa-solid fa-screwdriver-wrench"></i>
-                            </div>
+                            <div class="w-9 h-9 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center text-base"><i class="fa-solid fa-screwdriver-wrench"></i></div>
                         </div>
                         <div class="text-2xl font-black text-white" id="statEquipmentUpgrade">0</div>
                         <div class="text-xs text-slate-400 mt-0.5" data-en="Need Equipment Upgrade" data-ar="بحاجة ترقية معدات">Need Equipment Upgrade</div>
                     </div>
                 </div>
 
-                <!-- Search Bar & Table Controls -->
                 <div class="bg-cardBg border border-customBorder p-4 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-4">
                     <div class="relative w-full md:w-96">
                         <i class="fa-solid fa-magnifying-glass absolute left-3 rtl:left-auto rtl:right-3 top-3 text-slate-500 text-xs"></i>
                         <input type="text" id="creatorSearchInput" oninput="filterCreators()" placeholder="Search creator by name..." data-en-placeholder="Search creator by name..." data-ar-placeholder="البحث عن منشئ بالاسم..." class="w-full bg-[#0b0f19] border border-customBorder rounded-xl pl-9 pr-4 rtl:pl-4 rtl:pr-9 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brandPink transition">
                     </div>
-                    <div class="flex items-center gap-3">
-                        <div class="text-xs text-slate-400" id="paginationInfo">Showing 1-5 of 55 creators</div>
-                        <!-- Submit All Button on the Right Side -->
+                    <div class="flex items-center justify-between w-full md:w-auto gap-3">
+                        <div class="text-xs text-slate-400" id="paginationInfo">Showing 1-10 of 72 creators</div>
                         <button onclick="submitAllData(this)" id="submitAllBtn" class="bg-brandPink hover:bg-brandPinkHover text-white font-bold text-xs px-4 py-2.5 rounded-xl transition shadow-lg shadow-pink-500/20 whitespace-nowrap flex items-center gap-2">
                             <i class="fa-solid fa-cloud-arrow-up"></i>
                             <span data-en="Submit All" data-ar="إرسال الكل">Submit All</span>
@@ -206,35 +180,29 @@ body.light .text-slate-400 {
                     </div>
                 </div>
 
-                <!-- Main Data Table Container -->
                 <div class="bg-cardBg border border-customBorder rounded-2xl overflow-hidden shadow-xl">
-                    <div class="overflow-x-auto">
+                    <div class="hidden md:block overflow-x-auto">
                         <table class="w-full text-left rtl:text-right border-collapse" id="creatorsTable">
                             <thead>
-                                <tr id="tableHeaderRow" class="border-b border-customBorder text-[11px] font-semibold text-slate-400 uppercase tracking-wider bg-[#ff69b4]/50">
-                                    <!-- Populated dynamically by renderTable() -->
-                                </tr>
+                                <tr id="tableHeaderRow" class="border-b border-customBorder text-[11px] font-semibold text-slate-400 uppercase tracking-wider bg-[#ff69b4]/50"></tr>
                             </thead>
-                            <tbody class="divide-y divide-customBorder text-xs" id="creatorsTableBody">
-                                <!-- Dynamic rows populated via JS -->
-                            </tbody>
+                            <tbody class="divide-y divide-customBorder text-xs" id="creatorsTableBody"></tbody>
                         </table>
                     </div>
-                    <!-- Pagination Controls -->
+
+                    <div class="md:hidden divide-y divide-customBorder" id="creatorsMobileContainer"></div>
+
                     <div class="p-4 bg-[#0e1424] border-t border-customBorder flex items-center justify-between">
                         <button onclick="changePage(-1)" id="prevBtn" class="bg-[#ff69b4] border border-customBorder text-slate-300 px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-cardHover transition" data-en="Previous" data-ar="السابق">Previous</button>
-                        <span class="text-xs text-slate-400" id="pageIndicator">Page 1 of 11</span>
+                        <span class="text-xs text-slate-400" id="pageIndicator">Page 1 of 8</span>
                         <button onclick="changePage(1)" id="nextBtn" class="bg-[#ff69b4] border border-customBorder text-slate-300 px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-cardHover transition" data-en="Next" data-ar="التالي">Next</button>
                     </div>
                 </div>
 
-                <!-- Bottom Grid Section -->
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 pb-6">
-                    <!-- Potential Distribution Card -->
                     <div class="bg-cardBg border border-customBorder rounded-2xl p-5 flex flex-col justify-between">
                         <h3 class="text-sm font-bold text-white mb-4" data-en="Potential Distribution" data-ar="توزيع الإمكانيات">Potential Distribution</h3>
                         <div class="flex flex-col sm:flex-row items-center gap-6 my-auto">
-                            <!-- SVG Donut Chart -->
                             <div class="relative w-36 h-36 flex-shrink-0 flex items-center justify-center">
                                 <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
                                     <circle cx="50" cy="50" r="40" fill="transparent" stroke="#1e293b" stroke-width="14"></circle>
@@ -247,26 +215,14 @@ body.light .text-slate-400 {
                                     <span class="text-[9px] text-slate-400 uppercase tracking-widest" data-en="Total" data-ar="الإجمالي">Total</span>
                                 </div>
                             </div>
-
-                            <!-- Guide / Legend -->
                             <div class="space-y-2 text-xs w-full">
-                                <div class="flex items-center justify-between bg-[#0b0f19] px-3 py-2 rounded-xl border border-customBorder">
-                                    <span class="flex items-center gap-2 text-slate-300"><span class="w-2.5 h-2.5 rounded-full bg-green-500"></span> <span data-en="High" data-ar="عالية">High</span></span>
-                                    <span class="font-bold text-white" id="dist-high">0%</span>
-                                </div>
-                                <div class="flex items-center justify-between bg-[#0b0f19] px-3 py-2 rounded-xl border border-customBorder">
-                                    <span class="flex items-center gap-2 text-slate-300"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> <span data-en="Medium" data-ar="متوسطة">Medium</span></span>
-                                    <span class="font-bold text-white" id="dist-medium">0%</span>
-                                </div>
-                                <div class="flex items-center justify-between bg-[#0b0f19] px-3 py-2 rounded-xl border border-customBorder">
-                                    <span class="flex items-center gap-2 text-slate-300"><span class="w-2.5 h-2.5 rounded-full bg-red-500"></span> <span data-en="Low" data-ar="منخفضة">Low</span></span>
-                                    <span class="font-bold text-white" id="dist-low">100%</span>
-                                </div>
+                                <div class="flex items-center justify-between bg-[#0b0f19] px-3 py-2 rounded-xl border border-customBorder"><span class="flex items-center gap-2 text-slate-300"><span class="w-2.5 h-2.5 rounded-full bg-green-500"></span> <span data-en="High" data-ar="عالية">High</span></span><span class="font-bold text-white" id="dist-high">0%</span></div>
+                                <div class="flex items-center justify-between bg-[#0b0f19] px-3 py-2 rounded-xl border border-customBorder"><span class="flex items-center gap-2 text-slate-300"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> <span data-en="Medium" data-ar="متوسطة">Medium</span></span><span class="font-bold text-white" id="dist-medium">0%</span></div>
+                                <div class="flex items-center justify-between bg-[#0b0f19] px-3 py-2 rounded-xl border border-customBorder"><span class="flex items-center gap-2 text-slate-300"><span class="w-2.5 h-2.5 rounded-full bg-red-500"></span> <span data-en="Low" data-ar="منخفضة">Low</span></span><span class="font-bold text-white" id="dist-low">100%</span></div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Top Equipment Needs Card -->
                     <div class="bg-cardBg border border-customBorder rounded-2xl p-5 flex flex-col justify-between">
                         <h3 class="text-sm font-bold text-white mb-4" data-en="Top Equipment Needs" data-ar="أبرز المعدات المطلوبة">Top Equipment Needs</h3>
                         <div class="space-y-3.5 text-xs">
@@ -289,32 +245,154 @@ body.light .text-slate-400 {
                         </div>
                     </div>
 
-                    <!-- Agent To-Do (Today) with dynamic percentage -->
                     <div class="bg-cardBg border border-customBorder rounded-2xl p-5 flex flex-col justify-between">
                         <div>
                             <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-sm font-bold text-white" data-en="Agent To-Do" data-ar="مهام الوكيل ">Agent To-Do</h3>
+                                <h3 class="text-sm font-bold text-white" data-en="Agent To-Do" data-ar="مهام الوكيل">Agent To-Do</h3>
                                 <div class="w-10 h-10 rounded-full border-2 border-brandPink flex items-center justify-center text-xs font-black text-brandPink" id="todoPercentage">75%</div>
                             </div>
                             <div class="space-y-2.5 text-xs text-slate-300">
                                 <label class="flex items-center gap-3 bg-[#0b0f19] p-2.5 rounded-xl border border-customBorder cursor-pointer">
                                     <input type="checkbox" checked class="accent-brandPink w-4 h-4 rounded todo-checkbox" onchange="updateTodoPercentage()"> 
-                                    <span class="todo-text line-through text-slate-500" data-en="Follow up with creators & Live Entery" data-ar="المتابعة مع المنشئين و دخول البث ">Follow up with creators & Live Entery</span>
+                                    <span class="todo-text line-through text-slate-500">Follow up with creators & Live Entery</span>
                                 </label>
                                 <label class="flex items-center gap-3 bg-[#0b0f19] p-2.5 rounded-xl border border-customBorder cursor-pointer">
                                     <input type="checkbox" checked class="accent-brandPink w-4 h-4 rounded todo-checkbox" onchange="updateTodoPercentage()"> 
-                                    <span class="todo-text line-through text-slate-500" data-en="Send motivation messages" data-ar="إرسال رسائل تحفيزية">Send motivation messages</span>
-                                </label>
-                                                                    <label class="flex items-center gap-3 bg-[#0b0f19] p-2.5 rounded-xl border border-customBorder cursor-pointer">
-                                    <input type="checkbox" checked class="accent-brandPink w-4 h-4 rounded todo-checkbox" onchange="updateTodoPercentage()"> 
-                                    <span class="todo-text line-through text-slate-500" data-en="Schedule coaching calls" data-ar="جدولة مكالمات التوجيه">Schedule coaching calls</span>
+                                    <span class="todo-text line-through text-slate-500">Send motivation messages</span>
                                 </label>
                                 <label class="flex items-center gap-3 bg-[#0b0f19] p-2.5 rounded-xl border border-customBorder cursor-pointer">
                                     <input type="checkbox" checked class="accent-brandPink w-4 h-4 rounded todo-checkbox" onchange="updateTodoPercentage()"> 
-                                    <span class="todo-text line-through text-slate-500" data-en="Submit Data For All Managed Creators Daily" data-ar="إرسال بيانات جميع صناع المحتوي المُدارين يومياً">Submit Data For All Managed Creators Daily</span>
+                                    <span class="todo-text line-through text-slate-500">Schedule coaching calls</span>
+                                </label>
+                                <label class="flex items-center gap-3 bg-[#0b0f19] p-2.5 rounded-xl border border-customBorder cursor-pointer">
+                                    <input type="checkbox" checked class="accent-brandPink w-4 h-4 rounded todo-checkbox" onchange="updateTodoPercentage()"> 
+                                    <span class="todo-text line-through text-slate-500">Submit Data For All Managed Creators Daily</span>
                                 </label>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= PAGE 2: RECRUITMENT ================= -->
+            <div id="pageRecruitment" class="p-4 sm:p-6 space-y-6 hidden">
+                <div>
+                    <h1 class="text-2xl font-black text-white flex items-center gap-2">
+                        Good Morning, Masy 👋
+                    </h1>
+                    <p class="text-xs text-slate-400 mt-1">Let's achieve today's goals! Track your daily recruitment, check-in, and statuses.</p>
+                </div>
+
+                <!-- Top Metrics & Controls -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Agent Status with Functional Check-in / End Shift / Break -->
+                    <div class="bg-cardBg border border-customBorder rounded-2xl p-4 relative overflow-hidden flex flex-col justify-between space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-slate-300 flex items-center gap-1.5"><i class="fa-solid fa-user-check text-brandPink"></i> Agent Shift & Attendance</span>
+                        </div>
+                        <div class="flex items-center justify-between my-1">
+                            <div>
+                                <div id="shiftStatusText" class="flex items-center gap-2 text-slate-400 text-xs font-bold"><span id="statusDot" class="w-2 h-2 rounded-full bg-slate-500"></span> <span id="statusLabel">Not Checked In</span></div>
+                                <div id="shiftTimeLabel" class="text-[10px] text-slate-400 mt-1">Ready for shift</div>
+                            </div>
+                            <div class="relative w-16 h-16 flex items-center justify-center">
+                                <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                                    <circle cx="50" cy="50" r="40" fill="transparent" stroke="#1e293b" stroke-width="12"></circle>
+                                    <circle cx="50" cy="50" r="40" fill="transparent" stroke="#ec4899" stroke-width="12" stroke-dasharray="251.2" stroke-dashoffset="0"></circle>
+                                </svg>
+                                <span id="shiftTimerDisplay" class="absolute text-[10px] font-black text-white">00:00</span>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button id="checkInOutBtn" onclick="toggleCheckIn()" class="bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/40 text-emerald-400 rounded-xl py-2 text-xs font-semibold transition flex items-center justify-center gap-1.5">
+                                <i class="fa-solid fa-right-to-bracket"></i> <span id="checkInBtnText">Check In</span>
+                            </button>
+                            <button id="breakBtn" onclick="toggleBreak()" class="bg-[#1e293b] text-slate-400 rounded-xl py-2 text-xs font-semibold transition flex items-center justify-center gap-1.5 cursor-not-allowed opacity-50" disabled>
+                                <i class="fa-solid fa-mug-hot"></i> <span id="breakBtnText">Break</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Today's Progress -->
+                    <div class="bg-cardBg border border-customBorder rounded-2xl p-4 relative overflow-hidden flex flex-col justify-between">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-slate-300 flex items-center gap-1.5"><i class="fa-solid fa-bullseye text-brandPink"></i> Today's Progress</span>
+                        </div>
+                        <div class="flex items-center justify-between my-2">
+                            <div>
+                                <div class="text-2xl font-black text-white"><span id="todayRecruitedCount">0</span> <span class="text-xs text-slate-400 font-normal">/ 30</span></div>
+                                <div class="text-[10px] text-slate-400 mt-1" id="remainingUsersText">Remaining: 30</div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-[10px] text-brandPink font-bold">Total Recruited</div>
+                                <div class="text-lg font-black text-white" id="totalRecruitedNum">0</div>
+                            </div>
+                        </div>
+                        <div class="text-[10px] text-brandPink bg-pink-500/10 border border-pink-500/20 py-1 px-2 rounded-lg text-center font-semibold">Today's Target: 30 Available Users</div>
+                    </div>
+
+                    <!-- Dynamic Monthly Attendance -->
+                    <div class="bg-cardBg border border-customBorder rounded-2xl p-4 relative overflow-hidden flex flex-col justify-between sm:col-span-2 lg:col-span-1">
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-xs font-bold text-slate-300 flex items-center gap-1.5"><i class="fa-solid fa-calendar-check text-brandPink"></i> Monthly Attendance</span>
+                            <span id="currentMonthName" class="text-[10px] text-slate-400 font-semibold">July 2026</span>
+                        </div>
+                        <div id="attendanceGrid" class="grid grid-cols-7 gap-1 my-2 text-center text-[10px] max-h-24 overflow-y-auto"></div>
+                        <div class="flex items-center justify-between text-xs pt-1 border-t border-customBorder">
+                            <span class="text-slate-400" id="attendanceDaysCount">Checked: 0 Days</span>
+                            <span class="font-black text-brandPink" id="attendancePercentage">0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recruitment Tracker with 30 slots across paginated views & Submit All All 30 -->
+                <div class="bg-cardBg border border-customBorder rounded-2xl p-5 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 class="text-sm font-bold text-white flex items-center gap-2"><i class="fa-solid fa-user-plus text-brandPink"></i> Recruitment Tracker (30 Slots)</h3>
+                            <p class="text-xs text-slate-400 mt-0.5">Fill slots and submit. Click "Submit All 30 Slots" to send all pages at once.</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="changeRecruitPage(-1)" class="bg-[#0b0f19] border border-customBorder text-slate-300 px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-cardHover transition"><i class="fa-solid fa-chevron-left"></i></button>
+                            <span class="text-xs text-slate-300 font-bold" id="recruitPageIndicator">Page 1 of 3</span>
+                            <button onclick="changeRecruitPage(1)" class="bg-[#0b0f19] border border-customBorder text-slate-300 px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-cardHover transition"><i class="fa-solid fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+
+                    <div id="recruitmentSlotsContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3"></div>
+
+                    <div class="flex justify-end pt-2">
+                        <button onclick="submitRecruitmentBatch()" class="bg-brandPink hover:bg-brandPinkHover text-white font-bold text-xs px-6 py-3 rounded-xl transition shadow-lg shadow-pink-500/20 flex items-center gap-2">
+                            <span>Submit All 30 Slots</span>
+                            <i class="fa-solid fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- NEW SECTION: Follow Up Recruitment Status (Persistent & Cumulative) -->
+                <div class="bg-cardBg border border-customBorder rounded-2xl p-5 space-y-4 mb-6">
+                    <div class="flex items-center justify-between border-b border-customBorder pb-3">
+                        <div>
+                            <h3 class="text-sm font-bold text-white flex items-center gap-2"><i class="fa-solid fa-clipboard-user text-brandPink"></i> Follow Up Recruitment Status</h3>
+                            <p class="text-xs text-slate-400 mt-0.5">Automatically updated, cumulative and permanently saved.</p>
+                        </div>
+                        <span class="text-xs bg-[#0b0f19] border border-customBorder px-3 py-1.5 rounded-xl text-slate-300 font-semibold" id="totalFollowUpCount">Total Tracked: 0</span>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left rtl:text-right border-collapse text-xs">
+                            <thead>
+                                <tr class="border-b border-customBorder text-[11px] font-semibold text-slate-400 uppercase tracking-wider bg-[#ff69b4]/20">
+                                    <th class="py-3 px-4">#</th>
+                                    <th class="py-3 px-4">Recruited Username</th>
+                                    <th class="py-3 px-4">Date Added</th>
+                                    <th class="py-3 px-4 text-center">Recruited</th>
+                                    <th class="py-3 px-4 text-center">Negotiating</th>
+                                    <th class="py-3 px-4 text-center">No Response</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-customBorder" id="followUpTableBody"></tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -326,42 +404,39 @@ body.light .text-slate-400 {
         <i class="fa-solid fa-arrow-up text-sm"></i>
     </button>
 
-    <!-- Screenshot Modal for Uploading Proof when Replied is NO -->
+    <!-- Screenshot Modal -->
     <div id="screenshotModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="bg-cardBg border border-customBorder rounded-2xl w-full max-w-md p-6 space-y-4 shadow-2xl">
             <div class="flex items-center justify-between border-b border-customBorder pb-3">
                 <h3 class="text-sm font-bold text-white flex items-center gap-2">
                     <i class="fa-solid fa-cloud-arrow-up text-brandPink"></i>
-                    <span data-en="Upload Communication trial Screenshot" data-ar="رفع لقطة شاشة عدم الرد">Upload Reply Proof Screenshot</span>
+                    <span>Upload Reply Proof Screenshot</span>
                 </h3>
                 <button onclick="closeScreenshotModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-base"></i></button>
             </div>
-            <p class="text-xs text-slate-400" data-en="Please upload the screenshot proving the creator's status response or interaction." data-ar="الرجاء رفع لقطة الشاشة التي توضح عدم رد المنشئ.">Please upload the screenshot proving the creator's status response.</p>
-            
+            <p class="text-xs text-slate-400">Please upload the screenshot proving the creator's status response.</p>
             <div class="border-2 border-dashed border-customBorder hover:border-brandPink rounded-xl p-6 text-center cursor-pointer transition bg-[#0b0f19]" onclick="document.getElementById('modalFileField').click()">
                 <i class="fa-solid fa-image text-brandPink text-2xl mb-2"></i>
-                <div class="text-xs font-semibold text-slate-300" data-en="Click to browse screenshot file" data-ar="انقر لاستعراض ملف لقطة الشاشة">Click to browse screenshot file</div>
+                <div class="text-xs font-semibold text-slate-300">Click to browse screenshot file</div>
                 <div class="text-[10px] text-slate-500 mt-1">PNG, JPG, WEBP up to 5MB</div>
                 <input type="file" id="modalFileField" class="hidden" accept="image/*" onchange="handleFileSelected(event)">
             </div>
-
             <div id="selectedFileName" class="text-xs text-emerald-400 font-medium hidden"></div>
-
             <div class="flex justify-end gap-2 pt-2">
-                <button onclick="closeScreenshotModal()" class="bg-[#1e293b] hover:bg-slate-700 text-slate-300 px-4 py-2 rounded-xl text-xs font-semibold transition" data-en="Cancel" data-ar="إلغاء">Cancel</button>
-                <button onclick="confirmScreenshotUpload()" class="bg-brandPink hover:bg-brandPinkHover text-white px-4 py-2 rounded-xl text-xs font-semibold transition shadow-md shadow-pink-500/20" data-en="Upload & Confirm" data-ar="رفع وتأكيد">Upload & Confirm</button>
+                <button onclick="closeScreenshotModal()" class="bg-[#1e293b] hover:bg-slate-700 text-slate-300 px-4 py-2 rounded-xl text-xs font-semibold transition">Cancel</button>
+                <button onclick="confirmScreenshotUpload()" class="bg-brandPink hover:bg-brandPinkHover text-white px-4 py-2 rounded-xl text-xs font-semibold transition shadow-md shadow-pink-500/20">Upload & Confirm</button>
             </div>
         </div>
     </div>
 
-    <!-- JavaScript Handling All Automated Rules & Submit All Google Sheets Integration -->
+    <!-- JavaScript Handling Persistent Data via LocalStorage -->
     <script>
         const creatorUsernames = [
             "elmafia128", "hadyadell", "iambaraissa", "5_6_9", "lc4k__", "zdecq", "aanter62", "ziadzoka111", ".okbr2", "ziot.l3", "tawfeeqalbaik", "mosa5rsh", "vortex6246", "ali_amasha", "hsso_515", "anubis..gaming", "gemaa343", "safa7_valo", "al_rubaie506", "yasser_atef_sharaf", "superplayer.pg", "3._lnm", "k8u2r", "330fx3", "23rng_", "forkaneac", "youneskh48", "iiixzeus", "mr.eyad24", "9o_dl8", "boda3_up", "mohamed.reda6169", "yosseftawfik.official", "hon_daa3", "beboabdullah", "azyz_01", "kandilpop", "m3tz_10", "aflah.xv", "h.ithem", "8zvvx", "p3jc", "kawtherrr6", "husseinsherifofficial", "rayen_messadek", "h.hayek06", "483l", "_m.e.d.o_122", "aiadelnegm", "maryambel25", "dr.saif_salah", "trolleee0", "talalle6", "ma_khatab1", "chahdhosni4", "farrouk_", "800xx1", "i6xqkk", "am2r4", "e_ik8", "lunvr.28", "neldaechoudekh", "f5c55", "badr.mazktli", "ranse070", "_xxy.39", ".zayed999", "wardaia3", "ahmed.al.eleme", "bouamra137", "elgeka01"
         ];
 
-        // Google Sheet Web App Deployment URL
-        const GOOGLE_SHEET_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbzJbU4XGguRSnbBzi0QlvYkJb7tG8spBkCz1Z-59tI_KH-cxcm2fHzcxv2R4v17IQ/exec";
+        const RECRUIT_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbwpN5_OKARSEeSSqg2QyQusHmnDm5Gon5b0gwB91W92L1Ihk2MN6iyBCpK7Wje3RbQ/exec";
+        const GOOGLE_SHEET_WEBHOOK_URL = RECRUIT_WEBHOOK_URL;
 
         let creatorsData = creatorUsernames.map((username, index) => ({
             id: index + 1,
@@ -377,20 +452,40 @@ body.light .text-slate-400 {
         }));
 
         let currentPage = 1;
-        const itemsPerPage = 5;
+        const itemsPerPage = 10; // Updated to 10 creators per page as requested
         let filteredData = [...creatorsData];
         let pendingScreenshotIndex = null;
         let isArabic = false;
         let isLightMode = false;
+
+        // Persistent Recruitment State Variables - Reset Follow Up list as requested
+        let recruitPage = 1;
+        const totalSlots = 30;
+        const slotsPerPage = 10;
+        let recruitmentInputs = JSON.parse(localStorage.getItem('starsZone_recruitmentInputs')) || Array(totalSlots).fill("");
+        let cumulativeFollowUps = []; // Reset follow up recruitment status list
+        localStorage.removeItem('starsZone_cumulativeFollowUps');
+        let attendanceRecord = JSON.parse(localStorage.getItem('starsZone_attendanceRecord')) || {};
+
+        // Shift & Break timer variables
+        let isCheckedIn = false;
+        let shiftStartTime = null;
+        let shiftTimerInterval = null;
+        let isBreakActive = false;
+        let breakStartTime = 0;
+        let breakTimerInterval = null;
 
         window.addEventListener('DOMContentLoaded', () => {
             const options = { day: 'numeric', month: 'long', year: 'numeric' };
             document.getElementById('currentDateDisplay').innerText = new Date().toLocaleDateString('en-US', options);
             renderTable();
             recalculateAllMetrics();
+            renderAttendanceCalendar();
+            renderRecruitmentSlots();
+            renderFollowUpTable();
+            updateTodayProgressCount();
         });
 
-        // Scroll to Top visibility logic
         window.addEventListener('scroll', () => {
             const scrollBtn = document.getElementById('scrollToTopBtn');
             if (window.scrollY > 300) {
@@ -401,10 +496,281 @@ body.light .text-slate-400 {
         });
 
         function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function switchTab(tabName) {
+            const opTab = document.getElementById('tabOperations');
+            const recTab = document.getElementById('tabRecruitment');
+            const opPage = document.getElementById('pageOperations');
+            const recPage = document.getElementById('pageRecruitment');
+
+            if (tabName === 'operations') {
+                opTab.className = "px-3 sm:px-4 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-2 bg-brandPink text-white shadow-md shadow-pink-500/20";
+                recTab.className = "px-3 sm:px-4 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-2 text-slate-400 hover:text-white";
+                opPage.classList.remove('hidden');
+                recPage.classList.add('hidden');
+            } else {
+                recTab.className = "px-3 sm:px-4 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-2 bg-brandPink text-white shadow-md shadow-pink-500/20";
+                opTab.className = "px-3 sm:px-4 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-2 text-slate-400 hover:text-white";
+                recPage.classList.remove('hidden');
+                opPage.classList.add('hidden');
+            }
+        }
+
+        function toggleCheckIn() {
+            const btn = document.getElementById('checkInOutBtn');
+            const btnText = document.getElementById('checkInBtnText');
+            const statusDot = document.getElementById('statusDot');
+            const statusLabel = document.getElementById('statusLabel');
+            const timeLabel = document.getElementById('shiftTimeLabel');
+            const breakBtn = document.getElementById('breakBtn');
+
+            const now = new Date();
+            const timeString = now.toLocaleTimeString();
+
+            if (!isCheckedIn) {
+                isCheckedIn = true;
+                shiftStartTime = now;
+                btn.className = "bg-red-500/20 hover:bg-red-500/30 border border-red-500/40 text-red-400 rounded-xl py-2 text-xs font-semibold transition flex items-center justify-center gap-1.5";
+                btnText.innerText = "End Shift";
+                statusDot.className = "w-2 h-2 rounded-full bg-emerald-500 animate-pulse";
+                statusLabel.innerText = "Checked In";
+                timeLabel.innerText = "Started at " + timeString;
+                
+                breakBtn.removeAttribute('disabled');
+                breakBtn.className = "bg-[#1e293b] hover:bg-slate-700 text-slate-300 rounded-xl py-2 text-xs font-semibold transition flex items-center justify-center gap-1.5";
+
+                sendShiftTimeToSheet("checkin", timeString);
+
+                let seconds = 0;
+                shiftTimerInterval = setInterval(() => {
+                    seconds++;
+                    const mins = Math.floor(seconds / 60);
+                    const secs = seconds % 60;
+                    document.getElementById('shiftTimerDisplay').innerText = 
+                        String(mins).padStart(2, '0') + ":" + String(secs).padStart(2, '0');
+                }, 1000);
+
+                markTodayAttendance(true);
+
+            } else {
+                isCheckedIn = false;
+                clearInterval(shiftTimerInterval);
+                if (isBreakActive) toggleBreak();
+
+                btn.className = "bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/40 text-emerald-400 rounded-xl py-2 text-xs font-semibold transition flex items-center justify-center gap-1.5";
+                btnText.innerText = "Check In";
+                statusDot.className = "w-2 h-2 rounded-full bg-slate-500";
+                statusLabel.innerText = "Shift Ended";
+                timeLabel.innerText = "Ended at " + timeString;
+                
+                breakBtn.setAttribute('disabled', 'true');
+                breakBtn.className = "bg-[#1e293b] text-slate-400 rounded-xl py-2 text-xs font-semibold transition flex items-center justify-center gap-1.5 cursor-not-allowed opacity-50";
+                document.getElementById('breakBtnText').innerText = "Break";
+                document.getElementById('shiftTimerDisplay').innerText = "00:00";
+
+                sendShiftTimeToSheet("endshift", timeString);
+            }
+        }
+
+        function toggleBreak() {
+            const breakBtn = document.getElementById('breakBtn');
+            const breakBtnText = document.getElementById('breakBtnText');
+            const now = new Date();
+            const timeString = now.toLocaleTimeString();
+
+            if (!isBreakActive) {
+                isBreakActive = true;
+                breakStartTime = 0;
+                
+                breakBtn.className = "bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold rounded-xl py-2 text-xs transition shadow-lg shadow-orange-500/30 flex items-center justify-center gap-1.5 animate-pulse";
+                
+                sendShiftTimeToSheet("takebreak", timeString);
+
+                breakTimerInterval = setInterval(() => {
+                    breakStartTime++;
+                    const bm = Math.floor(breakStartTime / 60);
+                    const bs = breakStartTime % 60;
+                    breakBtnText.innerHTML = `<i class="fa-solid fa-mug-hot"></i> End Break (${String(bm).padStart(2, '0')}:${String(bs).padStart(2, '0')})`;
+                }, 1000);
+
+            } else {
+                isBreakActive = false;
+                clearInterval(breakTimerInterval);
+                
+                breakBtn.className = "bg-[#1e293b] hover:bg-slate-700 text-slate-300 rounded-xl py-2 text-xs font-semibold transition flex items-center justify-center gap-1.5";
+                breakBtnText.innerHTML = `Break`;
+
+                sendShiftTimeToSheet("endbreak", timeString);
+            }
+        }
+
+        function sendShiftTimeToSheet(type, timeVal) {
+            const payload = { action: "logShiftTime", shiftType: type, time: timeVal };
+            fetch(RECRUIT_WEBHOOK_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            }).catch(err => console.error("Shift time sync error:", err));
+        }
+
+        function renderAttendanceCalendar() {
+            const grid = document.getElementById('attendanceGrid');
+            grid.innerHTML = '';
+            const totalDaysInMonth = 31;
+            let checkedDaysCount = 0;
+
+            for (let i = 1; i <= totalDaysInMonth; i++) {
+                const dayEl = document.createElement('div');
+                const isChecked = attendanceRecord[i] === true;
+                if (isChecked) checkedDaysCount++;
+
+                dayEl.className = `p-1 rounded-lg font-bold flex flex-col items-center justify-center border ${isChecked ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30' : 'bg-[#0b0f19] text-slate-500 border-customBorder'}`;
+                dayEl.innerHTML = `<span>${i}</span><i class="fa-solid ${isChecked ? 'fa-check text-[9px]' : 'fa-minus text-[8px]'}"></i>`;
+                grid.appendChild(dayEl);
+            }
+
+            document.getElementById('attendanceDaysCount').innerText = `Checked: ${checkedDaysCount} Days`;
+            document.getElementById('attendancePercentage').innerText = `${Math.round((checkedDaysCount / totalDaysInMonth) * 100)}%`;
+        }
+
+        function markTodayAttendance(status) {
+            const todayDateNum = new Date().getDate();
+            attendanceRecord[todayDateNum] = status;
+            localStorage.setItem('starsZone_attendanceRecord', JSON.stringify(attendanceRecord));
+            renderAttendanceCalendar();
+        }
+
+        function renderRecruitmentSlots() {
+            const container = document.getElementById('recruitmentSlotsContainer');
+            container.innerHTML = '';
+
+            const startIdx = (recruitPage - 1) * slotsPerPage;
+            const endIdx = startIdx + slotsPerPage;
+
+            for (let i = startIdx; i < endIdx; i++) {
+                const slotNum = i + 1;
+                const slotDiv = document.createElement('div');
+                slotDiv.className = "flex items-center bg-[#0b0f19] border border-customBorder rounded-xl px-3 py-2 gap-2";
+                slotDiv.innerHTML = `
+                    <span class="text-[10px] text-slate-500 font-bold">${slotNum}</span>
+                    <input type="text" placeholder="Username ${slotNum}" value="${recruitmentInputs[i]}" oninput="updateRecruitmentInput(${i}, this.value)" class="w-full bg-transparent border-none text-xs text-white focus:outline-none">
+                `;
+                container.appendChild(slotDiv);
+            }
+
+            document.getElementById('recruitPageIndicator').innerText = `Page ${recruitPage} of 3`;
+        }
+
+        function updateRecruitmentInput(index, val) {
+            recruitmentInputs[index] = val;
+            localStorage.setItem('starsZone_recruitmentInputs', JSON.stringify(recruitmentInputs));
+        }
+
+        function changeRecruitPage(direction) {
+            recruitPage += direction;
+            if (recruitPage < 1) recruitPage = 1;
+            if (recruitPage > 3) recruitPage = 3;
+            renderRecruitmentSlots();
+        }
+
+        function submitRecruitmentBatch() {
+            let allBatchUsernames = [];
+
+            recruitmentInputs.forEach(username => {
+                const cleanUname = username.trim();
+                if (cleanUname) {
+                    allBatchUsernames.push(cleanUname.startsWith('@') ? cleanUname : '@' + cleanUname);
+                }
             });
+
+            if (allBatchUsernames.length > 0) {
+                const payload = {
+                    action: "submitRecruitment",
+                    usernames: allBatchUsernames
+                };
+
+                fetch(RECRUIT_WEBHOOK_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                }).then(() => {
+                    const currentDateStr = new Date().toLocaleDateString('en-GB');
+
+                    allBatchUsernames.forEach(uname => {
+                        if (!cumulativeFollowUps.some(item => item.username === uname)) {
+                            cumulativeFollowUps.push({
+                                username: uname,
+                                date: currentDateStr,
+                                checkIn: false,
+                                negotiating: false
+                            });
+                        }
+                    });
+
+                    recruitmentInputs = Array(totalSlots).fill("");
+                    localStorage.setItem('starsZone_recruitmentInputs', JSON.stringify(recruitmentInputs));
+                    localStorage.setItem('starsZone_cumulativeFollowUps', JSON.stringify(cumulativeFollowUps));
+
+                    renderRecruitmentSlots();
+                    renderFollowUpTable();
+                    updateTodayProgressCount();
+
+                    alert(isArabic ? 'تم إرسال جميع الأسماء (30 خانة) وحفظها بنجاح!' : 'All 30 recruitment slots submitted and saved successfully!');
+                }).catch(err => {
+                    console.error("Recruitment submission error:", err);
+                });
+
+            } else {
+                alert(isArabic ? 'الرجاء إدخال اسم مستخدم واحد على الأقل في أي خانة قبل الإرسال.' : 'Please enter at least one username in the tracker before submitting.');
+            }
+        }
+
+        function renderFollowUpTable() {
+            const tbody = document.getElementById('followUpTableBody');
+            tbody.innerHTML = '';
+
+            document.getElementById('totalFollowUpCount').innerText = `Total Tracked: ${cumulativeFollowUps.length}`;
+
+            if (cumulativeFollowUps.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="py-4 text-center text-slate-500">No recruited users tracked yet. Submit from the tracker above.</td></tr>`;
+                return;
+            }
+
+            cumulativeFollowUps.forEach((item, idx) => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-cardHover/50 transition";
+                tr.innerHTML = `
+                    <td class="py-3 px-4 font-bold text-slate-400">${idx + 1}</td>
+                    <td class="py-3 px-4 font-bold text-white">${item.username}</td>
+                    <td class="py-3 px-4 text-slate-400 text-[11px]">${item.date}</td>
+                    <td class="py-3 px-4 text-center">
+                        <input type="checkbox" ${item.checkIn ? 'checked' : ''} onchange="updateFollowUpStatus(${idx}, 'checkIn', this.checked)" class="accent-brandPink w-4 h-4 rounded cursor-pointer">
+                    </td>
+                    <td class="py-3 px-4 text-center">
+                        <input type="checkbox" ${item.negotiating ? 'checked' : ''} onchange="updateFollowUpStatus(${idx}, 'negotiating', this.checked)" class="accent-brandPink w-4 h-4 rounded cursor-pointer">
+                    </td>
+                    <td class="py-3 px-4 text-center">
+                        <input type="checkbox" ${item.noresponse ? 'checked' : ''} onchange="updateFollowUpStatus(${idx}, 'noresponse', this.checked)" class="accent-brandPink w-4 h-4 rounded cursor-pointer">
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function updateFollowUpStatus(index, field, value) {
+            cumulativeFollowUps[index][field] = value;
+            localStorage.setItem('starsZone_cumulativeFollowUps', JSON.stringify(cumulativeFollowUps));
+        }
+
+        function updateTodayProgressCount() {
+            const totalRecruited = cumulativeFollowUps.length;
+            document.getElementById('todayRecruitedCount').innerText = totalRecruited;
+            document.getElementById('totalRecruitedNum').innerText = totalRecruited;
+            document.getElementById('remainingUsersText').innerText = `Remaining: ${Math.max(0, 30 - totalRecruited)}`;
         }
 
         function toggleTheme() {
@@ -414,13 +780,9 @@ body.light .text-slate-400 {
             const text = document.getElementById('themeText');
             if (isLightMode) {
                 icon.className = "fa-solid fa-moon text-brandPink";
-                text.setAttribute('data-en', 'Night');
-                text.setAttribute('data-ar', 'ليلي');
                 text.innerText = isArabic ? 'ليلي' : 'Night';
             } else {
                 icon.className = "fa-solid fa-sun text-brandPink";
-                text.setAttribute('data-en', 'Day');
-                text.setAttribute('data-ar', 'نهاري');
                 text.innerText = isArabic ? 'نهاري' : 'Day';
             }
         }
@@ -433,7 +795,6 @@ body.light .text-slate-400 {
         }
 
         function renderTable() {
-            // Render Dynamic Table Header
             const headerRow = document.getElementById('tableHeaderRow');
             headerRow.innerHTML = `
                 <th class="py-4 px-4 text-left rtl:text-right">${isArabic ? 'المنشئ' : 'Creator'}</th>
@@ -441,26 +802,27 @@ body.light .text-slate-400 {
                 <th class="py-4 px-3 text-center">${isArabic ? 'تم الرد؟' : 'Replied?'}</th>
                 <th class="py-4 px-3 text-center">${isArabic ? 'حالة البث' : 'Live Status'}</th>
                 <th class="py-4 px-3 text-center">${isArabic ? 'حالة الإمكانيات' : 'Potential Status'}</th>
-                <th class="py-4 px-3 text-center">${isArabic ? 'قائمة التحقق البصري ' : 'Visual Checklist'}</th>
-                <th class="py-4 px-3 text-center">${isArabic ? 'المعدات المطلوبة ' : 'Equipment Needed'}</th>
+                <th class="py-4 px-3 text-center">${isArabic ? 'قائمة التحقق البصري' : 'Visual Checklist'}</th>
+                <th class="py-4 px-3 text-center">${isArabic ? 'المعدات المطلوبة' : 'Equipment Needed'}</th>
                 <th class="py-4 px-3 text-center">${isArabic ? 'ملاحظات الوكيل' : 'Agent Feedback'}</th>
             `;
 
             const tbody = document.getElementById('creatorsTableBody');
+            const mobileContainer = document.getElementById('creatorsMobileContainer');
+            
             tbody.innerHTML = '';
+            mobileContainer.innerHTML = '';
 
             const start = (currentPage - 1) * itemsPerPage;
             const end = start + itemsPerPage;
             const paginatedItems = filteredData.slice(start, end);
 
-            const totalText = isArabic ? `عرض ${filteredData.length > 0 ? start + 1 : 0}-${Math.min(end, filteredData.length)} من ${filteredData.length} منشئ` : `Showing ${filteredData.length > 0 ? start + 1 : 0}-${Math.min(end, filteredData.length)} of ${filteredData.length} creators`;
-            document.getElementById('paginationInfo').innerText = totalText;
+            document.getElementById('paginationInfo').innerText = isArabic ? `عرض ${filteredData.length > 0 ? start + 1 : 0}-${Math.min(end, filteredData.length)} من ${filteredData.length} منشئ` : `Showing ${filteredData.length > 0 ? start + 1 : 0}-${Math.min(end, filteredData.length)} of ${filteredData.length} creators`;
             
             const totalPages = Math.ceil(filteredData.length / itemsPerPage) || 1;
             document.getElementById('pageIndicator').innerText = isArabic ? `الصفحة ${currentPage} من ${totalPages}` : `Page ${currentPage} of ${totalPages}`;
 
             paginatedItems.forEach((creator) => {
-                // Find correct global index in the main creatorsData array using the unique name/handle
                 const globalIdx = creatorsData.findIndex(c => c.name === creator.name);
                 const avatarIcon = `<div class="w-full h-full bg-[#1e293b] text-slate-400 flex items-center justify-center text-sm"><i class="fa-solid fa-user-secret"></i></div>`;
                 
@@ -480,9 +842,7 @@ body.light .text-slate-400 {
                 row.innerHTML = `
                     <td class="py-4 px-4 text-left rtl:text-right">
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-full bg-slate-700 overflow-hidden border border-brandPink/40 flex items-center justify-center flex-shrink-0">
-                                ${avatarIcon}
-                            </div>
+                            <div class="w-10 h-10 rounded-full bg-slate-700 overflow-hidden border border-brandPink/40 flex items-center justify-center flex-shrink-0">${avatarIcon}</div>
                             <div>
                                 <div class="font-bold text-white">${creator.name}</div>
                                 <div class="text-[11px] text-slate-400">${creator.handle}</div>
@@ -548,6 +908,87 @@ body.light .text-slate-400 {
                     </td>
                 `;
                 tbody.appendChild(row);
+
+                const mobileCard = document.createElement('div');
+                mobileCard.className = "p-4 space-y-3 bg-cardBg";
+                mobileCard.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-9 h-9 rounded-full bg-slate-700 overflow-hidden border border-brandPink/40 flex items-center justify-center flex-shrink-0">${avatarIcon}</div>
+                            <div>
+                                <div class="font-bold text-white text-xs">${creator.name}</div>
+                                <div class="text-[10px] text-slate-400">${creator.handle}</div>
+                            </div>
+                        </div>
+                        <span class="px-2 py-0.5 rounded-md text-[10px] font-bold ${potentialClass}">${potentialText}</span>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2 text-xs pt-1">
+                        <div class="bg-[#0b0f19] p-2 rounded-xl border border-customBorder">
+                            <div class="text-[10px] text-slate-400 mb-1">${isArabic ? 'تم التواصل؟' : 'Contacted?'}</div>
+                            <select class="w-full border border-customBorder rounded-lg px-2 py-1 text-xs font-semibold focus:outline-none focus:border-brandPink ${creator.contacted === 'yes' ? 'text-emerald-400' : creator.contacted === 'no' ? 'text-red-400' : 'text-slate-500'}" onchange="updateCreatorField(${globalIdx}, 'contacted', this.value)">
+                                <option value="" disabled ${creator.contacted === '' ? 'selected' : ''}>${isArabic ? 'اختر...' : 'Select...'}</option>
+                                <option value="yes" ${creator.contacted === 'yes' ? 'selected' : ''}>${isArabic ? 'نعم' : 'Yes'}</option>
+                                <option value="no" ${creator.contacted === 'no' ? 'selected' : ''}>${isArabic ? 'لا' : 'No'}</option>
+                            </select>
+                        </div>
+                        <div class="bg-[#0b0f19] p-2 rounded-xl border border-customBorder">
+                            <div class="text-[10px] text-slate-400 mb-1">${isArabic ? 'تم الرد؟' : 'Replied?'}</div>
+                            <select class="w-full border border-customBorder rounded-lg px-2 py-1 text-xs font-semibold focus:outline-none focus:border-brandPink ${creator.replied === 'yes' ? 'text-emerald-400' : creator.replied === 'no' ? 'text-red-400' : 'text-slate-500'}" onchange="handleRepliedChange(${globalIdx}, this.value)">
+                                <option value="" disabled ${creator.replied === '' ? 'selected' : ''}>${isArabic ? 'اختر...' : 'Select...'}</option>
+                                <option value="yes" ${creator.replied === 'yes' ? 'selected' : ''}>${isArabic ? 'نعم' : 'Yes'}</option>
+                                <option value="no" ${creator.replied === 'no' ? 'selected' : ''}>${isArabic ? 'لا' : 'No'}</option>
+                            </select>
+                            ${creator.replied === 'no' ? `
+                                <div class="mt-1">
+                                    <button onclick="openScreenshotModal(${globalIdx})" class="text-[10px] text-brandPink hover:underline flex items-center gap-1 font-medium">
+                                        <i class="fa-solid fa-upload"></i> ${creator.screenshotName ? (isArabic ? 'تم الرفع' : 'Uploaded') : (isArabic ? 'رفع لقطة شاشة' : 'Upload Proof')}
+                                    </button>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+
+                    <div class="bg-[#0b0f19] p-2 rounded-xl border border-customBorder">
+                        <div class="text-[10px] text-slate-400 mb-1">${isArabic ? 'حالة البث' : 'Live Status'}</div>
+                        <select class="w-full border border-customBorder rounded-lg px-2 py-1 text-xs text-slate-300 font-medium focus:outline-none focus:border-brandPink" onchange="updateCreatorField(${globalIdx}, 'liveStatus', this.value)">
+                            <option value="" disabled ${creator.liveStatus === '' ? 'selected' : ''}>${isArabic ? 'اختر الحالة...' : 'Select status...'}</option>
+                            <option value="went_live" ${creator.liveStatus === 'went_live' ? 'selected' : ''}>• ${isArabic ? 'فتح بث مباشر' : 'went live'}</option>
+                            <option value="didnt_go_live" ${creator.liveStatus === 'didnt_go_live' ? 'selected' : ''}>• ${isArabic ? 'لم يفتح بث' : 'didnt go live'}</option>
+                            <option value="busy" ${creator.liveStatus === 'busy' ? 'selected' : ''}>• ${isArabic ? 'مشغول' : 'busy'}</option>
+                            <option value="vacation" ${creator.liveStatus === 'vacation' ? 'selected' : ''}>• ${isArabic ? 'إجازة' : 'vacation'}</option>
+                            <option value="refusing" ${creator.liveStatus === 'refusing' ? 'selected' : ''}>• ${isArabic ? 'رفض البث مجدداً' : 'refusing to go live'}</option>
+                        </select>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2 text-[11px] bg-[#0b0f19] p-2.5 rounded-xl border border-customBorder text-slate-300">
+                        <div>
+                            <div class="font-bold text-[10px] text-brandPink mb-1">${isArabic ? 'الفحص البصري' : 'Visual Checklist'}</div>
+                            <div class="space-y-1">
+                                <label class="flex items-center gap-1.5"><input type="checkbox" ${creator.visuals[0] ? 'checked' : ''} onchange="updateVisual(${globalIdx}, 0, this.checked)" class="accent-brandPink rounded"> <span>${isArabic ? 'جودة البث' : 'Live Quality'}</span></label>
+                                <label class="flex items-center gap-1.5"><input type="checkbox" ${creator.visuals[1] ? 'checked' : ''} onchange="updateVisual(${globalIdx}, 1, this.checked)" class="accent-brandPink rounded"> <span>${isArabic ? 'جودة الصوت' : 'Voice Quality'}</span></label>
+                                <label class="flex items-center gap-1.5"><input type="checkbox" ${creator.visuals[2] ? 'checked' : ''} onchange="updateVisual(${globalIdx}, 2, this.checked)" class="accent-brandPink rounded"> <span>${isArabic ? 'إنترنت' : 'Internet'}</span></label>
+                                <label class="flex items-center gap-1.5"><input type="checkbox" ${creator.visuals[3] ? 'checked' : ''} onchange="updateVisual(${globalIdx}, 3, this.checked)" class="accent-brandPink rounded"> <span>${isArabic ? 'خلفية نظيفة' : 'Background'}</span></label>
+                                <label class="flex items-center gap-1.5"><input type="checkbox" ${creator.visuals[4] ? 'checked' : ''} onchange="updateVisual(${globalIdx}, 4, this.checked)" class="accent-brandPink rounded"> <span>${isArabic ? 'ظهور الوجه' : 'Face'}</span></label>
+                                <label class="flex items-center gap-1.5"><input type="checkbox" ${creator.visuals[5] ? 'checked' : ''} onchange="updateVisual(${globalIdx}, 5, this.checked)" class="accent-brandPink rounded"> <span>${isArabic ? 'زاوية كاميرا' : 'Camera Angle'}</span></label>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="font-bold text-[10px] text-brandPink mb-1">${isArabic ? 'المعدات المطلوبة' : 'Equipment Needed'}</div>
+                            <div class="space-y-1">
+                                <label class="flex items-center gap-1.5"><input type="checkbox" ${creator.equipment[0] ? 'checked' : ''} onchange="updateEquipment(${globalIdx}, 0, this.checked)" class="accent-brandPink rounded"> <span>${isArabic ? 'إضاءة دائرية' : 'Ring Light'}</span></label>
+                                <label class="flex items-center gap-1.5"><input type="checkbox" ${creator.equipment[1] ? 'checked' : ''} onchange="updateEquipment(${globalIdx}, 1, this.checked)" class="accent-brandPink rounded"> <span>${isArabic ? 'ميكروفون' : 'Mic'}</span></label>
+                                <label class="flex items-center gap-1.5"><input type="checkbox" ${creator.equipment[2] ? 'checked' : ''} onchange="updateEquipment(${globalIdx}, 2, this.checked)" class="accent-brandPink rounded"> <span>${isArabic ? 'حامل هاتف' : 'Phone Stand'}</span></label>
+                                <label class="flex items-center gap-1.5"><input type="checkbox" ${creator.equipment[3] ? 'checked' : ''} onchange="updateEquipment(${globalIdx}, 3, this.checked)" class="accent-brandPink rounded"> <span>${isArabic ? 'خلفية نظيفة' : 'Background'}</span></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <textarea placeholder="${isArabic ? 'اكتب ملاحظة...' : 'Write feedback...'}" rows="2" oninput="creatorsData[${globalIdx}].feedback = this.value" class="w-full border border-customBorder rounded-xl p-2 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-brandPink resize-none">${creator.feedback}</textarea>
+                    </div>
+                `;
+                mobileContainer.appendChild(mobileCard);
             });
         }
 
@@ -562,28 +1003,17 @@ body.light .text-slate-400 {
         function updateCreatorField(index, field, value) {
             creatorsData[index][field] = value;
             recalculateAllMetrics();
-            // Preserve search query state when updating data
             const query = document.getElementById('creatorSearchInput').value.toLowerCase().trim();
-            if (query) {
-                filteredData = creatorsData.filter(c => c.name.toLowerCase().includes(query));
-            } else {
-                filteredData = [...creatorsData];
-            }
+            filteredData = query ? creatorsData.filter(c => c.name.toLowerCase().includes(query)) : [...creatorsData];
             renderTable();
         }
 
         function handleRepliedChange(index, value) {
             creatorsData[index].replied = value;
-            if (value === 'yes') {
-                creatorsData[index].screenshotName = "";
-            }
+            if (value === 'yes') creatorsData[index].screenshotName = "";
             recalculateAllMetrics();
             const query = document.getElementById('creatorSearchInput').value.toLowerCase().trim();
-            if (query) {
-                filteredData = creatorsData.filter(c => c.name.toLowerCase().includes(query));
-            } else {
-                filteredData = [...creatorsData];
-            }
+            filteredData = query ? creatorsData.filter(c => c.name.toLowerCase().includes(query)) : [...creatorsData];
             renderTable();
         }
 
@@ -612,12 +1042,6 @@ body.light .text-slate-400 {
             const fileInput = document.getElementById('modalFileField');
             if (pendingScreenshotIndex !== null && fileInput.files.length > 0) {
                 creatorsData[pendingScreenshotIndex].screenshotName = fileInput.files[0].name;
-                const query = document.getElementById('creatorSearchInput').value.toLowerCase().trim();
-                if (query) {
-                    filteredData = creatorsData.filter(c => c.name.toLowerCase().includes(query));
-                } else {
-                    filteredData = [...creatorsData];
-                }
                 renderTable();
             }
             closeScreenshotModal();
@@ -626,12 +1050,6 @@ body.light .text-slate-400 {
         function updateVisual(index, pos, val) {
             creatorsData[index].visuals[pos] = val;
             recalculateAllMetrics();
-            const query = document.getElementById('creatorSearchInput').value.toLowerCase().trim();
-            if (query) {
-                filteredData = creatorsData.filter(c => c.name.toLowerCase().includes(query));
-            } else {
-                filteredData = [...creatorsData];
-            }
             renderTable();
         }
 
@@ -642,12 +1060,8 @@ body.light .text-slate-400 {
 
         function recalculateAllMetrics() {
             document.getElementById('statGoCreators').innerText = creatorsData.length;
-
-            const openedLiveCount = creatorsData.filter(c => c.liveStatus === 'went_live').length;
-            document.getElementById('statOpenedLive').innerText = openedLiveCount;
-
-            const repliedYes = creatorsData.filter(c => c.replied === 'yes').length;
-            document.getElementById('statRepliedAgent').innerText = repliedYes;
+            document.getElementById('statOpenedLive').innerText = creatorsData.filter(c => c.liveStatus === 'went_live').length;
+            document.getElementById('statRepliedAgent').innerText = creatorsData.filter(c => c.replied === 'yes').length;
 
             let counts = { High: 0, Medium: 0, Low: 0 };
             creatorsData.forEach(c => {
@@ -671,15 +1085,12 @@ body.light .text-slate-400 {
             const circ = 251.2;
             document.getElementById('donut-low').style.strokeDasharray = `${(counts.Low / total) * circ} ${circ}`;
             document.getElementById('donut-low').style.strokeDashoffset = `0`;
-
             document.getElementById('donut-medium').style.strokeDasharray = `${(counts.Medium / total) * circ} ${circ}`;
             document.getElementById('donut-medium').style.strokeDashoffset = `-${(counts.Low / total) * circ}`;
-
             document.getElementById('donut-high').style.strokeDasharray = `${(counts.High / total) * circ} ${circ}`;
             document.getElementById('donut-high').style.strokeDashoffset = `- ${((counts.Low + counts.Medium) / total) * circ}`;
 
-            let ring = 0, mic = 0, phone = 0, bg = 0;
-            let upgradeCreators = 0;
+            let ring = 0, mic = 0, phone = 0, bg = 0, upgradeCreators = 0;
             creatorsData.forEach(c => {
                 let hasEq = false;
                 if (c.equipment[0]) { ring++; hasEq = true; }
@@ -707,64 +1118,44 @@ body.light .text-slate-400 {
             checkboxes.forEach(cb => {
                 if (cb.checked) checked++;
                 const span = cb.parentElement.querySelector('.todo-text');
-                if (cb.checked) {
-                    span.classList.add('line-through', 'text-slate-500');
-                    span.classList.remove('text-slate-300');
-                } else {
-                    span.classList.remove('line-through', 'text-slate-500');
-                    span.classList.add('text-slate-300');
+                if (span) {
+                    if (cb.checked) {
+                        span.classList.add('line-through', 'text-slate-500');
+                        span.classList.remove('text-slate-300');
+                    } else {
+                        span.classList.remove('line-through', 'text-slate-500');
+                        span.classList.add('text-slate-300');
+                    }
                 }
             });
             const pct = Math.round((checked / checkboxes.length) * 100);
-            document.getElementById('todoPercentage').innerText = pct + '%';
+            const el = document.getElementById('todoPercentage');
+            if (el) el.innerText = pct + '%';
         }
 
-      function toggleLanguage() {
-    isArabic = !isArabic;
+        function toggleLanguage() {
+            isArabic = !isArabic;
+            document.getElementById('langText').textContent = isArabic ? 'English' : 'العربية';
+            document.documentElement.dir = isArabic ? 'rtl' : 'ltr';
+            document.documentElement.lang = isArabic ? 'ar' : 'en';
 
-    document.getElementById('langText').textContent =
-        isArabic ? 'English' : 'العربية';
+            document.querySelectorAll('[data-en]').forEach(el => {
+                if (el.children.length === 0) {
+                    el.textContent = isArabic ? el.dataset.ar : el.dataset.en;
+                }
+            });
 
-    document.documentElement.dir = isArabic ? 'rtl' : 'ltr';
-    document.documentElement.lang = isArabic ? 'ar' : 'en';
+            document.querySelectorAll('[data-en-placeholder]').forEach(el => {
+                el.placeholder = isArabic ? el.dataset.arPlaceholder : el.dataset.enPlaceholder;
+            });
 
-    // Translate normal text
-    document.querySelectorAll('[data-en]').forEach(el => {
-        if (el.children.length === 0) {
-            el.textContent = isArabic
-                ? el.dataset.ar
-                : el.dataset.en;
+            document.getElementById('themeText').textContent = isLightMode ? (isArabic ? 'ليلي' : 'Night') : (isArabic ? 'نهاري' : 'Day');
+            
+            const options = { day: 'numeric', month: 'long', year: 'numeric' };
+            document.getElementById('currentDateDisplay').textContent = new Date().toLocaleDateString(isArabic ? 'ar-EG' : 'en-US', options);
+
+            renderTable();
         }
-    });
-
-    // Translate placeholders
-    document.querySelectorAll('[data-en-placeholder]').forEach(el => {
-        el.placeholder = isArabic
-            ? el.dataset.arPlaceholder
-            : el.dataset.enPlaceholder;
-    });
-
-    // Theme button text
-    document.getElementById('themeText').textContent =
-        isLightMode
-            ? (isArabic ? 'ليلي' : 'Night')
-            : (isArabic ? 'نهاري' : 'Day');
-
-    // Date
-    const options = {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric'
-    };
-
-    document.getElementById('currentDateDisplay').textContent =
-        new Date().toLocaleDateString(
-            isArabic ? 'ar-EG' : 'en-US',
-            options
-        );
-
-    renderTable();
-}
 
         function submitAllData(button) {
             button.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
@@ -789,15 +1180,13 @@ body.light .text-slate-400 {
             fetch(GOOGLE_SHEET_WEBHOOK_URL, {
                 method: 'POST',
                 mode: 'no-cors',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
             }).then(() => {
                 button.innerHTML = '<i class="fa-solid fa-check"></i>';
                 button.className = button.className.replace('bg-brandPink hover:bg-brandPinkHover', 'bg-emerald-600');
                 setTimeout(() => {
-                    button.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i> <span data-en="Submit All" data-ar="إرسال الكل">${isArabic ? 'إرسال الكل' : 'Submit All'}</span>`;
+                    button.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i> <span>${isArabic ? 'إرسال الكل' : 'Submit All'}</span>`;
                     button.className = button.className.replace('bg-emerald-600', 'bg-brandPink hover:bg-brandPinkHover');
                     button.disabled = false;
                 }, 1500);
@@ -805,7 +1194,7 @@ body.light .text-slate-400 {
                 console.error("Submission error:", err);
                 button.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i>';
                 setTimeout(() => {
-                    button.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i> <span data-en="Submit All" data-ar="إرسال الكل">${isArabic ? 'إرسال الكل' : 'Submit All'}</span>`;
+                    button.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i> <span>${isArabic ? 'إرسال الكل' : 'Submit All'}</span>`;
                     button.disabled = false;
                 }, 1500);
             });
