@@ -176,7 +176,6 @@
             font-size: 13px;
         }
 
-        /* تصميم الـ Tabs الجديدة الموجودة في الصورة */
         .portal-tabs {
             display: flex;
             background: var(--input-bg);
@@ -356,7 +355,6 @@
         <h2 id="portalTitle">Creator <span>Portal</span></h2>
         <div class="subtitle" id="loginSubtitle">Stars Zone Media Dashboard</div>
         
-        <!-- نظام الـ Tabs الجديد (زي الصورة تماماً) -->
         <div class="portal-tabs">
             <button class="tab-btn active" id="tabCreator" onclick="setPortalMode('creator')">Creator</button>
             <button class="tab-btn" id="tabAgent" onclick="setPortalMode('agent')">Agent</button>
@@ -449,7 +447,6 @@
     function updatePortalUI() {
         const titleEl = document.getElementById('portalTitle');
         
-        // تحديث كلاسات الأزرار (Tabs)
         document.getElementById('tabCreator').classList.remove('active');
         document.getElementById('tabAgent').classList.remove('active');
         document.getElementById('tabOperations').classList.remove('active');
@@ -483,7 +480,6 @@
         document.getElementById('ftEmpower').innerText = translations[currentLang].empower;
         document.getElementById('langBtn').innerText = translations[currentLang].langBtn;
         
-        // تحديث نصوص الـ Tabs باللغة المختارة
         document.getElementById('tabCreator').innerText = translations[currentLang].tabCreator;
         document.getElementById('tabAgent').innerText = translations[currentLang].tabAgent;
         document.getElementById('tabOperations').innerText = translations[currentLang].tabOperations;
@@ -544,7 +540,7 @@
         btn.innerText = currentLang === 'en' ? "Connecting..." : "جاري الاتصال...";
         btn.style.opacity = "0.7";
 
-        // 1. تسجيل الدخول الأساسي عبر الإيميل والباسورد
+        // 1. تسجيل الدخول الأساسي
         const { data: authData, error: authError } = await supabaseClient.auth.signInWithPassword({ email, password });
 
         if (authError) {
@@ -557,24 +553,25 @@
         try {
             const user = authData.user;
 
-            // 2. جلب الـ Role المخزن بداخل جدول الـ user_profiles
+            // 2. جلب الـ Role و الـ redirect_path من الجدول بتاعك (اكتبي اسم التابلي عندك هنا لو غير public أو اسم تاني، غالباً بيبقى اسم الجدول الفعلي اللي ظهر في الصورة)
+            // لو اسم التابلي في Supabase مختلف، بدلي 'public' أو اسم الجدول هنا بالاسم الصح (مثلاً table_name)
             const { data: profileData, error: profileError } = await supabaseClient
-                .from('user_profiles')
-                .select('role')
+                .from('public') // لو اسم الجدول حاجة تانية غير كده، غيري كلمة 'public' هنا باسم الجدول اللي في Supabase عندك
+                .select('role, redirect_path')
                 .eq('id', user.id)
                 .single();
 
             if (profileError || !profileData) {
-                errorDiv.innerText = currentLang === 'en' ? "Error fetching account configuration permissions." : "حدث خطأ أثناء جلب صلاحيات الحساب المأمن.";
+                errorDiv.innerText = currentLang === 'en' ? "Error fetching account configuration permissions." : "حدث خطأ أثناء جلب صلاحيات الحساب.";
                 btn.innerText = translations[currentLang].btn;
                 btn.style.opacity = "1";
                 await supabaseClient.auth.signOut();
                 return;
             }
 
-            // 3. التحقق الذكي من تطابق دور الحساب الفعلي مع التاب المختار
-            const dbRole = profileData.role; // ستكون 'Agent' أو 'Creator' أو 'Operations'
+            const dbRole = profileData.role; 
             
+            // 3. مطابقة الرول مع التاب المختار
             if (currentMode === 'agent' && dbRole !== 'Agent') {
                 errorDiv.innerText = translations[currentLang].roleMismatch;
                 btn.innerText = translations[currentLang].btn;
@@ -599,7 +596,7 @@
                 return;
             }
 
-            // 4. حفظ البيانات بأمان
+            // 4. حفظ البيانات
             localStorage.setItem('isLoggedIn', 'true');
             localStorage.setItem('userRole', dbRole);
 
@@ -609,13 +606,19 @@
                 localStorage.removeItem('rememberedEmail');
             }
             
-            // 5. التوجيه الفوري والآمن (الـ Operations يروح لـ fdashboard.html)
-            if (dbRole === 'Agent') {
-                window.location.href = `agentdashboard.html?lang=${currentLang}`;
-            } else if (dbRole === 'Operations') {
-                window.location.href = `fdashboard.html?lang=${currentLang}`;
+            // 5. التوجيه المباشر بناءً على الـ redirect_path المسجل في قاعدة البيانات
+            const targetPath = profileData.redirect_path;
+
+            if (targetPath) {
+                window.location.href = `${targetPath}?lang=${currentLang}`;
             } else {
-                window.location.href = `dashboard.html?lang=${currentLang}`;
+                if (dbRole === 'Agent') {
+                    window.location.href = `agentdashboard.html?lang=${currentLang}`;
+                } else if (dbRole === 'Operations') {
+                    window.location.href = `fdashboard.html?lang=${currentLang}`;
+                } else {
+                    window.location.href = `dashboard.html?lang=${currentLang}`;
+                }
             }
 
         } catch (globalErr) {
