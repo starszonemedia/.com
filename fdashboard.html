@@ -6,55 +6,215 @@
     <title>Stars Zone Media - Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
-                        darkBg: '#0b0f19',
-                        cardBg: '#131b2e',
-                        cardHover: '#1a243f',
-                        brandPink: '#ec4899',
-                        brandPinkHover: '#db2777',
-                        customBorder: '#1e293b'
+                        darkBg: '#07060b',
+                        cardBg: '#12101a',
+                        cardHover: '#1b1826',
+                        brandPink: '#E91E63',
+                        brandPinkHover: '#D81B60',
+                        customBorder: '#242030',
+                        gold: '#C9A24B',
+                        goldSoft: '#E8D5A3'
+                    },
+                    fontFamily: {
+                        display: ['"Fraunces"', 'serif'],
+                        sans: ['"Space Grotesk"', 'system-ui', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace']
                     }
                 }
             }
         }
     </script>
     <style>
-        body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            transition: background-color 0.3s ease, color 0.3s ease;
+        :root {
+            --gold: #C9A24B;
+            --gold-soft: #E8D5A3;
         }
+
+        * { scrollbar-width: thin; }
+
+        body {
+            font-family: 'Space Grotesk', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ===== Dark / default theme — deep obsidian with a gold undertone ===== */
         body:not(.light) {
-            background-color: #0b0f19;
+            background-color: #07060b;
+            background-image:
+                radial-gradient(ellipse 900px 500px at 15% -10%, rgba(233,30,99,0.10), transparent 60%),
+                radial-gradient(ellipse 700px 500px at 100% 0%, rgba(201,162,75,0.08), transparent 55%);
+            background-attachment: fixed;
             color: #f8fafc;
         }
-        body:not(.light) select, 
-        body:not(.light) input, 
+        body:not(.light) select,
+        body:not(.light) input,
         body:not(.light) textarea {
-            background-color: #0b0f19 !important;
+            background-color: #0a0810 !important;
             color: #f8fafc !important;
-            border-color: #1e293b !important;
+            border-color: #242030 !important;
         }
-        body:not(.light) ::-webkit-scrollbar-track { background: #0b0f19; }
-        body:not(.light) ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
-        body:not(.light) ::-webkit-scrollbar-thumb:hover { background: #334155; }
+        body:not(.light) ::-webkit-scrollbar { width: 6px; height: 6px; }
+        body:not(.light) ::-webkit-scrollbar-track { background: #07060b; }
+        body:not(.light) ::-webkit-scrollbar-thumb { background: linear-gradient(#3a2f18, var(--gold)); border-radius: 3px; }
+        body:not(.light) ::-webkit-scrollbar-thumb:hover { background: var(--gold-soft); }
 
+        /* Wordmark + headings get the editorial display serif */
+        h1, .font-display {
+            font-family: 'Fraunces', serif;
+            letter-spacing: -0.01em;
+        }
+
+        /* Gold hairline divider under the top navbar, replacing the flat border */
+        header {
+            border-bottom: 1px solid transparent !important;
+            background-image:
+                linear-gradient(#0d0b14, #0d0b14),
+                linear-gradient(90deg, transparent, rgba(201,162,75,0.55) 45%, rgba(233,30,99,0.45) 55%, transparent);
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
+            border-bottom: 1px solid transparent;
+            position: relative;
+        }
+        body:not(.light) header { background-color: #0d0b14 !important; }
+        header::before {
+            content: '';
+            position: absolute;
+            top: -40%; left: 8%;
+            width: 260px; height: 220px;
+            background: radial-gradient(ellipse at center, rgba(201,162,75,0.16), transparent 70%);
+            pointer-events: none;
+        }
+
+        /* Brand mark: subtle glow behind the star */
+        header .fa-star {
+            filter: drop-shadow(0 0 10px rgba(233,30,99,0.55)) drop-shadow(0 0 18px rgba(201,162,75,0.25));
+        }
+
+        /* ===== Cards: soft glass + gold-pink foil edge on hover ===== */
+        body:not(.light) .bg-cardBg {
+            background-color: #100e17;
+            background-image: linear-gradient(160deg, rgba(255,255,255,0.035), rgba(255,255,255,0) 40%);
+            border-color: #242030 !important;
+            box-shadow: 0 1px 0 0 rgba(255,255,255,0.03) inset, 0 12px 30px -18px rgba(0,0,0,0.7);
+            transition: border-color 0.35s ease, box-shadow 0.35s ease, transform 0.35s ease;
+        }
+        body:not(.light) .bg-cardBg:hover {
+            border-color: rgba(201,162,75,0.4) !important;
+            box-shadow: 0 1px 0 0 rgba(255,255,255,0.04) inset, 0 18px 40px -20px rgba(0,0,0,0.8), 0 0 0 1px rgba(233,30,99,0.08);
+        }
+
+        /* Stat numbers: refined mono, tabular, wide tracking — feels like a membership ledger */
+        #statGoCreators, #statOpenedLive, #statRepliedAgent, #statHighPotential, #statEquipmentUpgrade,
+        #todayRecruitedCount, #totalRecruitedNum, #shiftTimerDisplay, #donut-total-count,
+        #dist-high, #dist-medium, #dist-low, #eq-ring, #eq-mic, #eq-phone, #eq-bg,
+        #attendancePercentage, #todoPercentage {
+            font-family: 'JetBrains Mono', monospace;
+            font-variant-numeric: tabular-nums;
+            letter-spacing: -0.02em;
+        }
+
+        /* Top accent hairline on the operations stat cards, gold → pink */
+        #pageOperations .grid.lg\:grid-cols-5 > div.bg-cardBg,
+        #pageRecruitment .grid.lg\:grid-cols-3 > div.bg-cardBg {
+            position: relative;
+            overflow: hidden;
+        }
+        #pageOperations .grid.lg\:grid-cols-5 > div.bg-cardBg::after,
+        #pageRecruitment .grid.lg\:grid-cols-3 > div.bg-cardBg::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--gold), rgba(233,30,99,0.7), transparent);
+            opacity: 0.7;
+        }
+
+        /* Table header row: gold-edged label bar instead of flat pink tint */
+        body:not(.light) #tableHeaderRow,
+        body:not(.light) thead tr {
+            background: linear-gradient(90deg, rgba(233,30,99,0.14), rgba(201,162,75,0.08)) !important;
+            border-bottom: 1px solid rgba(201,162,75,0.25) !important;
+        }
+        #tableHeaderRow th, thead th {
+            letter-spacing: 0.08em;
+        }
+
+        /* Avatar rings: thin gold-pink foil ring */
+        [class*="border-brandPink/40"] {
+            box-shadow: 0 0 0 1px rgba(201,162,75,0.45), 0 0 14px rgba(233,30,99,0.20);
+        }
+
+        /* Buttons: gold shimmer sweep on hover for primary CTAs */
+        .bg-brandPink { position: relative; overflow: hidden; }
+        .bg-brandPink::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -60%;
+            width: 40%; height: 100%;
+            background: linear-gradient(115deg, transparent, rgba(255,255,255,0.35), transparent);
+            transform: skewX(-20deg);
+            transition: left 0.6s ease;
+            pointer-events: none;
+        }
+        .bg-brandPink:hover::before { left: 130%; }
+
+        /* Focus states: gold ring for accessibility with a luxe touch */
+        input:focus-visible, select:focus-visible, textarea:focus-visible, button:focus-visible {
+            outline: 2px solid rgba(201,162,75,0.65) !important;
+            outline-offset: 2px;
+        }
+
+        /* Gentle entrance for cards */
+        @media (prefers-reduced-motion: no-preference) {
+            #pageRecruitment > div, #pageOperations > div {
+                animation: riseIn 0.5s ease both;
+            }
+            #pageOperations > div:nth-child(2) { animation-delay: 0.04s; }
+            #pageOperations > div:nth-child(3) { animation-delay: 0.08s; }
+            #pageOperations > div:nth-child(4) { animation-delay: 0.12s; }
+            #pageRecruitment > div:nth-child(2) { animation-delay: 0.04s; }
+            #pageRecruitment > div:nth-child(3) { animation-delay: 0.08s; }
+            #pageRecruitment > div:nth-child(4) { animation-delay: 0.12s; }
+        }
+        @keyframes riseIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== Light theme — warm ivory with the same gold thread ===== */
         body.light {
-            background-color: #f8fafc;
-            color: #0f172a;
+            background-color: #faf8f4;
+            background-image: none;
+            color: #1c1a22;
+        }
+        body.light header {
+            background-color: #ffffff !important;
+            background-image: linear-gradient(90deg, transparent, rgba(201,162,75,0.5) 45%, rgba(233,30,99,0.35) 55%, transparent) !important;
         }
         body.light .bg-\[\#0b0f19\] { background-color: #ffffff !important; }
         body.light .bg-\[\#131b2e\] { background-color: #ffffff !important; }
-        body.light .bg-cardBg { background-color: #ffffff !important; border-color: #e2e8f0 !important; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
-        body.light .bg-\[\#0e1424\] { background-color: #f1f5f9 !important; }
-        body.light .border-\[\#1e293b\], body.light .border-customBorder { border-color: #e2e8f0 !important; }
-        body.light .text-white { color: #0f172a !important; }
-        body.light .text-slate-300, body.light .text-slate-400 { color: #6b7280 !important; }
-        body.light input, body.light select, body.light textarea { background-color: #f8fafc !important; color: #0f172a !important; border-color: #cbd5e1 !important; }
+        body.light .bg-cardBg { background-color: #ffffff !important; background-image: none; border-color: #e7e0d0 !important; box-shadow: 0 4px 16px -6px rgba(120,100,40,0.12); }
+        body.light .bg-cardBg:hover { border-color: rgba(201,162,75,0.5) !important; }
+        body.light .bg-\[\#0e1424\] { background-color: #f6f2e9 !important; }
+        body.light .border-\[\#1e293b\], body.light .border-customBorder { border-color: #e7e0d0 !important; }
+        body.light .text-white { color: #1c1a22 !important; }
+        body.light .text-slate-300, body.light .text-slate-400 { color: #6b6558 !important; }
+        body.light input, body.light select, body.light textarea { background-color: #faf8f4 !important; color: #1c1a22 !important; border-color: #ddd4bd !important; }
+        
+        /* Fix for Stars Zone Media logo gradient text in light mode */
+        body.light .bg-clip-text {
+            background-image: linear-gradient(90deg, #8a6c14, #332d20, #C2185B) !important;
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -68,18 +228,18 @@
                         <i class="fa-solid fa-star"></i>
                     </div>
                     <div class="flex flex-col min-w-0">
-                        <span class="text-white font-black text-xs sm:text-sm tracking-wider truncate">STARS ZONE MEDIA</span>
-                        <span class="text-[8px] sm:text-[9px] tracking-[0.05em] text-slate-400 font-semibold truncate" data-en="Track, Analyze & Reactivate" data-ar="تتبع، تحليل وإعادة تنشيط">Track, Analyze & Reactivate</span>
+                        <span class="font-display font-semibold text-xs sm:text-sm tracking-[0.12em] truncate bg-gradient-to-r from-goldSoft via-white to-brandPink bg-clip-text text-transparent">STARS ZONE MEDIA</span>
+                        <span class="text-[8px] sm:text-[9px] tracking-[0.15em] text-slate-400 font-semibold truncate uppercase" data-en="Track, Analyze & Reactivate" data-ar="تتبع، تحليل وإعادة تنشيط">Track, Analyze & Reactivate</span>
                     </div>
                 </div>
 
                 <div class="col-span-2 lg:col-span-1 flex justify-center order-last lg:order-none mt-2 lg:mt-0">
-                    <div class="flex items-center bg-[#0b0f19] border border-customBorder p-1 rounded-xl shadow-inner">
-                        <button onclick="switchTab('operations')" id="tabOperations" class="px-3 sm:px-4 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-2 bg-brandPink text-white shadow-md shadow-pink-500/20">
+                    <div class="flex items-center bg-[#0b0f19] border border-customBorder p-1 rounded-xl shadow-inner" style="box-shadow: inset 0 1px 2px rgba(0,0,0,0.4), 0 0 0 1px rgba(201,162,75,0.12);">
+                        <button onclick="switchTab('operations')" id="tabOperations" class="px-3 sm:px-4 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-2 text-slate-400 hover:text-white">
                             <i class="fa-solid fa-chart-line"></i>
                             <span data-en="Operations" data-ar="العمليات">Operations</span>
                         </button>
-                        <button onclick="switchTab('recruitment')" id="tabRecruitment" class="px-3 sm:px-4 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-2 text-slate-400 hover:text-white">
+                        <button onclick="switchTab('recruitment')" id="tabRecruitment" class="px-3 sm:px-4 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-2 bg-brandPink text-white shadow-md shadow-pink-500/20">
                             <i class="fa-solid fa-user-plus"></i>
                             <span data-en="Recruitment" data-ar="التوظيف">Recruitment</span>
                         </button>
@@ -120,7 +280,7 @@
             </header>
 
             <!-- ================= PAGE 1: OPERATIONS ================= -->
-            <div id="pageOperations" class="p-4 sm:p-6 space-y-6">
+            <div id="pageOperations" class="p-4 sm:p-6 space-y-6 hidden">
                 <div>
                     <h1 class="text-2xl font-black text-white flex items-center gap-2" data-en="Inactive Creators Dashboard" data-ar="لوحة تحكم المنشئين غير النشطين">
                         Inactive Creators Dashboard
@@ -184,7 +344,7 @@
                     <div class="hidden md:block overflow-x-auto">
                         <table class="w-full text-left rtl:text-right border-collapse" id="creatorsTable">
                             <thead>
-                                <tr id="tableHeaderRow" class="border-b border-customBorder text-[11px] font-semibold text-slate-400 uppercase tracking-wider bg-[#ff69b4]/50"></tr>
+                                <tr id="tableHeaderRow" class="border-b border-customBorder text-[11px] font-semibold text-slate-300 uppercase tracking-wider bg-[#E91E63]/20"></tr>
                             </thead>
                             <tbody class="divide-y divide-customBorder text-xs" id="creatorsTableBody"></tbody>
                         </table>
@@ -193,9 +353,9 @@
                     <div class="md:hidden divide-y divide-customBorder" id="creatorsMobileContainer"></div>
 
                     <div class="p-4 bg-[#0e1424] border-t border-customBorder flex items-center justify-between">
-                        <button onclick="changePage(-1)" id="prevBtn" class="bg-[#ff69b4] border border-customBorder text-slate-300 px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-cardHover transition" data-en="Previous" data-ar="السابق">Previous</button>
+                        <button onclick="changePage(-1)" id="prevBtn" class="bg-cardBg border border-customBorder text-slate-300 px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-cardHover transition" data-en="Previous" data-ar="السابق">Previous</button>
                         <span class="text-xs text-slate-400" id="pageIndicator">Page 1 of 8</span>
-                        <button onclick="changePage(1)" id="nextBtn" class="bg-[#ff69b4] border border-customBorder text-slate-300 px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-cardHover transition" data-en="Next" data-ar="التالي">Next</button>
+                        <button onclick="changePage(1)" id="nextBtn" class="bg-cardBg border border-customBorder text-slate-300 px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-cardHover transition" data-en="Next" data-ar="التالي">Next</button>
                     </div>
                 </div>
 
@@ -249,24 +409,24 @@
                         <div>
                             <div class="flex items-center justify-between mb-4">
                                 <h3 class="text-sm font-bold text-white" data-en="Agent To-Do" data-ar="مهام الوكيل">Agent To-Do</h3>
-                                <div class="w-10 h-10 rounded-full border-2 border-brandPink flex items-center justify-center text-xs font-black text-brandPink" id="todoPercentage">75%</div>
+                                <div class="w-10 h-10 rounded-full border-2 border-brandPink flex items-center justify-center text-xs font-black text-brandPink" id="todoPercentage">0%</div>
                             </div>
                             <div class="space-y-2.5 text-xs text-slate-300">
                                 <label class="flex items-center gap-3 bg-[#0b0f19] p-2.5 rounded-xl border border-customBorder cursor-pointer">
-                                    <input type="checkbox" checked class="accent-brandPink w-4 h-4 rounded todo-checkbox" onchange="updateTodoPercentage()"> 
-                                    <span class="todo-text line-through text-slate-500">Follow up with creators & Live Entery</span>
+                                    <input type="checkbox" class="accent-brandPink w-4 h-4 rounded todo-checkbox" onchange="updateTodoPercentage()"> 
+                                    <span class="todo-text text-slate-300">Follow up with creators & Live Entery</span>
                                 </label>
                                 <label class="flex items-center gap-3 bg-[#0b0f19] p-2.5 rounded-xl border border-customBorder cursor-pointer">
-                                    <input type="checkbox" checked class="accent-brandPink w-4 h-4 rounded todo-checkbox" onchange="updateTodoPercentage()"> 
-                                    <span class="todo-text line-through text-slate-500">Send motivation messages</span>
+                                    <input type="checkbox" class="accent-brandPink w-4 h-4 rounded todo-checkbox" onchange="updateTodoPercentage()"> 
+                                    <span class="todo-text text-slate-300">Send motivation messages</span>
                                 </label>
                                 <label class="flex items-center gap-3 bg-[#0b0f19] p-2.5 rounded-xl border border-customBorder cursor-pointer">
-                                    <input type="checkbox" checked class="accent-brandPink w-4 h-4 rounded todo-checkbox" onchange="updateTodoPercentage()"> 
-                                    <span class="todo-text line-through text-slate-500">Schedule coaching calls</span>
+                                    <input type="checkbox" class="accent-brandPink w-4 h-4 rounded todo-checkbox" onchange="updateTodoPercentage()"> 
+                                    <span class="todo-text text-slate-300">Schedule coaching calls</span>
                                 </label>
                                 <label class="flex items-center gap-3 bg-[#0b0f19] p-2.5 rounded-xl border border-customBorder cursor-pointer">
-                                    <input type="checkbox" checked class="accent-brandPink w-4 h-4 rounded todo-checkbox" onchange="updateTodoPercentage()"> 
-                                    <span class="todo-text line-through text-slate-500">Submit Data For All Managed Creators Daily</span>
+                                    <input type="checkbox" class="accent-brandPink w-4 h-4 rounded todo-checkbox" onchange="updateTodoPercentage()"> 
+                                    <span class="todo-text text-slate-300">Submit Data For All Managed Creators Daily</span>
                                 </label>
                             </div>
                         </div>
@@ -274,8 +434,8 @@
                 </div>
             </div>
 
-            <!-- ================= PAGE 2: RECRUITMENT ================= -->
-            <div id="pageRecruitment" class="p-4 sm:p-6 space-y-6 hidden">
+            <!-- ================= PAGE 2: RECRUITMENT (DEFAULT) ================= -->
+            <div id="pageRecruitment" class="p-4 sm:p-6 space-y-6">
                 <div>
                     <h1 class="text-2xl font-black text-white flex items-center gap-2">
                         Good Morning, Masy 👋
@@ -298,7 +458,7 @@
                             <div class="relative w-16 h-16 flex items-center justify-center">
                                 <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
                                     <circle cx="50" cy="50" r="40" fill="transparent" stroke="#1e293b" stroke-width="12"></circle>
-                                    <circle cx="50" cy="50" r="40" fill="transparent" stroke="#ec4899" stroke-width="12" stroke-dasharray="251.2" stroke-dashoffset="0"></circle>
+                                    <circle cx="50" cy="50" r="40" fill="transparent" stroke="#E91E63" stroke-width="12" stroke-dasharray="251.2" stroke-dashoffset="0"></circle>
                                 </svg>
                                 <span id="shiftTimerDisplay" class="absolute text-[10px] font-black text-white">00:00</span>
                             </div>
@@ -382,7 +542,7 @@
                     <div class="overflow-x-auto">
                         <table class="w-full text-left rtl:text-right border-collapse text-xs">
                             <thead>
-                                <tr class="border-b border-customBorder text-[11px] font-semibold text-slate-400 uppercase tracking-wider bg-[#ff69b4]/20">
+                                <tr class="border-b border-customBorder text-[11px] font-semibold text-slate-300 uppercase tracking-wider bg-[#E91E63]/20">
                                     <th class="py-3 px-4">#</th>
                                     <th class="py-3 px-4">Recruited Username</th>
                                     <th class="py-3 px-4">Date Added</th>
@@ -452,22 +612,20 @@
         }));
 
         let currentPage = 1;
-        const itemsPerPage = 10; // Updated to 10 creators per page as requested
+        const itemsPerPage = 10;
         let filteredData = [...creatorsData];
         let pendingScreenshotIndex = null;
         let isArabic = false;
         let isLightMode = false;
 
-        // Persistent Recruitment State Variables - Reset Follow Up list as requested
         let recruitPage = 1;
         const totalSlots = 30;
         const slotsPerPage = 10;
         let recruitmentInputs = JSON.parse(localStorage.getItem('starsZone_recruitmentInputs')) || Array(totalSlots).fill("");
-        let cumulativeFollowUps = []; // Reset follow up recruitment status list
+        let cumulativeFollowUps = [];
         localStorage.removeItem('starsZone_cumulativeFollowUps');
         let attendanceRecord = JSON.parse(localStorage.getItem('starsZone_attendanceRecord')) || {};
 
-        // Shift & Break timer variables
         let isCheckedIn = false;
         let shiftStartTime = null;
         let shiftTimerInterval = null;
