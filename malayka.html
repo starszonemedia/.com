@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stars Zone Media | Malayka</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        rose: {
+          50:'#fff7fb',100:'#ffe8f2',200:'#ffc9dd',300:'#ff9fc1',
+          400:'#ff6f9f',500:'#f54f87',600:'#df356d',700:'#b92155'
+        },
+        ink:'#09090b',
+        panel:'#101014',
+        panel2:'#15151b',
+        line:'#29292f'
+      },
+      fontFamily:{
+        sans:['DM Sans','sans-serif'],
+        display:['Playfair Display','serif']
+      },
+      boxShadow:{
+        luxury:'0 24px 80px rgba(0,0,0,.42)',
+        rose:'0 0 45px rgba(245,79,135,.16)',
+        pop:'0 0 30px rgba(245,79,135,.35), 0 0 10px rgba(255,255,255,.2) inset'
+      }
+    }
+  }
+}
+</script>
+
+<style>
+:root{
+  --bg:#08080a;
+  --panel:rgba(18,18,23,.78);
+  --panel-solid:#111116;
+  --panel-soft:#17171d;
+  --line:rgba(255,255,255,.09);
+  --text:#f7f4f5;
+  --muted:#99939a;
+  --rose:#f54f87;
+  --rose2:#ff9fc1;
+  --gold:#d8b47a;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:'DM Sans',sans-serif;
+  background:
+    radial-gradient(circle at 82% -5%,rgba(245,79,135,.13),transparent 28rem),
+    radial-gradient(circle at 10% 35%,rgba(216,180,122,.045),transparent 25rem),
+    var(--bg);
+  color:var(--text);
+  transition:.3s ease;
+}
+body:before{
+  content:"";
+  position:fixed; inset:0; pointer-events:none; z-index:-1;
+  background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
+  background-size:48px 48px;
+  mask-image:linear-gradient(to bottom,black,transparent 80%);
+}
+body.light{
+  --bg:#f7f4f6; --panel:rgba(255,255,255,.82); --panel-solid:#fff;
+  --panel-soft:#f5eef2; --line:rgba(25,20,24,.10); --text:#171318; --muted:#777078;
+  background:
+    radial-gradient(circle at 85% 0,rgba(245,79,135,.10),transparent 28rem),
+    var(--bg);
+}
+body.light:before{opacity:.35}
+a{text-decoration:none;color:inherit}
+::selection{background:var(--rose);color:white}
+.glass{
+  background:var(--panel);
+  border:1px solid var(--line);
+  box-shadow:0 24px 80px rgba(0,0,0,.25);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+}
+body.light .glass{box-shadow:0 20px 55px rgba(30,15,25,.07)}
+.topbar{
+  background:rgba(8,8,10,.72);
+  backdrop-filter:blur(22px);
+  border-bottom:1px solid var(--line);
+}
+body.light .topbar{background:rgba(255,255,255,.78)}
+.brand-mark{
+  background:linear-gradient(145deg,#ff9fc1,#f54f87 55%,#a91d4e);
+  box-shadow:0 0 35px rgba(245,79,135,.25), inset 0 1px rgba(255,255,255,.4);
+}
+.eyebrow{letter-spacing:.22em;text-transform:uppercase;font-size:10px;font-weight:700;color:var(--rose2)}
+.display{font-family:'Playfair Display',serif}
+.section-title{letter-spacing:-.03em}
+.premium-line{
+  height:1px;
+  background:linear-gradient(90deg,rgba(245,79,135,.7),rgba(255,255,255,.08),transparent);
+}
+.metric{
+  position:relative; overflow:hidden;
+  background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.018));
+  border:1px solid var(--line);
+}
+.metric:after{
+  content:""; position:absolute; width:100px;height:100px;right:-35px;top:-45px;
+  background:rgba(245,79,135,.13); filter:blur(28px); border-radius:50%;
+}
+.field{
+  background:rgba(255,255,255,.035)!important;
+  border:1px solid var(--line)!important;
+  color:var(--text)!important;
+}
+body.light .field{background:#faf7f9!important;color:#171318!important}
+.field:focus{outline:none!important;border-color:rgba(245,79,135,.65)!important;box-shadow:0 0 0 3px rgba(245,79,135,.08)}
+select option{background:#15151b;color:white}
+body.light select option{background:white;color:#171318}
+.pill{
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.035);
+}
+.btn-main{
+  background:linear-gradient(135deg,#ff6f9f,#d92f67);
+  box-shadow:0 12px 30px rgba(245,79,135,.20);
+}
+.btn-main:hover{transform:translateY(-1px);box-shadow:0 16px 35px rgba(245,79,135,.28)}
+.btn-main,.btn-soft{transition:.2s ease}
+.btn-soft{background:rgba(255,255,255,.04);border:1px solid var(--line)}
+.btn-soft:hover{border-color:rgba(245,79,135,.45);background:rgba(245,79,135,.07)}
+.table-wrap{border:1px solid var(--line);background:rgba(0,0,0,.12)}
+tbody tr{transition:.18s ease}
+tbody tr:hover{background:rgba(245,79,135,.035)}
+.calendar-day{min-height:56px;transition:.2s ease}
+.calendar-day:hover{transform:translateY(-1px);border-color:rgba(245,79,135,.45)!important}
+.calendar-day.today{box-shadow:inset 0 0 0 1px rgba(245,79,135,.55),0 0 25px rgba(245,79,135,.08)}
+.calendar-day.done{background:linear-gradient(145deg,rgba(16,185,129,.14),rgba(16,185,129,.035));border-color:rgba(52,211,153,.38)!important}
+
+.pop-action-active {
+  animation: popPulse 2s infinite ease-in-out;
+  box-shadow: 0 0 25px rgba(245,79,135,.5), inset 0 0 10px rgba(255,255,255,.4) !important;
+  border-color: rgba(245,79,135,.8) !important;
+}
+@keyframes popPulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(245,79,135,.4), inset 0 0 8px rgba(255,255,255,.3); }
+  50% { transform: scale(1.03); box-shadow: 0 0 35px rgba(245,79,135,.7), inset 0 0 12px rgba(255,255,255,.6); }
+}
+
+.scroll::-webkit-scrollbar{width:5px;height:5px}
+.scroll::-webkit-scrollbar-thumb{background:#39343a;border-radius:10px}
+.fade-up{animation:fadeUp .55s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.delay-1{animation-delay:.06s}.delay-2{animation-delay:.12s}.delay-3{animation-delay:.18s}
+
+@media(max-width:768px){
+  .mobile-card-view {
+    border: none !important;
+    background: transparent !important;
+  }
+  .mobile-card-view tr {
+    display: block;
+    margin-bottom: 16px;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    background: rgba(18,18,23,0.85);
+    padding: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  }
+  .mobile-card-view td {
+    display: flex;
+    flex-direction: column;
+    width: 100% !important;
+    text-align: left !important;
+    padding: 6px 8px !important;
+    border: none !important;
+  }
+  .mobile-card-view td::before {
+    content: attr(data-label);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 10px;
+    color: var(--rose2);
+    margin-bottom: 4px;
+    letter-spacing: 0.1em;
+  }
+  .mobile-card-view thead {
+    display: none;
+  }
+}
+</style>
+</head>
+
+<body class="dark min-h-screen antialiased pb-16">
+
+<header class="topbar sticky top-0 z-50">
+  <div class="max-w-[1500px] mx-auto px-5 lg:px-8 h-[78px] flex items-center justify-between gap-5">
+    <div class="flex items-center gap-3.5 min-w-0">
+      <div class="brand-mark w-11 h-11 rounded-[15px] flex items-center justify-center overflow-hidden p-2">
+        <img src="https://api.iconify.design/solar:star-fall-bold-duotone.svg?color=%23ffffff" alt="Star Logo" class="w-full h-full object-contain filter drop-shadow">
+      </div>
+      <div class="min-w-0">
+        <div class="eyebrow truncate">Stars Zone Media</div>
+        <div class="font-semibold text-[15px] truncate">Malayka <span class="text-zinc-500 font-normal">/ Agent Portal</span></div>
+      </div>
+    </div>
+
+    <div class="hidden lg:flex items-center gap-2 text-[11px] text-zinc-500">
+      <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(52,211,153,.8)]"></span>
+      System online
+      <span class="mx-2 text-zinc-700">•</span>
+      <span id="liveDate"></span>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <div id="checkInContainer" class="pill rounded-2xl p-2 flex items-center gap-2 shadow-lg transition-all">
+        <button onclick="toggleStartShift()" id="checkInBtn" class="btn-main px-4 py-2 rounded-xl text-white text-xs font-bold">
+          Start Shift
+        </button>
+        <div id="checkInTimerWrapper" class="hidden items-center gap-2 px-2">
+          <span class="w-2 h-2 rounded-full bg-rose-400 animate-pulse"></span>
+          <span class="text-[11px] text-zinc-400">Active</span>
+          <span id="shiftTimerCount" class="font-mono text-xs font-bold">00</span>
+        </div>
+      </div>
+
+      <div id="breakContainer" class="hidden pill rounded-2xl p-2 items-center gap-2 shadow-lg transition-all">
+        <button onclick="toggleBreak()" id="breakBtn" class="px-3 py-2 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-400/20 text-xs font-bold">Break</button>
+        <span id="breakTimerDisplay" class="hidden text-xs font-mono text-amber-400 font-bold pr-2">00:00</span>
+      </div>
+
+      <button onclick="toggleTheme()" class="btn-soft w-10 h-10 rounded-xl flex items-center justify-center" title="Toggle theme">
+        <span id="themeIcon">☀</span>
+      </button>
+      <button onclick="handleLogout()" class="hidden sm:flex btn-soft px-3.5 h-10 rounded-xl items-center gap-2 text-xs font-semibold text-zinc-400 hover:text-rose-300">
+        <span>↪</span> Logout
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="max-w-[1500px] mx-auto px-5 lg:px-8 pt-10 space-y-8">
+
+  <section class="relative overflow-hidden rounded-[30px] glass p-7 lg:p-10 fade-up">
+    <div class="absolute -right-24 -top-32 w-96 h-96 rounded-full bg-rose-500/10 blur-3xl"></div>
+    <div class="absolute right-1/3 -bottom-40 w-72 h-72 rounded-full bg-amber-300/5 blur-3xl"></div>
+    <div class="relative">
+      <div class="eyebrow mb-3">Operations workspace · 2026</div>
+      <h1 class="display text-4xl lg:text-6xl leading-[1.02] max-w-3xl">Good evening, <span class="italic text-rose-300">Malayka.</span></h1>
+      <p class="text-sm lg:text-[15px] text-zinc-400 mt-4 max-w-2xl leading-7">
+        Your recruitment, partnerships and team operations organized in one focused workspace.
+      </p>
+    </div>
+  </section>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <section class="glass rounded-[28px] p-6 lg:p-7 fade-up delay-1">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+        <div class="flex items-center gap-2.5">
+          <span class="w-7 h-7 rounded-lg bg-rose-500/10 border border-rose-400/20 flex items-center justify-center text-rose-300 text-xs font-bold">📅</span>
+          <h2 class="section-title text-lg font-semibold">Monthly Attendance</h2>
+        </div>
+        <div class="flex items-center gap-2">
+          <div class="pill rounded-xl px-3 py-1.5 text-[11px] text-zinc-400">
+            <span id="currentMonthName" class="text-zinc-200 font-semibold"></span>
+          </div>
+        </div>
+      </div>
+      <div class="premium-line mb-4"></div>
+      <div class="max-h-[220px] overflow-y-auto scroll pr-1.5">
+        <div class="grid grid-cols-4 sm:grid-cols-7 gap-2" id="attendanceGridContainer"></div>
+      </div>
+      <div class="flex items-center justify-between mt-4 text-[11px] text-zinc-400 pt-3 border-t border-white/5">
+        <span id="checkedDaysCountText">Checked: 0 Days</span>
+        <span id="checkedDaysPercentage" class="text-rose-400 font-bold">0%</span>
+      </div>
+    </section>
+
+    <section class="glass rounded-[28px] p-6 lg:p-7 fade-up delay-1 flex flex-col justify-between">
+      <div>
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+          <div class="flex items-center gap-2.5">
+            <span class="w-7 h-7 rounded-lg bg-emerald-500/10 border border-emerald-400/20 flex items-center justify-center text-emerald-300 text-xs font-bold">📂</span>
+            <h2 class="section-title text-lg font-semibold">Saved Submissions</h2>
+          </div>
+          <div class="flex items-center gap-2">
+            <button type="button" onclick="clearArchiveVault()" class="text-[10px] text-zinc-500 hover:text-rose-400 transition underline">Reset Vault</button>
+            <div class="pill rounded-xl p-1 flex items-center gap-1 text-xs">
+              <button type="button" onclick="switchArchiveTab('recruitment')" id="archBtnRecruitment" class="px-3 py-1.5 rounded-lg font-bold transition bg-rose-500 text-white shadow">Recruitment</button>
+              <button type="button" onclick="switchArchiveTab('partnership')" id="archBtnPartnership" class="px-3 py-1.5 rounded-lg font-bold transition text-zinc-400 hover:text-white">Partnership</button>
+          </div>
+          </div>
+        </div>
+        <div class="premium-line mb-4"></div>
+        
+        <div class="max-h-[210px] overflow-y-auto scroll pr-1.5 space-y-2.5 text-xs" id="archiveContentContainer">
+        </div>
+      </div>
+
+      <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between text-[11px] text-zinc-500">
+        <span id="archiveMetaStatus">Permanent local vault active</span>
+        <span class="text-emerald-400 font-semibold">● Synced</span>
+      </div>
+    </section>
+  </div>
+
+  <section class="glass rounded-[28px] p-6 lg:p-7 fade-up delay-2">
+    <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-5 mb-6">
+      <div>
+        <div class="eyebrow mb-2">Creator acquisition</div>
+        <h2 class="section-title text-2xl font-semibold">Recruitment Tracker</h2>
+        <p class="text-xs text-zinc-500 mt-1.5">Track creators usernames, status and follow-up notes.</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="text-[10px] uppercase tracking-widest text-zinc-600">Page</div>
+        <div class="pill rounded-xl p-1.5 flex items-center gap-1" id="recruitmentPagination"></div>
+      </div>
+  </div>
+
+  <form id="recruitmentForm" onsubmit="submitRecruitment(event)">
+      <div class="table-wrap rounded-2xl overflow-x-auto scroll">
+        <table class="w-full min-w-[800px] text-left border-collapse mobile-card-view">
+          <thead>
+            <tr class="border-b border-white/8 text-[10px] uppercase tracking-[.16em] text-zinc-500 text-center">
+              <th class="py-4 px-5 w-16 font-semibold text-center">No.</th>
+              <th class="py-4 px-5 font-semibold text-center">Username</th>
+              <th class="py-4 px-5 w-64 font-semibold text-center">Pipeline Status</th>
+              <th class="py-4 px-5 font-semibold text-center">Notes / Next action</th>
+            </tr>
+          </thead>
+          <tbody id="recruitmentTableBody" class="divide-y divide-white/5 text-sm"></tbody>
+        </table>
+      </div>
+      <div class="flex justify-end mt-5">
+        <button type="submit" class="btn-main rounded-xl px-5 py-3 text-xs font-bold text-white">Save Recruitment Data <span class="ml-2">→</span></button>
+      </div>
+    </form>
+  </section>
+
+  <section class="glass rounded-[28px] p-6 lg:p-7 fade-up delay-3">
+    <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-5 mb-6">
+      <div>
+        <div class="eyebrow mb-2">Business development</div>
+        <h2 class="section-title text-2xl font-semibold">Company Partnerships</h2>
+        <p class="text-xs text-zinc-500 mt-1.5">Manage outreach, negotiation stages and scheduled meetings.</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="text-[10px] uppercase tracking-widest text-zinc-600">Page</div>
+        <div class="pill rounded-xl p-1.5 flex items-center gap-1" id="partnershipPagination"></div>
+      </div>
+  </div>
+
+  <form id="partnershipsForm" onsubmit="submitPartnerships(event)">
+      <div class="table-wrap rounded-2xl overflow-x-auto scroll">
+        <table class="w-full min-w-[1000px] text-left border-collapse mobile-card-view">
+          <thead>
+            <tr class="border-b border-white/8 text-[10px] uppercase tracking-[.16em] text-zinc-500 text-center">
+              <th class="py-4 px-5 w-16 font-semibold text-center">No.</th>
+              <th class="py-4 px-5 font-semibold text-center">Company</th>
+              <th class="py-4 px-5 font-semibold text-center">Contact Person</th>
+              <th class="py-4 px-5 w-52 font-semibold text-center">Status</th>
+              <th class="py-4 px-5 w-64 font-semibold text-center">Meeting</th>
+            </tr>
+          </thead>
+          <tbody id="partnershipsTableBody" class="divide-y divide-white/5 text-sm"></tbody>
+        </table>
+      </div>
+      <div class="flex justify-end mt-5">
+        <button type="submit" class="btn-main rounded-xl px-5 py-3 text-xs font-bold text-white">Save Partnership Data <span class="ml-2">→</span></button>
+      </div>
+    </form>
+  </section>
+
+  <section class="glass rounded-[28px] p-6 lg:p-7">
+    <div class="mb-6">
+      <div class="eyebrow mb-2">Calendar</div>
+      <h2 class="section-title text-2xl font-semibold">Weekly Team Meetings</h2>
+      <p class="text-xs text-zinc-500 mt-1.5">Your upcoming internal syncs and operational checkpoints for August.</p>
+  </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="meetingsContainer"></div>
+  </section>
+
+  <section>
+    <div class="mb-5">
+      <div class="eyebrow mb-2">Daily operations</div>
+      <h2 class="section-title text-2xl font-semibold">Notes & Intelligence</h2>
+  </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div class="glass rounded-[24px] p-6">
+        <div class="flex items-center justify-between mb-4">
+          <div><div class="text-sm font-semibold">Today's Feedback</div><div class="text-[10px] text-zinc-500 mt-1">Shift observations</div></div>
+          <span class="w-9 h-9 rounded-xl bg-rose-500/10 border border-rose-400/10 flex items-center justify-center text-rose-300">✦</span>
+        </div>
+        <textarea rows="5" class="field w-full rounded-2xl p-3.5 text-sm resize-none scroll" placeholder="Capture what happened today..."></textarea>
+        <button onclick="submitSection('Feedback', event)" class="btn-soft w-full mt-3 py-3 rounded-xl text-xs font-bold text-zinc-300">Save Feedback</button>
+      </div>
+
+      <div class="glass rounded-[24px] p-6">
+        <div class="flex items-center justify-between mb-4">
+          <div><div class="text-sm font-semibold">Issues & Challenges</div><div class="text-[10px] text-zinc-500 mt-1">Blockers & escalations</div></div>
+          <span class="w-9 h-9 rounded-xl bg-amber-500/10 border border-amber-400/10 flex items-center justify-center text-amber-300">!</span>
+        </div>
+        <textarea rows="5" class="field w-full rounded-2xl p-3.5 text-sm resize-none scroll" placeholder="Document an issue or blocker..."></textarea>
+        <button onclick="submitSection('Issues', event)" class="btn-soft w-full mt-3 py-3 rounded-xl text-xs font-bold text-zinc-300">Log Issue</button>
+      </div>
+
+      <div class="glass rounded-[24px] p-6">
+        <div class="flex items-center justify-between mb-4">
+          <div><div class="text-sm font-semibold">Ideas & Improvements</div><div class="text-[10px] text-zinc-500 mt-1">Growth opportunities</div></div>
+          <span class="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-400/10 flex items-center justify-center text-emerald-300">↗</span>
+        </div>
+        <textarea rows="5" class="field w-full rounded-2xl p-3.5 text-sm resize-none scroll" placeholder="Suggest a new strategy or improvement..."></textarea>
+        <button onclick="submitSection('Ideas', event)" class="btn-soft w-full mt-3 py-3 rounded-xl text-xs font-bold text-zinc-300">Save Idea</button>
+      </div>
+  </div>
+  </section>
+
+  <footer class="pt-5 pb-6 flex flex-col sm:flex-row justify-between gap-3 text-[10px] uppercase tracking-[.16em] text-zinc-600">
+    <span>Stars Zone Media · Operations Portal</span>
+    <span>Private workspace</span>
+  </footer>
+</main>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyMw4ijgsak11iIO0k_3r8K4QzviMdtUMIODtCmcbZlw76iEsSV72YBI7sykWTseKJ2/exec";
+
+async function sendDataToSheet(payload, btnElement, originalText) {
+  if (btnElement) {
+    btnElement.disabled = true;
+    btnElement.innerHTML = `<span class="inline-block animate-spin mr-1">⏳</span> Loading...`;
+  }
+  
+  try {
+    const response = await fetch(SCRIPT_URL, {
+      method: "POST",
+      body: JSON.stringify(payload)
+    });
+    const result = await response.json();
+    
+    if (result.status === "success" && btnElement) {
+      btnElement.innerHTML = `✓ Success`;
+      setTimeout(() => {
+        btnElement.innerHTML = originalText;
+        btnElement.disabled = false;
+      }, 2000);
+    } else if (btnElement) {
+      btnElement.innerHTML = originalText;
+      btnElement.disabled = false;
+    }
+  } catch (err) {
+    console.error(err);
+    if (btnElement) {
+      btnElement.innerHTML = originalText;
+      btnElement.disabled = false;
+    }
+  }
+}
+
+window.resetPortalVault = function() {
+  localStorage.clear();
+  window.location.reload(true);
+};
+
+function clearArchiveVault(){
+  if(confirm('Are you sure you want to reset and clear all saved submissions?')){
+    localStorage.removeItem('szm_archive_recruitment');
+    localStorage.removeItem('szm_archive_partnership');
+    renderArchiveView();
+  }
+}
+
+function toggleTheme(){
+  const body=document.body, icon=document.getElementById('themeIcon');
+  if(body.classList.contains('dark')){
+    body.classList.remove('dark'); body.classList.add('light');
+    icon.textContent='☾'; localStorage.setItem('szm_theme','light');
+  }else{
+    body.classList.remove('light'); body.classList.add('dark');
+    icon.textContent='☀'; localStorage.setItem('szm_theme','dark');
+  }
+}
+if(localStorage.getItem('szm_theme')==='light'){
+  document.body.classList.remove('dark'); document.body.classList.add('light');
+  document.getElementById('themeIcon').textContent='☾';
+}
+
+function handleLogout(){
+  if(confirm('Are you sure you want to log out of Stars Zone Media portal?')){
+    window.location.reload();
+  }
+}
+
+function renderLiveDate(){
+  document.getElementById('liveDate').textContent =
+    new Date().toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'});
+}
+
+const now=new Date();
+const currentYear=now.getFullYear();
+const currentMonth=now.getMonth();
+const todayDateNum=now.getDate();
+const totalDaysInMonth=new Date(currentYear,currentMonth+1,0).getDate();
+const monthNames=["January","February","March","April","May","June","July","August","September","October","November","December"];
+document.getElementById('currentMonthName').textContent=`${monthNames[currentMonth]} ${currentYear}`;
+
+const attendanceStorageKey=`szm_attendance_${currentYear}_${currentMonth}`;
+let attendedDays=JSON.parse(localStorage.getItem(attendanceStorageKey)||'[]');
+
+function renderAttendanceGrid(){
+  const container=document.getElementById('attendanceGridContainer');
+  container.innerHTML='';
+  for(let day=1;day<=totalDaysInMonth;day++){
+    const isAttended=attendedDays.includes(day), isToday=day===todayDateNum;
+    const box=document.createElement('div');
+    box.className=`calendar-day rounded-xl border p-2 flex flex-col justify-between text-center ${isAttended?'done':isToday?'today':''}`;
+    box.innerHTML=`
+      <div class="text-xs font-semibold">${day}</div>
+      <div class="text-[9px] mt-1 ${isAttended?'text-emerald-300':isToday?'text-rose-300':'text-zinc-500'}">
+        ${isAttended?'✓':isToday?'Today':'—'}
+      </div>`;
+    container.appendChild(box);
+  }
+  const count=attendedDays.length;
+  document.getElementById('checkedDaysCountText').textContent=`Checked: ${count} Days`;
+  const pct=Math.round((count/totalDaysInMonth)*100);
+  document.getElementById('checkedDaysPercentage').textContent=`${pct}%`;
+}
+
+let isStarted=false, shiftInterval=null, shiftSeconds=0;
+let isOnBreak=false, breakInterval=null, breakSeconds=0;
+
+function toggleStartShift(){
+  isStarted=!isStarted;
+  const btn=document.getElementById('checkInBtn');
+  const timerWrapper=document.getElementById('checkInTimerWrapper');
+  const breakContainer=document.getElementById('breakContainer');
+  const container=document.getElementById('checkInContainer');
+
+  const actionType = isStarted ? "Start Shift" : "End Shift";
+  sendDataToSheet({
+    action: "shift",
+    type: actionType,
+    date: new Date().toLocaleDateString(),
+    timestamp: new Date().toLocaleTimeString()
+  }, null, "");
+
+  if(isStarted){
+    btn.textContent='End Shift';
+    btn.className='px-4 py-2 rounded-xl bg-red-500/20 text-red-300 border border-red-400/30 text-xs font-bold';
+    timerWrapper.classList.remove('hidden'); timerWrapper.classList.add('flex');
+    breakContainer.classList.remove('hidden'); breakContainer.classList.add('flex');
+    container.classList.add('pop-action-active');
+
+    if(!attendedDays.includes(todayDateNum)){
+      attendedDays.push(todayDateNum);
+      localStorage.setItem(attendanceStorageKey,JSON.stringify(attendedDays));
+      renderAttendanceGrid();
+    }
+
+    shiftSeconds=0;
+    shiftInterval=setInterval(()=>{
+      shiftSeconds++;
+      document.getElementById('shiftTimerCount').textContent=String(shiftSeconds%60).padStart(2,'0');
+    },1000);
+  }else{
+    btn.textContent='Start Shift';
+    btn.className='btn-main px-4 py-2 rounded-xl text-white text-xs font-bold';
+    timerWrapper.classList.add('hidden'); timerWrapper.classList.remove('flex');
+    breakContainer.classList.add('hidden'); breakContainer.classList.remove('flex');
+    container.classList.remove('pop-action-active');
+    clearInterval(shiftInterval);
+    if(isOnBreak) toggleBreak();
+  }
+}
+
+function toggleBreak(){
+  isOnBreak=!isOnBreak;
+  const btn=document.getElementById('breakBtn');
+  const display=document.getElementById('breakTimerDisplay');
+  const container=document.getElementById('breakContainer');
+  
+  const actionType = isOnBreak ? "Start Break" : "End Break";
+  sendDataToSheet({
+    action: "break",
+    type: actionType,
+    date: new Date().toLocaleDateString(),
+    timestamp: new Date().toLocaleTimeString()
+  }, null, "");
+
+  if(isOnBreak){
+    btn.textContent='End Break';
+    btn.className='px-3 py-2 rounded-xl bg-amber-500/30 text-amber-200 border border-amber-400/40 text-xs font-bold';
+    container.classList.add('pop-action-active');
+    display.classList.remove('hidden');
+    breakSeconds=0;
+    breakInterval=setInterval(()=>{
+      breakSeconds++;
+      const mins=Math.floor(breakSeconds/60), secs=breakSeconds%60;
+      display.textContent=`${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
+    },1000);
+  }else{
+    btn.textContent='Break';
+    btn.className='px-3 py-2 rounded-xl bg-amber-500/10 text-amber-300 border border-amber-400/20 text-xs font-bold';
+    container.classList.remove('pop-action-active');
+    display.classList.add('hidden');
+    clearInterval(breakInterval);
+  }
+}
+
+const totalRecruitmentSlots=50, perPageRecruitment=5;
+let currentRecruitmentPage=1;
+let recruitmentData=Array.from({length:totalRecruitmentSlots},()=>({username:'',status:'',notes:''}));
+const recruitmentStatuses=['intersted','not intersted','onboarded','negotiation','no response'];
+
+function escapeHtml(v){
+  return String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+}
+function renderRecruitmentTable(){
+  const tbody=document.getElementById('recruitmentTableBody'); tbody.innerHTML='';
+  const start=(currentRecruitmentPage-1)*perPageRecruitment;
+  for(let i=start;i<start+perPageRecruitment;i++){
+    const row=recruitmentData[i], tr=document.createElement('tr');
+    tr.innerHTML=`
+      <td class="py-4 px-5 text-zinc-600 font-mono text-[11px] text-center" data-label="No.">${String(i+1).padStart(2,'0')}</td>
+      <td class="py-3 px-5 text-center" data-label="Username">
+        <input type="text" value="${escapeHtml(row.username)}" oninput="updateRecruitmentData(${i},'username',this.value)"
+          placeholder="@username" class="field w-full rounded-xl px-3.5 py-2.5 text-sm text-center">
+      </td>
+      <td class="py-3 px-5 text-center" data-label="Pipeline Status">
+        <select onchange="updateRecruitmentData(${i},'status',this.value)" class="field w-full rounded-xl px-3.5 py-2.5 text-sm capitalize text-center">
+          <option value="" disabled ${row.status===''?'selected':''}>Select status</option>
+          ${recruitmentStatuses.map(s=>`<option value="${s}" ${row.status===s?'selected':''}>${s}</option>`).join('')}
+        </select>
+      </td>
+      <td class="py-3 px-5 text-center" data-label="Notes">
+        <input type="text" value="${escapeHtml(row.notes)}" oninput="updateRecruitmentData(${i},'notes',this.value)"
+          placeholder="Add note or next action if presented..." class="field w-full rounded-xl px-3.5 py-2.5 text-sm text-center">
+      </td>`;
+    tbody.appendChild(tr);
+  }
+  renderRecruitmentPagination();
+}
+function updateRecruitmentData(index,field,val){recruitmentData[index][field]=val}
+function renderRecruitmentPagination(){
+  const container=document.getElementById('recruitmentPagination'); container.innerHTML='';
+  for(let p=1;p<=totalRecruitmentSlots/perPageRecruitment;p++){
+    const btn=document.createElement('button');
+    btn.type='button'; btn.textContent=p;
+    btn.className=`w-8 h-8 rounded-lg text-[10px] font-bold transition ${currentRecruitmentPage===p?'bg-rose-500 text-white shadow-[0_0_20px_rgba(245,79,135,.25)]':'text-zinc-500 hover:text-white hover:bg-white/5'}`;
+    btn.onclick=()=>{currentRecruitmentPage=p;renderRecruitmentTable()};
+    container.appendChild(btn);
+  }
+}
+
+function submitRecruitment(e){
+  e.preventDefault();
+  const btn = e.target.querySelector('button[type="submit"]');
+  const originalText = btn.innerHTML;
+  
+  const filledRecruitment = recruitmentData.filter(r => r.username.trim() !== '' || r.status !== '' || r.notes.trim() !== '');
+  const formattedRows = (filledRecruitment.length > 0 ? filledRecruitment : [{username:'(Empty Submission)', status:'N/A', notes:''}]).map((r, idx) => ({
+    no: idx + 1,
+    username: r.username,
+    status: r.status,
+    notes: r.notes
+  }));
+
+  sendDataToSheet({
+    action: "recruitment",
+    rows: formattedRows
+  }, btn, originalText);
+
+  let submissionRecord = {
+    date: new Date().toLocaleString('en-US', {month:'short', day:'numeric', hour:'2-digit', minute:'2-digit'}),
+    data: filledRecruitment.length > 0 ? filledRecruitment : [{username:'(Empty Submission)', status:'N/A', notes:''}]
+  };
+  
+  let savedArchive = JSON.parse(localStorage.getItem('szm_archive_recruitment') || '[]');
+  savedArchive.unshift(submissionRecord);
+  localStorage.setItem('szm_archive_recruitment', JSON.stringify(savedArchive));
+  renderArchiveView();
+
+  // Clear data and reset table view
+  recruitmentData = Array.from({length:totalRecruitmentSlots},()=>({username:'',status:'',notes:''}));
+  renderRecruitmentTable();
+}
+
+const totalPartnershipSlots=30, perPagePartnership=5;
+let currentPartnershipPage=1;
+let partnershipRows=Array.from({length:totalPartnershipSlots},()=>({company:'',contact:'',status:'',meetingTime:''}));
+const partnershipStatuses=['meeting','negotiation','contacted','signed'];
+
+function renderPartnershipsTable(){
+  const tbody=document.getElementById('partnershipsTableBody'); tbody.innerHTML='';
+  const start=(currentPartnershipPage-1)*perPagePartnership;
+  for(let idx=start; idx<start+perPagePartnership; idx++){
+    const row=partnershipRows[idx];
+    const tr=document.createElement('tr');
+    tr.innerHTML=`
+      <td class="py-4 px-5 text-zinc-600 font-mono text-[11px] text-center" data-label="No.">${String(idx+1).padStart(2,'0')}</td>
+      <td class="py-3 px-5 text-center" data-label="Company"><input type="text" value="${escapeHtml(row.company)}" oninput="updatePartnership(${idx},'company',this.value)" placeholder="Company name" class="field w-full rounded-xl px-3.5 py-2.5 text-sm text-center"></td>
+      <td class="py-3 px-5 text-center" data-label="Contact Person"><input type="text" value="${escapeHtml(row.contact)}" oninput="validateNumbersOnly(this);updatePartnership(${idx},'contact',this.value)" placeholder="Numbers only" class="field w-full rounded-xl px-3.5 py-2.5 text-sm text-center"></td>
+      <td class="py-3 px-5 text-center" data-label="Status">
+        <select onchange="updatePartnershipStatus(${idx},this.value)" class="field w-full rounded-xl px-3.5 py-2.5 text-sm capitalize text-center">
+          <option value="" disabled ${row.status===''?'selected':''}>Select status</option>
+          ${partnershipStatuses.map(s=>`<option value="${s}" ${row.status===s?'selected':''}>${s}</option>`).join('')}
+        </select>
+      </td>
+      <td class="py-3 px-5 text-center" data-label="Meeting">
+        ${row.status==='meeting'
+          ? `<input type="datetime-local" value="${row.meetingTime}" oninput="updatePartnership(${idx},'meetingTime',this.value)" class="field w-full rounded-xl px-3.5 py-2.5 text-sm border-rose-400/40 text-center">`
+          : `<span class="text-[11px] text-zinc-600 italic">Set status to meeting</span>`}
+      </td>`;
+    tbody.appendChild(tr);
+  }
+  renderPartnershipPagination();
+}
+function validateNumbersOnly(input){input.value=input.value.replace(/[^0-9]/g,'')}
+function updatePartnership(idx,field,val){partnershipRows[idx][field]=val}
+function updatePartnershipStatus(idx,val){partnershipRows[idx].status=val;if(val!=='meeting')partnershipRows[idx].meetingTime='';renderPartnershipsTable()}
+
+function renderPartnershipPagination(){
+  const container=document.getElementById('partnershipPagination'); container.innerHTML='';
+  for(let p=1;p<=totalPartnershipSlots/perPagePartnership;p++){
+    const btn=document.createElement('button');
+    btn.type='button'; btn.textContent=p;
+    btn.className=`w-8 h-8 rounded-lg text-[10px] font-bold transition ${currentPartnershipPage===p?'bg-rose-500 text-white shadow-[0_0_20px_rgba(245,79,135,.25)]':'text-zinc-500 hover:text-white hover:bg-white/5'}`;
+    btn.onclick=()=>{currentPartnershipPage=p;renderPartnershipsTable()};
+    container.appendChild(btn);
+  }
+}
+
+function submitPartnerships(e){
+  e.preventDefault();
+  const btn = e.target.querySelector('button[type="submit"]');
+  const originalText = btn.innerHTML;
+
+  const filledPartnerships = partnershipRows.filter(p => p.company.trim() !== '' || p.contact.trim() !== '' || p.status !== '');
+  const formattedRows = (filledPartnerships.length > 0 ? filledPartnerships : [{company:'(Empty Partnership Submission)', contact:'N/A', status:'N/A', meetingTime:''}]).map((p, idx) => ({
+    no: idx + 1,
+    company: p.company,
+    contact: p.contact,
+    status: p.status,
+    meetingTime: p.meetingTime || 'N/A'
+  }));
+
+  sendDataToSheet({
+    action: "partnership",
+    rows: formattedRows
+  }, btn, originalText);
+
+  let submissionRecord = {
+    date: new Date().toLocaleString('en-US', {month:'short', day:'numeric', hour:'2-digit', minute:'2-digit'}),
+    data: filledPartnerships.length > 0 ? filledPartnerships : [{company:'(Empty Partnership Submission)', contact:'N/A', status:'N/A'}]
+  };
+  
+  let savedArchive = JSON.parse(localStorage.getItem('szm_archive_partnership') || '[]');
+  savedArchive.unshift(submissionRecord);
+  localStorage.setItem('szm_archive_partnership', JSON.stringify(savedArchive));
+  renderArchiveView();
+
+  // Clear data and reset table view
+  partnershipRows = Array.from({length:totalPartnershipSlots},()=>({company:'',contact:'',status:'',meetingTime:''}));
+  renderPartnershipsTable();
+}
+
+let currentArchiveTab = 'recruitment';
+
+function switchArchiveTab(tab){
+  currentArchiveTab = tab;
+  const btnRec = document.getElementById('archBtnRecruitment');
+  const btnPart = document.getElementById('archBtnPartnership');
+  if(tab === 'recruitment'){
+    btnRec.className = 'px-3 py-1.5 rounded-lg font-bold transition bg-rose-500 text-white shadow';
+    btnPart.className = 'px-3 py-1.5 rounded-lg font-bold transition text-zinc-400 hover:text-white';
+  } else {
+    btnPart.className = 'px-3 py-1.5 rounded-lg font-bold transition bg-rose-500 text-white shadow';
+    btnRec.className = 'px-3 py-1.5 rounded-lg font-bold transition text-zinc-400 hover:text-white';
+  }
+  renderArchiveView();
+}
+
+function renderArchiveView(){
+  const container = document.getElementById('archiveContentContainer');
+  container.innerHTML = '';
+  const storageKey = currentArchiveTab === 'recruitment' ? 'szm_archive_recruitment' : 'szm_archive_partnership';
+  const records = JSON.parse(localStorage.getItem(storageKey) || '[]');
+
+  if(records.length === 0){
+    container.innerHTML = `<div class="text-center py-8 text-zinc-500 italic">No permanent submissions recorded yet. Submit data below to populate vault.</div>`;
+    return;
+  }
+
+  records.forEach((rec, idx) => {
+    const card = document.createElement('div');
+    card.className = 'pill rounded-2xl p-3 bg-white/2 space-y-2';
+    
+    let itemsHtml = '';
+    if(currentArchiveTab === 'recruitment'){
+      itemsHtml = rec.data.map(item => `
+        <div class="flex items-center justify-between text-[11px] border-b border-white/5 pb-1 last:border-0 last:pb-0">
+          <span class="text-zinc-200 font-medium">${escapeHtml(item.username || '(No Username)')}</span>
+          <span class="text-rose-300 capitalize">${escapeHtml(item.status || 'No status')}</span>
+          <span class="text-zinc-500 truncate max-w-[120px]">${escapeHtml(item.notes || '')}</span>
+        </div>
+      `).join('');
+    } else {
+      itemsHtml = rec.data.map(item => `
+        <div class="flex items-center justify-between text-[11px] border-b border-white/5 pb-1 last:border-0 last:pb-0">
+          <span class="text-zinc-200 font-medium">${escapeHtml(item.company || '(No Company)')}</span>
+          <span class="text-amber-300 capitalize">${escapeHtml(item.status || 'No status')}</span>
+          <span class="text-zinc-400">${escapeHtml(item.contact || '')}</span>
+        </div>
+      `).join('');
+    }
+
+    card.innerHTML = `
+      <div class="flex items-center justify-between text-[10px] text-zinc-400 font-mono">
+        <span>Submission #${records.length - idx}</span>
+        <span class="text-rose-300 font-semibold">${rec.date}</span>
+      </div>
+      <div class="space-y-1.5 pt-1">
+        ${itemsHtml}
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+const weeklyMeetings=[
+  {
+    title:'Kick-off & Weekly Alignment',
+    datetime:'2026-08-03T15:00',
+    host:'Management',
+    desc:'Reviewing week goals, quick sync, and kick-off support for agents.',
+    isFirst: true
+  },
+  {
+    title:'Agent Support & Feedback Checkpoint',
+    datetime:'2026-08-10T15:00',
+    host:'Management',
+    desc:'Taking feedback from agents, addressing challenges, and tracking progress.',
+    isFirst: false
+  },
+  {
+    title:'Mid-Month Operations & Support Sync',
+    datetime:'2026-08-17T15:00',
+    host:'Management',
+    desc:'Mid-month review, identifying blockers, and optimizing creator workflows.',
+    isFirst: false
+  },
+  {
+    title:'Strategy & Performance Follow-up',
+    datetime:'2026-08-24T15:00',
+    host:'Management',
+    desc:'Checking campaign metrics, agent feedback, and fine-tuning operations.',
+    isFirst: false
+  },
+  {
+    title:'Monthly Overview & Comprehensive Feedback',
+    datetime:'2026-08-31T15:00',
+    host:'Malayka & Team',
+    desc:'Comprehensive overview and feedback session covering all work done throughout August.',
+    isLast: true
+  }
+];
+
+function renderMeetings(){
+  const container=document.getElementById('meetingsContainer'); container.innerHTML='';
+  const current=new Date();
+  weeklyMeetings.forEach(m=>{
+    const d=new Date(m.datetime), diff=d-current;
+    let status='Upcoming', tone='text-zinc-500', dot='bg-zinc-600';
+    if(diff<=0 && diff>-86400000){status='Active / Today';tone='text-emerald-300';dot='bg-emerald-400'}
+    else if(diff>0 && diff<172800000){status='Next Up';tone='text-amber-300';dot='bg-amber-400'}
+     
+    const card=document.createElement('div');
+     
+    let highlightStyle = 'glass border border-white/6';
+    let badgeExtra = '';
+    if(m.isFirst){
+      highlightStyle = 'glass border-2 border-rose-500/60 shadow-[0_0_30px_rgba(245,79,135,.15)] relative overflow-hidden';
+      badgeExtra = '<span class="absolute top-0 right-0 bg-rose-500 text-white text-[9px] font-bold px-3 py-0.5 rounded-bl-xl uppercase tracking-wider">Kick-off</span>';
+    } else if(m.isLast){
+      highlightStyle = 'glass border-2 border-amber-400/60 shadow-[0_0_30px_rgba(251,191,36,.15)] relative overflow-hidden';
+      badgeExtra = '<span class="absolute top-0 right-0 bg-amber-500 text-zinc-950 text-[9px] font-bold px-3 py-0.5 rounded-bl-xl uppercase tracking-wider">Grand Finale</span>';
+    }
+
+    card.className=`${highlightStyle} rounded-[22px] p-5 flex flex-col justify-between`;
+    card.innerHTML=`
+      ${badgeExtra}
+      <div>
+        <div class="flex items-center justify-between gap-3 mb-3">
+          <span class="flex items-center gap-2 text-[10px] uppercase tracking-widest ${tone}">
+            <i class="w-1.5 h-1.5 rounded-full ${dot}"></i>${status}
+          </span>
+          <span class="text-[10px] text-zinc-600">Host · ${escapeHtml(m.host)}</span>
+        </div>
+        <h4 class="font-semibold text-[15px] leading-6">${escapeHtml(m.title)}</h4>
+        <p class="text-xs text-zinc-400 mt-2 leading-relaxed">${escapeHtml(m.desc)}</p>
+      </div>
+      <div class="mt-5 pt-3 border-t border-white/5 space-y-2">
+        <div class="flex items-center justify-between text-[11px]">
+          <span class="text-zinc-400">Egypt: <strong class="${tone}">19:00</strong></span>
+          <span class="text-zinc-500 font-medium">Monday</span>
+          <span class="text-zinc-400">LA: <strong class="${tone}">09:00</strong></span>
+        </div>
+        <div class="flex items-center justify-between text-[11px] pt-1">
+          <span class="${tone}">${d.toLocaleString('en-US',{month:'short',day:'numeric'})}</span>
+          <a href="https://meet.google.com/dqe-sycm-ofb" target="_blank" class="text-rose-300 font-semibold hover:underline">Join →</a>
+        </div>
+      </div>`;
+    container.appendChild(card);
+  });
+}
+
+function submitSection(sectionName, event){
+  const btn = event.target;
+  const originalText = btn.textContent;
+  const card = btn.closest('div.glass');
+  const textarea = card.querySelector('textarea');
+  
+  if(!textarea.value.trim()){
+    return;
+  }
+
+  sendDataToSheet({
+    action: "notes",
+    category: sectionName,
+    content: textarea.value
+  }, btn, originalText);
+
+  textarea.value = "";
+}
+
+window.onload=()=>{
+  renderLiveDate();
+  renderAttendanceGrid();
+  renderRecruitmentTable();
+  renderPartnershipsTable();
+  renderMeetings();
+  renderArchiveView();
+};
+</script>
+</body>
+</html>
