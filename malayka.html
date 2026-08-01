@@ -160,39 +160,116 @@ tbody tr:hover{background:rgba(245,79,135,.035)}
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 .delay-1{animation-delay:.06s}.delay-2{animation-delay:.12s}.delay-3{animation-delay:.18s}
 
-@media(max-width:768px){
-  .mobile-card-view {
-    border: none !important;
-    background: transparent !important;
+@media (max-width:768px){
+.table-wrap{
+    overflow:visible !important;
+    border:none;
+    background:transparent;
+}
+.mobile-card-view{
+    width:100%;
+    min-width:100% !important;
+    border-collapse:separate;
+    border-spacing:0;
+}
+.mobile-card-view thead{
+    display:none;
+}
+.mobile-card-view tbody{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+.mobile-card-view tr{
+    display:block;
+    width:100%;
+    padding:18px;
+    border-radius:22px;
+    background:var(--panel);
+    border:1px solid var(--line);
+    box-shadow:0 12px 35px rgba(0,0,0,.28);
+}
+.mobile-card-view td{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:14px;
+    width:100%;
+    padding:10px 0 !important;
+    border:none;
+    text-align:right !important;
+}
+.mobile-card-view td:not(:last-child){
+    border-bottom:1px solid rgba(255,255,255,.05);
+}
+.mobile-card-view td::before{
+    content:attr(data-label);
+    flex-shrink:0;
+    color:var(--rose2);
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+}
+.mobile-card-view input,
+.mobile-card-view select{
+    width:65%;
+    font-size:14px;
+}
+.mobile-card-view input[type="datetime-local"]{
+    width:65%;
+}
+}
+@media (max-width:768px){
+html,
+body{
+    width:100%;
+    overflow-x:hidden;
+}
+main,
+header{
+    width:100%;
+}
+section{
+    width:100%;
+}
+.glass{
+    border-radius:22px;
+}
+}
+@media (max-width:768px){
+#recruitmentPagination,
+#partnershipPagination{
+    display:flex;
+    flex-wrap:nowrap;
+    overflow-x:auto;
+    overflow-y:hidden;
+    gap:8px;
+    padding:4px;
+    justify-content:flex-start;
+    scrollbar-width:none;
+    -ms-overflow-style:none;
+}
+#recruitmentPagination::-webkit-scrollbar,
+#partnershipPagination::-webkit-scrollbar{
+    display:none;
+}
+#recruitmentPagination button,
+#partnershipPagination button{
+    flex:0 0 auto;
+    width:38px;
+    height:38px;
+    border-radius:12px;
+    font-size:12px;
+}
+}
+@media (max-width: 640px) {
+  .topbar {
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
   }
-  .mobile-card-view tr {
-    display: block;
-    margin-bottom: 16px;
-    border: 1px solid var(--line);
-    border-radius: 20px;
-    background: rgba(18,18,23,0.85);
-    padding: 12px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-  }
-  .mobile-card-view td {
-    display: flex;
-    flex-direction: column;
-    width: 100% !important;
-    text-align: left !important;
-    padding: 6px 8px !important;
-    border: none !important;
-  }
-  .mobile-card-view td::before {
-    content: attr(data-label);
-    font-weight: 700;
-    text-transform: uppercase;
-    font-size: 10px;
-    color: var(--rose2);
-    margin-bottom: 4px;
-    letter-spacing: 0.1em;
-  }
-  .mobile-card-view thead {
-    display: none;
+  #checkInContainer {
+    justify-content: space-between;
   }
 }
 </style>
@@ -201,17 +278,29 @@ tbody tr:hover{background:rgba(245,79,135,.035)}
 <body class="dark min-h-screen antialiased pb-16">
 
 <header class="topbar sticky top-0 z-50">
-  <div class="max-w-[1500px] mx-auto px-5 lg:px-8 h-[78px] flex items-center justify-between gap-5">
-    <div class="flex items-center gap-3.5 min-w-0">
-      <div class="brand-mark w-11 h-11 rounded-[15px] flex items-center justify-center overflow-hidden p-2">
-        <img src="https://api.iconify.design/solar:star-fall-bold-duotone.svg?color=%23ffffff" alt="Star Logo" class="w-full h-full object-contain filter drop-shadow">
+  <div class="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 h-auto sm:h-[78px] py-3 sm:py-0 flex flex-col sm:flex-row items-center justify-between gap-4">
+    
+    <!-- Logo & Title Section -->
+    <div class="flex items-center justify-between w-full sm:w-auto gap-3.5 min-w-0">
+      <div class="flex items-center gap-3.5 min-w-0">
+        <div class="brand-mark w-10 h-10 sm:w-11 sm:h-11 rounded-[15px] flex items-center justify-center overflow-hidden p-2 flex-shrink-0">
+          <img src="https://api.iconify.design/solar:star-fall-bold-duotone.svg?color=%23ffffff" alt="Star Logo" class="w-full h-full object-contain filter drop-shadow">
+        </div>
+        <div class="min-w-0">
+          <div class="eyebrow truncate">Stars Zone Media</div>
+          <div class="font-semibold text-[13px] sm:text-[15px] truncate">Malayka <span class="text-zinc-500 font-normal">/ Agent Portal</span></div>
+        </div>
       </div>
-      <div class="min-w-0">
-        <div class="eyebrow truncate">Stars Zone Media</div>
-        <div class="font-semibold text-[15px] truncate">Malayka <span class="text-zinc-500 font-normal">/ Agent Portal</span></div>
+
+      <!-- Mobile Quick Actions (Theme Toggle) -->
+      <div class="flex sm:hidden items-center gap-2">
+        <button onclick="toggleTheme()" class="btn-soft w-9 h-9 rounded-xl flex items-center justify-center" title="Toggle theme">
+          <span id="themeIconMobile">☀</span>
+        </button>
       </div>
     </div>
 
+    <!-- Center Status (Desktop) -->
     <div class="hidden lg:flex items-center gap-2 text-[11px] text-zinc-500">
       <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(52,211,153,.8)]"></span>
       System online
@@ -219,29 +308,43 @@ tbody tr:hover{background:rgba(245,79,135,.035)}
       <span id="liveDate"></span>
     </div>
 
-    <div class="flex items-center gap-3">
-      <div id="checkInContainer" class="pill rounded-2xl p-2 flex items-center gap-2 shadow-lg transition-all">
-        <button onclick="toggleStartShift()" id="checkInBtn" class="btn-main px-4 py-2 rounded-xl text-white text-xs font-bold">
-          Start Shift
-        </button>
-        <div id="checkInTimerWrapper" class="hidden items-center gap-2 px-2">
-          <span class="w-2 h-2 rounded-full bg-rose-400 animate-pulse"></span>
-          <span class="text-[11px] text-zinc-400">Active</span>
-          <span id="shiftTimerCount" class="font-mono text-xs font-bold">00</span>
+    <!-- Actions & Controls Section -->
+    <div class="flex items-center justify-between sm:justify-end flex-wrap w-full sm:w-auto gap-2.5 pt-2 sm:pt-0 border-t sm:border-t-0 border-white/5">
+      
+      <!-- Shift & Break Controls -->
+      <div class="flex items-center gap-2 flex-1 sm:flex-initial">
+        <div id="checkInContainer" class="pill rounded-2xl p-1.5 sm:p-2 flex items-center gap-2 shadow-lg transition-all flex-1 sm:flex-initial justify-center">
+          <button onclick="toggleStartShift()" id="checkInBtn" class="btn-main px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-xl text-white text-xs font-bold w-full sm:w-auto">
+            Start Shift
+          </button>
+          <div id="checkInTimerWrapper" class="hidden items-center gap-2 px-2">
+            <span class="w-2 h-2 rounded-full bg-rose-400 animate-pulse"></span>
+            <span class="text-[11px] text-zinc-400 hidden md:inline">Active</span>
+            <span id="shiftTimerCount" class="font-mono text-xs font-bold">00</span>
+          </div>
+        </div>
+
+        <div id="breakContainer" class="hidden pill rounded-2xl p-1.5 sm:p-2 items-center gap-2 shadow-lg transition-all">
+          <button onclick="toggleBreak()" id="breakBtn" class="px-3 py-1.5 sm:py-2 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-400/20 text-xs font-bold">Break</button>
+          <span id="breakTimerDisplay" class="hidden text-xs font-mono text-amber-400 font-bold pr-2">00:00</span>
         </div>
       </div>
 
-      <div id="breakContainer" class="hidden pill rounded-2xl p-2 items-center gap-2 shadow-lg transition-all">
-        <button onclick="toggleBreak()" id="breakBtn" class="px-3 py-2 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-400/20 text-xs font-bold">Break</button>
-        <span id="breakTimerDisplay" class="hidden text-xs font-mono text-amber-400 font-bold pr-2">00:00</span>
+      <!-- Desktop Theme Toggle & Logout -->
+      <div class="hidden sm:flex items-center gap-2">
+        <button onclick="toggleTheme()" class="btn-soft w-10 h-10 rounded-xl flex items-center justify-center" title="Toggle theme">
+          <span id="themeIcon">☀</span>
+        </button>
+        <button onclick="handleLogout()" class="btn-soft px-3.5 h-10 rounded-xl flex items-center gap-2 text-xs font-semibold text-zinc-400 hover:text-rose-300">
+          <span>↪</span> Logout
+        </button>
       </div>
 
-      <button onclick="toggleTheme()" class="btn-soft w-10 h-10 rounded-xl flex items-center justify-center" title="Toggle theme">
-        <span id="themeIcon">☀</span>
+      <!-- Mobile Logout Button -->
+      <button onclick="handleLogout()" class="btn-soft px-3 h-9 rounded-xl flex sm:hidden items-center gap-1.5 text-xs font-semibold text-zinc-400 hover:text-rose-300">
+        <span>↪</span> <span class="text-[11px]">Logout</span>
       </button>
-      <button onclick="handleLogout()" class="hidden sm:flex btn-soft px-3.5 h-10 rounded-xl items-center gap-2 text-xs font-semibold text-zinc-400 hover:text-rose-300">
-        <span>↪</span> Logout
-      </button>
+
     </div>
   </div>
 </header>
@@ -477,23 +580,28 @@ function clearArchiveVault(){
 }
 
 function toggleTheme(){
-  const body=document.body, icon=document.getElementById('themeIcon');
+  const body=document.body, icon=document.getElementById('themeIcon'), iconMob=document.getElementById('themeIconMobile');
   if(body.classList.contains('dark')){
     body.classList.remove('dark'); body.classList.add('light');
-    icon.textContent='☾'; localStorage.setItem('szm_theme','light');
+    if(icon) icon.textContent='☾';
+    if(iconMob) iconMob.textContent='☾';
+    localStorage.setItem('szm_theme','light');
   }else{
     body.classList.remove('light'); body.classList.add('dark');
-    icon.textContent='☀'; localStorage.setItem('szm_theme','dark');
+    if(icon) icon.textContent='☀';
+    if(iconMob) iconMob.textContent='☀';
+    localStorage.setItem('szm_theme','dark');
   }
 }
 if(localStorage.getItem('szm_theme')==='light'){
   document.body.classList.remove('dark'); document.body.classList.add('light');
-  document.getElementById('themeIcon').textContent='☾';
+  if(document.getElementById('themeIcon')) document.getElementById('themeIcon').textContent='☾';
+  if(document.getElementById('themeIconMobile')) document.getElementById('themeIconMobile').textContent='☾';
 }
 
 function handleLogout(){
   if(confirm('Are you sure you want to log out of Stars Zone Media portal?')){
-    window.location.reload();
+    window.location.href = 'login.html';
   }
 }
 
@@ -553,7 +661,7 @@ function toggleStartShift(){
 
   if(isStarted){
     btn.textContent='End Shift';
-    btn.className='px-4 py-2 rounded-xl bg-red-500/20 text-red-300 border border-red-400/30 text-xs font-bold';
+    btn.className='px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-xl bg-red-500/20 text-red-300 border border-red-400/30 text-xs font-bold w-full sm:w-auto';
     timerWrapper.classList.remove('hidden'); timerWrapper.classList.add('flex');
     breakContainer.classList.remove('hidden'); breakContainer.classList.add('flex');
     container.classList.add('pop-action-active');
@@ -571,7 +679,7 @@ function toggleStartShift(){
     },1000);
   }else{
     btn.textContent='Start Shift';
-    btn.className='btn-main px-4 py-2 rounded-xl text-white text-xs font-bold';
+    btn.className='btn-main px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-xl text-white text-xs font-bold w-full sm:w-auto';
     timerWrapper.classList.add('hidden'); timerWrapper.classList.remove('flex');
     breakContainer.classList.add('hidden'); breakContainer.classList.remove('flex');
     container.classList.remove('pop-action-active');
@@ -596,7 +704,7 @@ function toggleBreak(){
 
   if(isOnBreak){
     btn.textContent='End Break';
-    btn.className='px-3 py-2 rounded-xl bg-amber-500/30 text-amber-200 border border-amber-400/40 text-xs font-bold';
+    btn.className='px-3 py-1.5 sm:py-2 rounded-xl bg-amber-500/30 text-amber-200 border border-amber-400/40 text-xs font-bold';
     container.classList.add('pop-action-active');
     display.classList.remove('hidden');
     breakSeconds=0;
@@ -607,7 +715,7 @@ function toggleBreak(){
     },1000);
   }else{
     btn.textContent='Break';
-    btn.className='px-3 py-2 rounded-xl bg-amber-500/10 text-amber-300 border border-amber-400/20 text-xs font-bold';
+    btn.className='px-3 py-1.5 sm:py-2 rounded-xl bg-amber-500/10 text-amber-300 border border-amber-400/20 text-xs font-bold';
     container.classList.remove('pop-action-active');
     display.classList.add('hidden');
     clearInterval(breakInterval);
@@ -687,7 +795,6 @@ function submitRecruitment(e){
   localStorage.setItem('szm_archive_recruitment', JSON.stringify(savedArchive));
   renderArchiveView();
 
-  // Clear data and reset table view
   recruitmentData = Array.from({length:totalRecruitmentSlots},()=>({username:'',status:'',notes:''}));
   renderRecruitmentTable();
 }
@@ -766,7 +873,6 @@ function submitPartnerships(e){
   localStorage.setItem('szm_archive_partnership', JSON.stringify(savedArchive));
   renderArchiveView();
 
-  // Clear data and reset table view
   partnershipRows = Array.from({length:totalPartnershipSlots},()=>({company:'',contact:'',status:'',meetingTime:''}));
   renderPartnershipsTable();
 }
