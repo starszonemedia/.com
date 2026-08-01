@@ -553,10 +553,9 @@
         try {
             const user = authData.user;
 
-            // 2. جلب الـ Role و الـ redirect_path من الجدول بتاعك (اكتبي اسم التابلي عندك هنا لو غير public أو اسم تاني، غالباً بيبقى اسم الجدول الفعلي اللي ظهر في الصورة)
-            // لو اسم التابلي في Supabase مختلف، بدلي 'public' أو اسم الجدول هنا بالاسم الصح (مثلاً table_name)
+            // 2. جلب الـ Role و الـ redirect_path من جدول user_profiles
             const { data: profileData, error: profileError } = await supabaseClient
-                .from('public') // لو اسم الجدول حاجة تانية غير كده، غيري كلمة 'public' هنا باسم الجدول اللي في Supabase عندك
+                .from('user_profiles')
                 .select('role, redirect_path')
                 .eq('id', user.id)
                 .single();
@@ -606,20 +605,25 @@
                 localStorage.removeItem('rememberedEmail');
             }
             
-            // 5. التوجيه المباشر بناءً على الـ redirect_path المسجل في قاعدة البيانات
-            const targetPath = profileData.redirect_path;
+            // 5. التوجيه المباشر بناءً على الـ redirect_path أو القواعد الافتراضية لكل دور
+            let targetPath = profileData.redirect_path;
 
-            if (targetPath) {
-                window.location.href = `${targetPath}?lang=${currentLang}`;
-            } else {
-                if (dbRole === 'Agent') {
-                    window.location.href = `agentdashboard.html?lang=${currentLang}`;
+            if (!targetPath || targetPath === 'EMPTY' || targetPath.trim() === '') {
+                if (dbRole === 'Creator') {
+                    targetPath = 'dashboard.html';
+                } else if (dbRole === 'Agent') {
+                    targetPath = 'agentdashboard.html';
                 } else if (dbRole === 'Operations') {
-                    window.location.href = `fdashboard.html?lang=${currentLang}`;
-                } else {
-                    window.location.href = `dashboard.html?lang=${currentLang}`;
+                    // التوجيه المميز لحسابات العمليات بناءً على الـ ID الخاص بكل حساب
+                    if (user.id === '60506f4c-774c-4afe-b7c6-63de4f576427') {
+                        targetPath = 'malayka.html';
+                    } else {
+                        targetPath = 'fdashboard.html';
+                    }
                 }
             }
+
+            window.location.href = `${targetPath}?lang=${currentLang}`;
 
         } catch (globalErr) {
             console.error("Global Login Role Handler Exception: ", globalErr);
