@@ -47,7 +47,6 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* ===== Dark / default theme — deep obsidian with a gold undertone ===== */
         body:not(.light) {
             background-color: #07060b;
             background-image:
@@ -68,13 +67,11 @@
         body:not(.light) ::-webkit-scrollbar-thumb { background: linear-gradient(#3a2f18, var(--gold)); border-radius: 3px; }
         body:not(.light) ::-webkit-scrollbar-thumb:hover { background: var(--gold-soft); }
 
-        /* Wordmark + headings get the editorial display serif */
         h1, .font-display {
             font-family: 'Fraunces', serif;
             letter-spacing: -0.01em;
         }
 
-        /* Gold hairline divider under the top navbar, replacing the flat border */
         header {
             border-bottom: 1px solid transparent !important;
             background-image:
@@ -82,7 +79,6 @@
                 linear-gradient(90deg, transparent, rgba(201,162,75,0.55) 45%, rgba(233,30,99,0.45) 55%, transparent);
             background-origin: border-box;
             background-clip: padding-box, border-box;
-            border-bottom: 1px solid transparent;
             position: relative;
         }
         body:not(.light) header { background-color: #0d0b14 !important; }
@@ -95,12 +91,10 @@
             pointer-events: none;
         }
 
-        /* Brand mark: subtle glow behind the star */
         header .fa-star {
             filter: drop-shadow(0 0 10px rgba(233,30,99,0.55)) drop-shadow(0 0 18px rgba(201,162,75,0.25));
         }
 
-        /* ===== Cards: soft glass + gold-pink foil edge on hover ===== */
         body:not(.light) .bg-cardBg {
             background-color: #100e17;
             background-image: linear-gradient(160deg, rgba(255,255,255,0.035), rgba(255,255,255,0) 40%);
@@ -113,7 +107,6 @@
             box-shadow: 0 1px 0 0 rgba(255,255,255,0.04) inset, 0 18px 40px -20px rgba(0,0,0,0.8), 0 0 0 1px rgba(233,30,99,0.08);
         }
 
-        /* Stat numbers: refined mono, tabular, wide tracking — feels like a membership ledger */
         #statGoCreators, #statOpenedLive, #statRepliedAgent, #statHighPotential, #statEquipmentUpgrade,
         #todayRecruitedCount, #totalRecruitedNum, #shiftTimerDisplay, #donut-total-count,
         #dist-high, #dist-medium, #dist-low, #eq-ring, #eq-mic, #eq-phone, #eq-bg,
@@ -123,7 +116,6 @@
             letter-spacing: -0.02em;
         }
 
-        /* Top accent hairline on the operations stat cards, gold → pink */
         #pageOperations .grid.lg\:grid-cols-5 > div.bg-cardBg,
         #pageRecruitment .grid.lg\:grid-cols-3 > div.bg-cardBg {
             position: relative;
@@ -139,7 +131,6 @@
             opacity: 0.7;
         }
 
-        /* Table header row: gold-edged label bar instead of flat pink tint */
         body:not(.light) #tableHeaderRow,
         body:not(.light) thead tr {
             background: linear-gradient(90deg, rgba(233,30,99,0.14), rgba(201,162,75,0.08)) !important;
@@ -149,12 +140,10 @@
             letter-spacing: 0.08em;
         }
 
-        /* Avatar rings: thin gold-pink foil ring */
         [class*="border-brandPink/40"] {
             box-shadow: 0 0 0 1px rgba(201,162,75,0.45), 0 0 14px rgba(233,30,99,0.20);
         }
 
-        /* Buttons: gold shimmer sweep on hover for primary CTAs */
         .bg-brandPink { position: relative; overflow: hidden; }
         .bg-brandPink::before {
             content: '';
@@ -168,30 +157,11 @@
         }
         .bg-brandPink:hover::before { left: 130%; }
 
-        /* Focus states: gold ring for accessibility with a luxe touch */
         input:focus-visible, select:focus-visible, textarea:focus-visible, button:focus-visible {
             outline: 2px solid rgba(201,162,75,0.65) !important;
             outline-offset: 2px;
         }
 
-        /* Gentle entrance for cards */
-        @media (prefers-reduced-motion: no-preference) {
-            #pageRecruitment > div, #pageOperations > div {
-                animation: riseIn 0.5s ease both;
-            }
-            #pageOperations > div:nth-child(2) { animation-delay: 0.04s; }
-            #pageOperations > div:nth-child(3) { animation-delay: 0.08s; }
-            #pageOperations > div:nth-child(4) { animation-delay: 0.12s; }
-            #pageRecruitment > div:nth-child(2) { animation-delay: 0.04s; }
-            #pageRecruitment > div:nth-child(3) { animation-delay: 0.08s; }
-            #pageRecruitment > div:nth-child(4) { animation-delay: 0.12s; }
-        }
-        @keyframes riseIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ===== Light theme — warm ivory with the same gold thread ===== */
         body.light {
             background-color: #faf8f4;
             background-image: none;
@@ -211,7 +181,6 @@
         body.light .text-slate-300, body.light .text-slate-400 { color: #6b6558 !important; }
         body.light input, body.light select, body.light textarea { background-color: #faf8f4 !important; color: #1c1a22 !important; border-color: #ddd4bd !important; }
         
-        /* Fix for Stars Zone Media logo gradient text in light mode */
         body.light .bg-clip-text {
             background-image: linear-gradient(90deg, #8a6c14, #332d20, #C2185B) !important;
         }
@@ -465,7 +434,7 @@
                         </div>
                         <div class="grid grid-cols-2 gap-2">
                             <button id="checkInOutBtn" onclick="toggleCheckIn()" class="bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/40 text-emerald-400 rounded-xl py-2 text-xs font-semibold transition flex items-center justify-center gap-1.5">
-                                <i class="fa-solid fa-right-to-bracket"></i> <span id="checkInBtnText">Check In</span>
+                                <i class="fa-solid fa-right-to-bracket"></i> <span id="checkInBtnText">start Shift</span>
                             </button>
                             <button id="breakBtn" onclick="toggleBreak()" class="bg-[#1e293b] text-slate-400 rounded-xl py-2 text-xs font-semibold transition flex items-center justify-center gap-1.5 cursor-not-allowed opacity-50" disabled>
                                 <i class="fa-solid fa-mug-hot"></i> <span id="breakBtnText">Break</span>
@@ -536,7 +505,13 @@
                             <h3 class="text-sm font-bold text-white flex items-center gap-2"><i class="fa-solid fa-clipboard-user text-brandPink"></i> Follow Up Recruitment Status</h3>
                             <p class="text-xs text-slate-400 mt-0.5">Automatically updated, cumulative and permanently saved.</p>
                         </div>
-                        <span class="text-xs bg-[#0b0f19] border border-customBorder px-3 py-1.5 rounded-xl text-slate-300 font-semibold" id="totalFollowUpCount">Total Tracked: 0</span>
+                        <div class="flex items-center gap-3">
+                            <span class="text-xs bg-[#0b0f19] border border-customBorder px-3 py-1.5 rounded-xl text-slate-300 font-semibold" id="totalFollowUpCount">Total Tracked: 0</span>
+                            <button onclick="submitFollowUpData(this)" id="submitFollowUpBtn" class="bg-brandPink hover:bg-brandPinkHover text-white font-bold text-xs px-4 py-2 rounded-xl transition shadow-lg shadow-pink-500/20 flex items-center gap-2">
+                                <i class="fa-solid fa-cloud-arrow-up"></i>
+                                <span data-en="Submit All" data-ar="إرسال الكل">Submit All</span>
+                            </button>
+                        </div>
                     </div>
 
                     <div class="overflow-x-auto">
@@ -589,14 +564,22 @@
         </div>
     </div>
 
-    <!-- JavaScript Handling Persistent Data via LocalStorage -->
+    <!-- JavaScript Handling Persistent Data via LocalStorage & Google Sheets -->
     <script>
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyIG8_4NCvEgndl0QAAyKirVSD08W7Iee0PAA7gRAXvgdzwNzAs_DCXrY15cKZEZHwJ/exec";
+
+        function sendDataToSheet(payload) {
+            fetch(SCRIPT_URL, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            }).catch(err => console.error("Error:", err));
+        }
+
         const creatorUsernames = [
             "elmafia128", "hadyadell", "iambaraissa", "5_6_9", "lc4k__", "zdecq", "aanter62", "ziadzoka111", ".okbr2", "ziot.l3", "tawfeeqalbaik", "mosa5rsh", "vortex6246", "ali_amasha", "hsso_515", "anubis..gaming", "gemaa343", "safa7_valo", "al_rubaie506", "yasser_atef_sharaf", "superplayer.pg", "3._lnm", "k8u2r", "330fx3", "23rng_", "forkaneac", "youneskh48", "iiixzeus", "mr.eyad24", "9o_dl8", "boda3_up", "mohamed.reda6169", "yosseftawfik.official", "hon_daa3", "beboabdullah", "azyz_01", "kandilpop", "m3tz_10", "aflah.xv", "h.ithem", "8zvvx", "p3jc", "kawtherrr6", "husseinsherifofficial", "rayen_messadek", "h.hayek06", "483l", "_m.e.d.o_122", "aiadelnegm", "maryambel25", "dr.saif_salah", "trolleee0", "talalle6", "ma_khatab1", "chahdhosni4", "farrouk_", "800xx1", "i6xqkk", "am2r4", "e_ik8", "lunvr.28", "neldaechoudekh", "f5c55", "badr.mazktli", "ranse070", "_xxy.39", ".zayed999", "wardaia3", "ahmed.al.eleme", "bouamra137", "elgeka01"
         ];
-
-        const RECRUIT_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbwpN5_OKARSEeSSqg2QyQusHmnDm5Gon5b0gwB91W92L1Ihk2MN6iyBCpK7Wje3RbQ/exec";
-        const GOOGLE_SHEET_WEBHOOK_URL = RECRUIT_WEBHOOK_URL;
 
         let creatorsData = creatorUsernames.map((username, index) => ({
             id: index + 1,
@@ -622,8 +605,7 @@
         const totalSlots = 30;
         const slotsPerPage = 10;
         let recruitmentInputs = JSON.parse(localStorage.getItem('starsZone_recruitmentInputs')) || Array(totalSlots).fill("");
-        let cumulativeFollowUps = [];
-        localStorage.removeItem('starsZone_cumulativeFollowUps');
+        let cumulativeFollowUps = JSON.parse(localStorage.getItem('starsZone_cumulativeFollowUps')) || [];
         let attendanceRecord = JSON.parse(localStorage.getItem('starsZone_attendanceRecord')) || {};
 
         let isCheckedIn = false;
@@ -690,6 +672,8 @@
             if (!isCheckedIn) {
                 isCheckedIn = true;
                 shiftStartTime = now;
+                sendDataToSheet({ type: "Shift", action: "Start Shift", timestamp: timeString });
+
                 btn.className = "bg-red-500/20 hover:bg-red-500/30 border border-red-500/40 text-red-400 rounded-xl py-2 text-xs font-semibold transition flex items-center justify-center gap-1.5";
                 btnText.innerText = "End Shift";
                 statusDot.className = "w-2 h-2 rounded-full bg-emerald-500 animate-pulse";
@@ -698,8 +682,6 @@
                 
                 breakBtn.removeAttribute('disabled');
                 breakBtn.className = "bg-[#1e293b] hover:bg-slate-700 text-slate-300 rounded-xl py-2 text-xs font-semibold transition flex items-center justify-center gap-1.5";
-
-                sendShiftTimeToSheet("checkin", timeString);
 
                 let seconds = 0;
                 shiftTimerInterval = setInterval(() => {
@@ -716,9 +698,10 @@
                 isCheckedIn = false;
                 clearInterval(shiftTimerInterval);
                 if (isBreakActive) toggleBreak();
+                sendDataToSheet({ type: "Shift", action: "End Shift", timestamp: timeString });
 
                 btn.className = "bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/40 text-emerald-400 rounded-xl py-2 text-xs font-semibold transition flex items-center justify-center gap-1.5";
-                btnText.innerText = "Check In";
+                btnText.innerText = "Start Shift";
                 statusDot.className = "w-2 h-2 rounded-full bg-slate-500";
                 statusLabel.innerText = "Shift Ended";
                 timeLabel.innerText = "Ended at " + timeString;
@@ -727,24 +710,20 @@
                 breakBtn.className = "bg-[#1e293b] text-slate-400 rounded-xl py-2 text-xs font-semibold transition flex items-center justify-center gap-1.5 cursor-not-allowed opacity-50";
                 document.getElementById('breakBtnText').innerText = "Break";
                 document.getElementById('shiftTimerDisplay').innerText = "00:00";
-
-                sendShiftTimeToSheet("endshift", timeString);
             }
         }
 
         function toggleBreak() {
             const breakBtn = document.getElementById('breakBtn');
             const breakBtnText = document.getElementById('breakBtnText');
-            const now = new Date();
-            const timeString = now.toLocaleTimeString();
+            const timeString = new Date().toLocaleTimeString();
 
             if (!isBreakActive) {
                 isBreakActive = true;
                 breakStartTime = 0;
+                sendDataToSheet({ type: "Shift", action: "Start Break", timestamp: timeString });
                 
                 breakBtn.className = "bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold rounded-xl py-2 text-xs transition shadow-lg shadow-orange-500/30 flex items-center justify-center gap-1.5 animate-pulse";
-                
-                sendShiftTimeToSheet("takebreak", timeString);
 
                 breakTimerInterval = setInterval(() => {
                     breakStartTime++;
@@ -756,22 +735,11 @@
             } else {
                 isBreakActive = false;
                 clearInterval(breakTimerInterval);
+                sendDataToSheet({ type: "Shift", action: "End Break", timestamp: timeString });
                 
                 breakBtn.className = "bg-[#1e293b] hover:bg-slate-700 text-slate-300 rounded-xl py-2 text-xs font-semibold transition flex items-center justify-center gap-1.5";
                 breakBtnText.innerHTML = `Break`;
-
-                sendShiftTimeToSheet("endbreak", timeString);
             }
-        }
-
-        function sendShiftTimeToSheet(type, timeVal) {
-            const payload = { action: "logShiftTime", shiftType: type, time: timeVal };
-            fetch(RECRUIT_WEBHOOK_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            }).catch(err => console.error("Shift time sync error:", err));
         }
 
         function renderAttendanceCalendar() {
@@ -836,55 +804,83 @@
 
         function submitRecruitmentBatch() {
             let allBatchUsernames = [];
+            const currentDateStr = new Date().toLocaleDateString('en-GB');
 
             recruitmentInputs.forEach(username => {
                 const cleanUname = username.trim();
                 if (cleanUname) {
-                    allBatchUsernames.push(cleanUname.startsWith('@') ? cleanUname : '@' + cleanUname);
+                    const finalUname = cleanUname.startsWith('@') ? cleanUname : '@' + cleanUname;
+                    allBatchUsernames.push(finalUname);
+                    sendDataToSheet({ type: "Recruitment", username: finalUname, date: currentDateStr });
                 }
             });
 
             if (allBatchUsernames.length > 0) {
-                const payload = {
-                    action: "submitRecruitment",
-                    usernames: allBatchUsernames
-                };
+                const btn = event.currentTarget;
+                const originalHTML = btn.innerHTML;
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+                btn.disabled = true;
 
-                fetch(RECRUIT_WEBHOOK_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                }).then(() => {
-                    const currentDateStr = new Date().toLocaleDateString('en-GB');
-
-                    allBatchUsernames.forEach(uname => {
-                        if (!cumulativeFollowUps.some(item => item.username === uname)) {
-                            cumulativeFollowUps.push({
-                                username: uname,
-                                date: currentDateStr,
-                                checkIn: false,
-                                negotiating: false
-                            });
-                        }
-                    });
-
-                    recruitmentInputs = Array(totalSlots).fill("");
-                    localStorage.setItem('starsZone_recruitmentInputs', JSON.stringify(recruitmentInputs));
-                    localStorage.setItem('starsZone_cumulativeFollowUps', JSON.stringify(cumulativeFollowUps));
-
-                    renderRecruitmentSlots();
-                    renderFollowUpTable();
-                    updateTodayProgressCount();
-
-                    alert(isArabic ? 'تم إرسال جميع الأسماء (30 خانة) وحفظها بنجاح!' : 'All 30 recruitment slots submitted and saved successfully!');
-                }).catch(err => {
-                    console.error("Recruitment submission error:", err);
+                allBatchUsernames.forEach(uname => {
+                    if (!cumulativeFollowUps.some(item => item.username === uname)) {
+                        cumulativeFollowUps.push({
+                            username: uname,
+                            date: currentDateStr,
+                            checkIn: false,
+                            negotiating: false,
+                            noresponse: false
+                        });
+                    }
                 });
+
+                recruitmentInputs = Array(totalSlots).fill("");
+                localStorage.setItem('starsZone_recruitmentInputs', JSON.stringify(recruitmentInputs));
+                localStorage.setItem('starsZone_cumulativeFollowUps', JSON.stringify(cumulativeFollowUps));
+
+                renderRecruitmentSlots();
+                renderFollowUpTable();
+                updateTodayProgressCount();
+
+                setTimeout(() => {
+                    btn.innerHTML = '<i class="fa-solid fa-check"></i>';
+                    btn.className = btn.className.replace('bg-brandPink hover:bg-brandPinkHover', 'bg-emerald-600');
+                    setTimeout(() => {
+                        btn.innerHTML = originalHTML;
+                        btn.className = btn.className.replace('bg-emerald-600', 'bg-brandPink hover:bg-brandPinkHover');
+                        btn.disabled = false;
+                    }, 1500);
+                }, 500);
 
             } else {
                 alert(isArabic ? 'الرجاء إدخال اسم مستخدم واحد على الأقل في أي خانة قبل الإرسال.' : 'Please enter at least one username in the tracker before submitting.');
             }
+        }
+
+        function submitFollowUpData(button) {
+            const originalHTML = button.innerHTML;
+            button.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+            button.disabled = true;
+
+            cumulativeFollowUps.forEach(item => {
+                sendDataToSheet({
+                    type: "FollowUp",
+                    username: item.username,
+                    dateAdded: item.date,
+                    recruited: item.checkIn ? "Yes" : "No",
+                    negotiating: item.negotiating ? "Yes" : "No",
+                    noResponse: item.noresponse ? "Yes" : "No"
+                });
+            });
+
+            setTimeout(() => {
+                button.innerHTML = '<i class="fa-solid fa-check"></i>';
+                button.className = button.className.replace('bg-brandPink hover:bg-brandPinkHover', 'bg-emerald-600');
+                setTimeout(() => {
+                    button.innerHTML = originalHTML;
+                    button.className = button.className.replace('bg-emerald-600', 'bg-brandPink hover:bg-brandPinkHover');
+                    button.disabled = false;
+                }, 1500);
+            }, 500);
         }
 
         function renderFollowUpTable() {
@@ -1143,7 +1139,7 @@
                     </div>
 
                     <div>
-                        <textarea placeholder="${isArabic ? 'اكتب ملاحظة...' : 'Write feedback...'}" rows="2" oninput="creatorsData[${globalIdx}].feedback = this.value" class="w-full border border-customBorder rounded-xl p-2 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-brandPink resize-none">${creator.feedback}</textarea>
+                        <textarea placeholder="${isArabic ? 'اكتب ملاحظة...' : 'Write feedback...'}" rows="2" oninput="creatorsData[${globalIdx}].feedback = this.value" class="w-full border border-customBorder rounded-xl p-2 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-brandPink resize-none"></textarea>
                     </div>
                 `;
                 mobileContainer.appendChild(mobileCard);
@@ -1316,46 +1312,36 @@
         }
 
         function submitAllData(button) {
+            const originalHTML = button.innerHTML;
             button.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
             button.disabled = true;
 
-            const payload = {
-                action: "submitAll",
-                timestamp: new Date().toISOString(),
-                creators: creatorsData.map(c => ({
-                    name: c.name,
-                    handle: c.handle,
-                    contacted: c.contacted,
-                    replied: c.replied,
-                    liveStatus: c.liveStatus,
-                    visuals: c.visuals.join(', '),
-                    equipment: c.equipment.join(', '),
-                    feedback: c.feedback,
-                    screenshot: c.screenshotName || 'None'
-                }))
-            };
+            creatorsData.forEach(creator => {
+                const visualCount = creator.visuals.filter(Boolean).length;
+                let potVal = "Low";
+                if (visualCount === 3) potVal = "Medium";
+                else if (visualCount > 3) potVal = "High";
 
-            fetch(GOOGLE_SHEET_WEBHOOK_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            }).then(() => {
+                sendDataToSheet({
+                    type: "Operations",
+                    name: creator.name,
+                    contacted: creator.contacted || "Not Set",
+                    replied: creator.replied || "Not Set",
+                    liveStatus: creator.liveStatus || "Not Set",
+                    potential: potVal,
+                    feedback: creator.feedback || ""
+                });
+            });
+
+            setTimeout(() => {
                 button.innerHTML = '<i class="fa-solid fa-check"></i>';
                 button.className = button.className.replace('bg-brandPink hover:bg-brandPinkHover', 'bg-emerald-600');
                 setTimeout(() => {
-                    button.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i> <span>${isArabic ? 'إرسال الكل' : 'Submit All'}</span>`;
+                    button.innerHTML = originalHTML;
                     button.className = button.className.replace('bg-emerald-600', 'bg-brandPink hover:bg-brandPinkHover');
                     button.disabled = false;
                 }, 1500);
-            }).catch(err => {
-                console.error("Submission error:", err);
-                button.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i>';
-                setTimeout(() => {
-                    button.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i> <span>${isArabic ? 'إرسال الكل' : 'Submit All'}</span>`;
-                    button.disabled = false;
-                }, 1500);
-            });
+            }, 500);
         }
     </script>
 </body>
