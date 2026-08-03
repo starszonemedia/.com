@@ -564,7 +564,7 @@
         </div>
     </div>
 
-    <!-- JavaScript Handling Persistent Data via LocalStorage & Google Sheets -->
+    <!-- JavaScript Handling Persistent Data via LocalStorage & Google Sheets (Full Batch Updated) -->
     <script>
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyIG8_4NCvEgndl0QAAyKirVSD08W7Iee0PAA7gRAXvgdzwNzAs_DCXrY15cKZEZHwJ/exec";
 
@@ -802,85 +802,114 @@
             renderRecruitmentSlots();
         }
 
+        // دالة إرسال التوظيف دفعة واحدة (Batch)
         function submitRecruitmentBatch() {
-            let allBatchUsernames = [];
+            let allBatchRows = [];
             const currentDateStr = new Date().toLocaleDateString('en-GB');
 
             recruitmentInputs.forEach(username => {
                 const cleanUname = username.trim();
                 if (cleanUname) {
                     const finalUname = cleanUname.startsWith('@') ? cleanUname : '@' + cleanUname;
-                    allBatchUsernames.push(finalUname);
-                    sendDataToSheet({ type: "Recruitment", username: finalUname, date: currentDateStr });
-                }
-            });
-
-            if (allBatchUsernames.length > 0) {
-                const btn = event.currentTarget;
-                const originalHTML = btn.innerHTML;
-                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
-                btn.disabled = true;
-
-                allBatchUsernames.forEach(uname => {
-                    if (!cumulativeFollowUps.some(item => item.username === uname)) {
+                    allBatchRows.push([finalUname, currentDateStr]);
+                    
+                    if (!cumulativeFollowUps.some(item => item.username === finalUname)) {
                         cumulativeFollowUps.push({
-                            username: uname,
+                            username: finalUname,
                             date: currentDateStr,
                             checkIn: false,
                             negotiating: false,
                             noresponse: false
                         });
                     }
-                });
+                }
+            });
 
-                recruitmentInputs = Array(totalSlots).fill("");
-                localStorage.setItem('starsZone_recruitmentInputs', JSON.stringify(recruitmentInputs));
-                localStorage.setItem('starsZone_cumulativeFollowUps', JSON.stringify(cumulativeFollowUps));
+            if (allBatchRows.length > 0) {
+                const btn = event.currentTarget;
+                const originalHTML = btn.innerHTML;
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+                btn.disabled = true;
 
-                renderRecruitmentSlots();
-                renderFollowUpTable();
-                updateTodayProgressCount();
+                fetch(SCRIPT_URL, {
+                    method: "POST",
+                    mode: "no-cors",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        type: "Recruitment",
+                        rows: allBatchRows
+                    })
+                }).then(() => {
+                    recruitmentInputs = Array(totalSlots).fill("");
+                    localStorage.setItem('starsZone_recruitmentInputs', JSON.stringify(recruitmentInputs));
+                    localStorage.setItem('starsZone_cumulativeFollowUps', JSON.stringify(cumulativeFollowUps));
 
-                setTimeout(() => {
-                    btn.innerHTML = '<i class="fa-solid fa-check"></i>';
-                    btn.className = btn.className.replace('bg-brandPink hover:bg-brandPinkHover', 'bg-emerald-600');
+                    renderRecruitmentSlots();
+                    renderFollowUpTable();
+                    updateTodayProgressCount();
+
                     setTimeout(() => {
-                        btn.innerHTML = originalHTML;
-                        btn.className = btn.className.replace('bg-emerald-600', 'bg-brandPink hover:bg-brandPinkHover');
-                        btn.disabled = false;
-                    }, 1500);
-                }, 500);
+                        btn.innerHTML = '<i class="fa-solid fa-check"></i>';
+                        btn.className = btn.className.replace('bg-brandPink hover:bg-brandPinkHover', 'bg-emerald-600');
+                        setTimeout(() => {
+                            btn.innerHTML = originalHTML;
+                            btn.className = btn.className.replace('bg-emerald-600', 'bg-brandPink hover:bg-brandPinkHover');
+                            btn.disabled = false;
+                        }, 1500);
+                    }, 500);
+                }).catch(err => {
+                    console.error("Error:", err);
+                    btn.disabled = false;
+                    btn.innerHTML = originalHTML;
+                    alert("حدث خطأ أثناء الإرسال، حاول مرة أخرى.");
+                });
 
             } else {
                 alert(isArabic ? 'الرجاء إدخال اسم مستخدم واحد على الأقل في أي خانة قبل الإرسال.' : 'Please enter at least one username in the tracker before submitting.');
             }
         }
 
+        // دالة إرسال المتابعة دفعة واحدة (Batch)
         function submitFollowUpData(button) {
             const originalHTML = button.innerHTML;
             button.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
             button.disabled = true;
 
+            let allFollowUpRows = [];
             cumulativeFollowUps.forEach(item => {
-                sendDataToSheet({
-                    type: "FollowUp",
-                    username: item.username,
-                    dateAdded: item.date,
-                    recruited: item.checkIn ? "Yes" : "No",
-                    negotiating: item.negotiating ? "Yes" : "No",
-                    noResponse: item.noresponse ? "Yes" : "No"
-                });
+                allFollowUpRows.push([
+                    item.username,
+                    item.date,
+                    item.checkIn ? "Yes" : "No",
+                    item.negotiating ? "Yes" : "No",
+                    item.noresponse ? "Yes" : "No"
+                ]);
             });
 
-            setTimeout(() => {
-                button.innerHTML = '<i class="fa-solid fa-check"></i>';
-                button.className = button.className.replace('bg-brandPink hover:bg-brandPinkHover', 'bg-emerald-600');
+            fetch(SCRIPT_URL, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    type: "FollowUp",
+                    rows: allFollowUpRows
+                })
+            }).then(() => {
                 setTimeout(() => {
-                    button.innerHTML = originalHTML;
-                    button.className = button.className.replace('bg-emerald-600', 'bg-brandPink hover:bg-brandPinkHover');
-                    button.disabled = false;
-                }, 1500);
-            }, 500);
+                    button.innerHTML = '<i class="fa-solid fa-check"></i>';
+                    button.className = button.className.replace('bg-brandPink hover:bg-brandPinkHover', 'bg-emerald-600');
+                    setTimeout(() => {
+                        button.innerHTML = originalHTML;
+                        button.className = button.className.replace('bg-emerald-600', 'bg-brandPink hover:bg-brandPinkHover');
+                        button.disabled = false;
+                    }, 1500);
+                }, 500);
+            }).catch(err => {
+                console.error("Error:", err);
+                button.disabled = false;
+                button.innerHTML = originalHTML;
+                alert("حدث خطأ أثناء الإرسال، حاول مرة أخرى.");
+            });
         }
 
         function renderFollowUpTable() {
@@ -1311,37 +1340,53 @@
             renderTable();
         }
 
+        // دالة إرسال الـ Operations بالكامل دفعة واحدة (Batch)
         function submitAllData(button) {
             const originalHTML = button.innerHTML;
             button.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
             button.disabled = true;
 
+            let allRows = [];
             creatorsData.forEach(creator => {
                 const visualCount = creator.visuals.filter(Boolean).length;
                 let potVal = "Low";
                 if (visualCount === 3) potVal = "Medium";
                 else if (visualCount > 3) potVal = "High";
 
-                sendDataToSheet({
-                    type: "Operations",
-                    name: creator.name,
-                    contacted: creator.contacted || "Not Set",
-                    replied: creator.replied || "Not Set",
-                    liveStatus: creator.liveStatus || "Not Set",
-                    potential: potVal,
-                    feedback: creator.feedback || ""
-                });
+                allRows.push([
+                    creator.name,
+                    creator.contacted || "Not Set",
+                    creator.replied || "Not Set",
+                    creator.liveStatus || "Not Set",
+                    potVal,
+                    creator.feedback || ""
+                ]);
             });
 
-            setTimeout(() => {
-                button.innerHTML = '<i class="fa-solid fa-check"></i>';
-                button.className = button.className.replace('bg-brandPink hover:bg-brandPinkHover', 'bg-emerald-600');
+            fetch(SCRIPT_URL, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    type: "Operations",
+                    rows: allRows
+                })
+            }).then(() => {
                 setTimeout(() => {
-                    button.innerHTML = originalHTML;
-                    button.className = button.className.replace('bg-emerald-600', 'bg-brandPink hover:bg-brandPinkHover');
-                    button.disabled = false;
-                }, 1500);
-            }, 500);
+                    button.innerHTML = '<i class="fa-solid fa-check"></i>';
+                    button.className = button.className.replace('bg-brandPink hover:bg-brandPinkHover', 'bg-emerald-600');
+                    setTimeout(() => {
+                        button.innerHTML = originalHTML;
+                        button.className = button.className.replace('bg-emerald-600', 'bg-brandPink hover:bg-brandPinkHover');
+                        button.disabled = false;
+                    }, 1500);
+                }, 500);
+            }).catch(err => {
+                console.error("Error:", err);
+                button.disabled = false;
+                button.innerHTML = originalHTML;
+                alert("حدث خطأ أثناء الإرسال، حاول مرة أخرى.");
+            });
         }
     </script>
 </body>
