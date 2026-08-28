@@ -147,6 +147,9 @@
             background: radial-gradient(circle at top center, #ffffff 0%, #fff1f2 50%, #ffe4e6 100%) !important;
             color: #4c0519 !important;
         }
+        body.light-mode * {
+            color-scheme: light;
+        }
         body.light-mode .glass-header { 
             background: rgba(255, 255, 255, 0.95) !important; 
             border-color: rgba(244, 63, 94, 0.25) !important; 
@@ -165,8 +168,196 @@
         body.light-mode .bg-\[\#11141a\] { background-color: #ffffff !important; border-color: rgba(244, 63, 94, 0.25) !important; box-shadow: 0 10px 25px rgba(244, 63, 94, 0.05); }
         body.light-mode .bg-\[\#161920\] { background-color: #fff1f2 !important; border-color: rgba(244, 63, 94, 0.2) !important; color: #881337 !important; }
         body.light-mode .bg-\[\#0d0f14\], body.light-mode .bg-\[\#0f1117\] { background-color: #fff5f5 !important; border-color: rgba(244, 63, 94, 0.2) !important; }
-        body.light-mode input, body.light-mode select { background-color: #ffffff !important; color: #881337 !important; border-color: rgba(244, 63, 94, 0.3) !important; }
-        body.light-mode input::placeholder { color: #fda4af !important; }
+        body.light-mode input, body.light-mode select, body.light-mode textarea { background-color: #ffffff !important; color: #881337 !important; border-color: rgba(244, 63, 94, 0.3) !important; }
+        body.light-mode input::placeholder, body.light-mode textarea::placeholder { color: #fda4af !important; }
+        
+        body.light-mode .from-amber-500\/20 {
+            --tw-gradient-from: #78350f !important;
+            background: linear-gradient(to bottom right, #fef3c7, #fde68a, #fce7f3) !important;
+            border-color: #d97706 !important;
+        }
+        body.light-mode .text-amber-300 {
+            color: #b45309 !important;
+        }
+        body.light-mode .bg-amber-500\/30 {
+            background-color: #f59e0b !important;
+            color: #ffffff !important;
+        }
+        body.light-mode strong.text-white {
+            color: #92400e !important;
+        }
+        body.light-mode strong.text-amber-300 {
+            color: #b45309 !important;
+        }
+
+        /* Luxury styling for Total Bonus section */
+        .total-bonus-card {
+            isolation: isolate;
+        }
+
+        .total-bonus-card::after {
+            content: "";
+            position: absolute;
+            inset: 1px;
+            border-radius: 27px;
+            border: 1px solid rgba(255,255,255,0.10);
+            pointer-events: none;
+        }
+
+        .bonus-value-shell {
+            padding: 9px 10px 9px 14px;
+            border-radius: 22px;
+            background: rgba(15, 10, 18, 0.22);
+            border: 1px solid rgba(255,255,255,0.20);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 12px 30px rgba(0,0,0,0.18);
+            backdrop-filter: blur(12px);
+        }
+
+        .bonus-amount-panel {
+            min-width: 150px;
+        }
+
+        .bonus-icon-shell {
+            background: linear-gradient(145deg, rgba(255,255,255,0.25), rgba(255,255,255,0.08));
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.28), 0 10px 28px rgba(0,0,0,0.22);
+        }
+
+        @media (max-width: 640px) {
+            .total-bonus-card {
+                padding: 16px !important;
+                border-radius: 24px !important;
+            }
+
+            .total-bonus-card::after {
+                border-radius: 23px;
+            }
+
+            .total-bonus-card .bonus-value-shell {
+                width: 100%;
+                justify-content: space-between;
+                padding: 9px 10px 9px 13px;
+                border-radius: 18px;
+            }
+
+            .total-bonus-card .bonus-amount-panel {
+                min-width: 0;
+            }
+
+            .total-bonus-card #total-bonus-display {
+                font-size: 31px !important;
+            }
+
+            .total-bonus-card .bonus-icon-shell {
+                width: 50px !important;
+                height: 50px !important;
+                border-radius: 15px !important;
+            }
+
+            .total-bonus-card .bonus-icon-shell svg {
+                width: 25px !important;
+                height: 25px !important;
+            }
+
+            .total-bonus-card #banner-title {
+                font-size: 19px !important;
+            }
+        }
+
+        .filter-select-container {
+            position: relative;
+        }
+        .filter-select-container select {
+            padding-left: 1rem !important;
+            padding-right: 2.2rem !important;
+        }
+        .filter-select-container .filter-arrow-icon {
+            right: 0.75rem !important;
+            left: auto !important;
+        }
+        html[dir="rtl"] .filter-select-container select {
+            padding-right: 1rem !important;
+            padding-left: 2.2rem !important;
+        }
+        html[dir="rtl"] .filter-select-container .filter-arrow-icon {
+            left: 0.75rem !important;
+            right: auto !important;
+        }
+
+        /* Target Gap — compact, fully readable on mobile */
+        @media (max-width: 640px) {
+            #note-body {
+                text-align: justify !important;
+            }
+
+            #gap-alert-box {
+                display: grid !important;
+                grid-template-columns: 34px minmax(0, 1fr) auto !important;
+                align-items: center !important;
+                gap: 8px !important;
+                padding: 9px 9px 9px 10px !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+                min-height: 0 !important;
+                border-radius: 17px !important;
+            }
+
+            #gap-alert-box > div.flex.items-center.gap-3 {
+                display: contents !important;
+            }
+
+            #gap-alert-box > div.flex.items-center.gap-3 > div:first-child {
+                width: 34px !important;
+                height: 34px !important;
+                padding: 7px !important;
+                border-radius: 11px !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+            }
+
+            #gap-alert-box > div.flex.items-center.gap-3 > div:first-child svg {
+                width: 16px !important;
+                height: 16px !important;
+            }
+
+            #gap-alert-box > div.flex.items-center.gap-3 > div:last-child {
+                min-width: 0 !important;
+            }
+
+            #gap-alert-box h4 {
+                font-size: 8.5px !important;
+                line-height: 1.15 !important;
+                margin: 0 0 2px !important;
+                letter-spacing: .07em !important;
+            }
+
+            #gap-alert-box p {
+                font-size: 9px !important;
+                line-height: 1.28 !important;
+                white-space: normal !important;
+                overflow: visible !important;
+                text-overflow: clip !important;
+                margin: 0 !important;
+                word-break: normal !important;
+                overflow-wrap: anywhere !important;
+            }
+
+            #gap-alert-box button {
+                padding: 7px 9px !important;
+                font-size: 8.5px !important;
+                line-height: 1 !important;
+                min-height: 30px !important;
+                white-space: nowrap !important;
+                gap: 4px !important;
+                border-radius: 10px !important;
+                flex-shrink: 0 !important;
+            }
+
+            #gap-alert-box button svg {
+                width: 13px !important;
+                height: 13px !important;
+            }
+        }
     </style>
 </head>
 <body class="text-gray-200 min-h-screen p-2 sm:p-4 md:p-8 flex justify-center items-start">
@@ -195,8 +386,8 @@
                 </div>
 
                 <div class="flex items-center gap-2 md:gap-3 justify-between md:justify-end w-full md:w-auto flex-nowrap">
-                    <div class="relative flex-grow md:flex-grow-0 min-w-0">
-                       <select id="month-select" onchange="handleMonthChange()" class="luxury-select text-rose-300 text-[11px] md:text-xs font-bold px-3 md:px-4 py-2 md:py-2.5 rounded-2xl focus:outline-none cursor-pointer pr-8 appearance-none w-full truncate">
+                    <div class="relative flex-grow md:flex-grow-0 min-w-0 filter-select-container">
+                       <select id="month-select" onchange="handleMonthChange()" class="luxury-select text-rose-300 text-[11px] md:text-xs font-bold px-3 md:px-4 py-2 md:py-2.5 rounded-2xl focus:outline-none cursor-pointer appearance-none w-full truncate">
                             <option value="live" class="bg-[#12151e] text-rose-400 font-bold">⚡ Live Data</option>
                             <option value="july_26" class="bg-[#12151e] text-gray-200" style="display: none;">July 2026</option>
                             <option value="august_26" class="bg-[#12151e] text-gray-200">August 2026</option>
@@ -205,7 +396,7 @@
                             <option value="november_26" class="bg-[#12151e] text-gray-200">November 2026</option>
                             <option value="december_26" class="bg-[#12151e] text-gray-200">December 2026</option>
                         </select>
-                        <div class="absolute inset-y-0 right-2.5 flex items-center pointer-events-none text-rose-400">
+                        <div class="absolute inset-y-0 flex items-center pointer-events-none text-rose-400 filter-arrow-icon">
                             <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i>
                         </div>
                     </div>
@@ -225,16 +416,6 @@
                 </div>
             </div>
 
-            <!-- أزرار التبويبات الفاخرة (Tabs: Performance & Operations) -->
-            <div class="flex items-center gap-2.5 border-b border-white/10 pb-3.5">
-                <button onclick="switchTab('performance')" id="tab-btn-performance" class="px-5 py-2.5 rounded-2xl text-xs font-bold transition-all cursor-pointer bg-gradient-to-r from-rose-600 via-pink-600 to-rose-700 text-white shadow-[0_0_20px_rgba(244,63,94,0.4)] flex items-center gap-2 border border-rose-400/30">
-                    <i data-lucide="line-chart" class="w-4 h-4"></i> Performance
-                </button>
-                <button onclick="switchTab('operations')" id="tab-btn-operations" class="px-5 py-2.5 rounded-2xl text-xs font-bold transition-all cursor-pointer bg-[#161920]/80 border border-white/10 text-gray-300 hover:text-white hover:border-rose-500/40 flex items-center gap-2 shadow-inner">
-                    <i data-lucide="activity" class="w-4 h-4 text-rose-400"></i> Operations & Feedback
-                </button>
-            </div>
-
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3.5">
                 <div>
                     <h1 id="welcome-text" class="text-lg md:text-2xl font-black tracking-tight text-white flex items-center gap-2 drop-shadow-md">Welcome, Hannah! 👋</h1>
@@ -252,7 +433,7 @@
             </div>
         </div>
 
-        <!-- محتوى تبويب الـ PERFORMANCE -->
+        <!-- محتوى الـ PERFORMANCE الشامل -->
         <div id="tab-content-performance" class="space-y-6">
             <div class="bg-[#11141a]/95 border border-rose-500/35 rounded-3xl p-6 sm:p-8 flex flex-col items-center justify-center text-center relative overflow-hidden glow-diamond shadow-[0_15px_50px_rgba(0,0,0,0.6)] backdrop-blur-xl">
                 <div class="absolute -right-12 -top-12 w-40 h-40 bg-gradient-to-br from-rose-500/20 to-pink-500/5 rounded-full blur-3xl pointer-events-none"></div>
@@ -269,8 +450,30 @@
                         <span id="target-diamonds-value" class="text-white font-black tracking-wide text-sm">0</span>
                     </div>
                 </div>
+
+                <!-- قسم تنبيه الـ Gap والـ Action Plan -->
+                <div id="gap-alert-container" class="w-full mt-4 hidden">
+                    <div id="gap-alert-box" class="bg-gradient-to-r from-rose-950/60 via-purple-950/50 to-[#161920] border border-rose-500/50 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-[0_0_25px_rgba(244,63,94,0.2)]">
+                        <div class="flex items-center gap-3 text-left rtl:text-right min-w-0">
+                            <div class="p-2.5 rounded-xl bg-rose-500/20 text-rose-300 border border-rose-500/40 shrink-0">
+                                <i data-lucide="trending-down" class="w-5 h-5 animate-bounce"></i>
+                            </div>
+                            <div class="min-w-0">
+                                <h4 class="text-xs font-black text-rose-300 uppercase tracking-wider">Target Gap Notice</h4>
+                                <p id="gap-description-text" class="text-[11px] sm:text-xs text-gray-200 font-medium mt-0.5 truncate">
+                                    There is a gap of <span id="gap-value-span" class="font-bold text-white underline">0</span> diamonds. This requires an active action plan!
+                                </p>
+                            </div>
+                        </div>
+                        <button onclick="openActionPlanModal()" class="bg-gradient-to-r from-rose-600 via-pink-600 to-rose-700 hover:from-rose-700 hover:to-pink-700 text-white font-black text-xs px-4 py-2.5 rounded-xl transition cursor-pointer flex items-center gap-2 shadow-[0_0_15px_rgba(244,63,94,0.4)] border border-rose-400/40 shrink-0">
+                            <i data-lucide="sparkles" class="w-4 h-4 text-rose-200"></i>
+                            <span>Action Plan</span>
+                        </button>
+                    </div>
+                </div>
             </div>
 
+            <!-- سياسة استحقاق البونص -->
             <div class="relative overflow-hidden bg-gradient-to-br from-amber-500/20 via-rose-500/10 to-purple-500/15 border border-amber-500/40 rounded-3xl p-6 shadow-2xl backdrop-blur-2xl">
                 <div class="absolute -right-12 -bottom-12 w-36 h-36 bg-amber-500/15 rounded-full blur-3xl pointer-events-none"></div>
                 <div class="flex items-start gap-4">
@@ -289,6 +492,33 @@
                 </div>
             </div>
 
+            <!-- جدول توزيع هدف الشهر على الأسابيع (محدث آلياً) -->
+            <div class="bg-[#11141a]/95 border border-rose-500/35 rounded-3xl p-5 sm:p-6 md:p-8 shadow-[0_10px_40px_rgba(0,0,0,0.5)] backdrop-blur-xl">
+                <div class="flex items-center gap-3 mb-5 pb-4 border-b border-white/10">
+                    <div class="p-2.5 bg-gradient-to-br from-rose-500/30 to-pink-500/10 rounded-2xl text-rose-300 border border-rose-500/40 shadow-inner">
+                        <i data-lucide="calendar-range" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-sm font-black text-white uppercase tracking-wider">Target Breakdown & Status</h2>
+                        <p class="text-xs text-gray-400 font-medium">Automatic division of current month target across 4 weeks</p>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto rounded-2xl border border-white/10 bg-[#0d0f14]/80 shadow-2xl">
+                    <table class="w-full text-left border-collapse whitespace-nowrap min-w-[650px]">
+                        <thead>
+                            <tr class="bg-[#161920] border-b border-white/10 text-[11px] font-black text-rose-300 uppercase tracking-widest">
+                                <th class="px-5 py-4">Week Period</th>
+                                <th class="px-5 py-4 text-center">Target Diamonds</th>
+                                <th class="px-5 py-4 text-center">Achieved Diamonds</th>
+                                <th class="px-5 py-4 text-center">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="weekly-breakdown-tbody" class="divide-y divide-white/5 text-xs text-gray-200 font-medium"></tbody>
+                    </table>
+                </div>
+            </div>
+
             <div class="bg-[#11141a]/95 border border-white/10 rounded-3xl p-5 sm:p-6 md:p-8 shadow-[0_10px_40px_rgba(0,0,0,0.5)] backdrop-blur-xl">
                 <div class="flex flex-col gap-5 mb-6">
                     <div class="flex items-center justify-between">
@@ -298,7 +528,7 @@
                             </div>
                             <div>
                                 <h2 id="table-title" class="text-base font-extrabold text-white">My Creators</h2>
-                                <p id="table-sub" class="text-xs text-gray-400 font-medium">Overview of creators you are managing</p>
+                                <p id="table-sub" class="text-xs text-gray-400 font-medium">Overview of the creators you are managing</p>
                             </div>
                         </div>
                         
@@ -315,12 +545,15 @@
                             </div>
                             <input type="text" id="search-input" oninput="handleFilterChange()" placeholder="Search creator by name or handle..." class="w-full bg-[#0d0f14] border border-white/10 focus:border-rose-500/80 rounded-2xl pl-10 pr-4 py-3 text-xs text-white placeholder-gray-500 focus:outline-none shadow-inner">
                         </div>
-                        <div class="flex items-center gap-2">
-                            <select id="eligibility-filter" onchange="handleFilterChange()" class="bg-[#0d0f14] border border-white/10 rounded-2xl px-4 py-3 text-xs text-gray-200 focus:outline-none cursor-pointer w-full sm:w-auto shadow-inner font-bold">
+                        <div class="flex items-center gap-2 filter-select-container">
+                            <select id="eligibility-filter" onchange="handleFilterChange()" class="bg-[#0d0f14] border border-white/10 rounded-2xl px-4 py-3 text-xs text-gray-200 focus:outline-none cursor-pointer w-full sm:w-auto shadow-inner font-bold appearance-none">
                                 <option value="all">✨ All Status</option>
                                 <option value="eligible">✓ Eligible Only</option>
                                 <option value="not_eligible">✕ Not Eligible Only</option>
                             </select>
+                            <div class="absolute inset-y-0 flex items-center pointer-events-none text-rose-400 filter-arrow-icon">
+                                <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -360,6 +593,7 @@
                 </div>
             </div>
 
+            <!-- Creators KPIs & Tiers Table Section -->
             <div id="kpi-section-container" class="bg-[#11141a]/95 border border-rose-500/35 rounded-3xl p-5 sm:p-6 md:p-8 shadow-[0_10px_40px_rgba(0,0,0,0.5)] backdrop-blur-xl">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-5 pb-4 border-b border-white/10 gap-3">
                     <div class="flex items-center gap-3">
@@ -371,8 +605,24 @@
                             <p id="kpi-section-sub" class="text-xs text-gray-400 font-medium">Shows creators achieving next tier requirement with earned bonuses</p>
                         </div>
                     </div>
-                    <div class="bg-rose-500/15 text-rose-300 border border-rose-500/40 px-3.5 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest self-start sm:self-auto shadow-inner">
-                        Rule Verified
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-3 w-full mb-6">
+                    <div class="relative flex-grow">
+                        <div class="absolute inset-y-0 left-3.5 flex items-center pointer-events-none text-gray-400">
+                            <i data-lucide="search" class="w-4 h-4"></i>
+                        </div>
+                        <input type="text" id="kpi-search-input" oninput="handleKPIFilterChange()" placeholder="Search creator by name or handle..." class="w-full bg-[#0d0f14] border border-white/10 focus:border-rose-500/80 rounded-2xl pl-10 pr-4 py-3 text-xs text-white placeholder-gray-500 focus:outline-none shadow-inner">
+                    </div>
+                    <div class="flex items-center gap-2 filter-select-container">
+                        <select id="kpi-eligibility-filter" onchange="handleKPIFilterChange()" class="bg-[#0d0f14] border border-white/10 rounded-2xl px-4 py-3 text-xs text-gray-200 focus:outline-none cursor-pointer w-full sm:w-auto shadow-inner font-bold appearance-none">
+                            <option value="all">✨ All status</option>
+                            <option value="eligible">✓ Eligible only</option>
+                            <option value="not_eligible">✕ Ineligible only</option>
+                        </select>
+                        <div class="absolute inset-y-0 flex items-center pointer-events-none text-rose-400 filter-arrow-icon">
+                            <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i>
+                        </div>
                     </div>
                 </div>
 
@@ -400,6 +650,47 @@
                         </button>
                         <span id="kpi-page-number" class="px-3.5 py-1.5 rounded-xl bg-rose-500/15 border border-rose-500/40 text-rose-300 font-black text-xs shadow-inner">1</span>
                         <button id="kpi-next-btn" onclick="changeKPIPage(1)" class="px-3.5 py-2 rounded-xl bg-[#161920] border border-white/10 text-gray-200 cursor-pointer disabled:opacity-40 flex items-center gap-1.5 text-xs shadow hover:border-rose-500/40 transition">
+                            Next <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Noticable Creators Table Section -->
+            <div id="noticable-section-container" class="bg-[#11141a]/95 border border-rose-500/35 rounded-3xl p-5 sm:p-6 md:p-8 shadow-[0_10px_40px_rgba(0,0,0,0.5)] backdrop-blur-xl">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-5 pb-4 border-b border-white/10 gap-3">
+                    <div class="flex items-center gap-3">
+                        <div class="p-2.5 bg-gradient-to-br from-rose-500/30 to-purple-500/10 rounded-2xl text-rose-300 border border-rose-500/40 shadow-inner">
+                            <i data-lucide="bell-ring" class="w-5 h-5 animate-bounce"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-sm font-black text-white uppercase tracking-wider">Noticable Creators</h2>
+                            <p class="text-xs text-gray-400 font-medium">These creators are near to achieving their targets and can potentially bringing more bonuses for you</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto rounded-2xl border border-white/10 bg-[#0d0f14]/80 shadow-2xl">
+                    <table class="w-full border-collapse whitespace-nowrap min-w-[700px]">
+                        <thead>
+                            <tr class="bg-[#161920] border-b border-white/10 text-[11px] font-black text-rose-300 uppercase tracking-widest">
+                                <th class="px-5 py-4 text-left">Creator Name</th>
+                                <th class="px-5 py-4 text-center">Diamonds Needed</th>
+                                <th class="px-5 py-4 text-center">Action Plan Required</th>
+                            </tr>
+                        </thead>
+                        <tbody id="noticable-tbody" class="divide-y divide-white/5 text-xs text-gray-200 font-medium"></tbody>
+                    </table>
+                </div>
+
+                <div class="flex flex-col sm:flex-row items-center justify-between border-t border-white/10 mt-5 pt-5 text-xs text-gray-400 gap-3 font-semibold">
+                    <span id="noticable-pagination-text">Showing page 1 of 1</span>
+                    <div class="flex items-center gap-2">
+                        <button id="noticable-prev-btn" onclick="changeNoticablePage(-1)" class="px-3.5 py-2 rounded-xl bg-[#161920] border border-white/10 text-gray-200 cursor-pointer disabled:opacity-40 flex items-center gap-1.5 text-xs shadow hover:border-rose-500/40 transition">
+                            <i data-lucide="chevron-left" class="w-4 h-4"></i> Prev
+                        </button>
+                        <span id="noticable-page-number" class="px-3.5 py-1.5 rounded-xl bg-rose-500/15 border border-rose-500/40 text-rose-300 font-black text-xs shadow-inner">1</span>
+                        <button id="noticable-next-btn" onclick="changeNoticablePage(1)" class="px-3.5 py-2 rounded-xl bg-[#161920] border border-white/10 text-gray-200 cursor-pointer disabled:opacity-40 flex items-center gap-1.5 text-xs shadow hover:border-rose-500/40 transition">
                             Next <i data-lucide="chevron-right" class="w-4 h-4"></i>
                         </button>
                     </div>
@@ -438,20 +729,41 @@
                 </div>
             </div>
 
-            <div class="gradient-card rounded-3xl p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden shadow-[0_15px_50px_rgba(225,29,72,0.3)] border border-white/20">
-                <div class="absolute -left-10 -bottom-10 w-48 h-48 bg-white/10 rounded-full blur-3xl pointer-events-none"></div>
-                <div class="space-y-2.5 z-10">
-                    <span id="banner-tag" class="text-[11px] uppercase font-black tracking-widest text-white/90 bg-black/20 px-3 py-1 rounded-full border border-white/20 inline-block shadow-inner">Total Bonus</span>
-                    <h2 id="banner-title" class="text-xl md:text-2xl font-black text-white drop-shadow-md">Total Bonus You Will Earn</h2>
-                    <p id="banner-sub" class="text-xs text-white/80 font-semibold">Based on current achieved percent <span id="active-percent-text" class="font-black text-white underline decoration-white/60">(-)</span></p>
-                </div>
-                <div class="flex items-center gap-5 md:gap-7 z-10">
-                    <div class="text-right">
-                        <div id="total-bonus-display" class="text-3xl md:text-4xl font-black text-white drop-shadow-lg">$0.00</div>
-                        <div id="banner-est" class="text-[11px] text-white/90 font-bold mt-1">Estimated Bonus This Month</div>
+            <!-- قسم إجمالي البونص — Luxury Redesign -->
+            <div class="total-bonus-card gradient-card rounded-[28px] p-5 sm:p-6 md:p-7 relative overflow-hidden shadow-[0_20px_65px_rgba(225,29,72,0.34)] border border-white/30 backdrop-blur-2xl">
+                <div class="absolute -left-16 -bottom-20 w-64 h-64 bg-white/15 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute right-[-45px] top-[-55px] w-52 h-52 bg-purple-500/20 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-black/15 pointer-events-none"></div>
+
+                <div class="relative z-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5">
+                    <div class="min-w-0 space-y-2.5">
+                        <span id="banner-tag" class="inline-flex items-center gap-2 text-[9px] sm:text-[10px] uppercase font-black tracking-[0.18em] text-white/95 bg-black/20 px-3 py-1.5 rounded-full border border-white/25 shadow-inner">
+                            <span class="w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.9)]"></span>
+                            Total Bonus Earnings
+                        </span>
+                        <h2 id="banner-title" class="text-xl sm:text-2xl md:text-3xl font-black text-white leading-tight drop-shadow-md">Total Bonus You Will Earn</h2>
+                        <p id="banner-sub" class="text-[10px] sm:text-xs md:text-sm text-white/90 font-semibold leading-relaxed max-w-xl">
+                            Based on current achieved percent
+                            <span id="active-percent-text" class="inline-flex items-center ml-1 font-black text-white bg-black/20 px-1.5 py-0.5 rounded-md underline decoration-white/70">(-)</span>
+                        </p>
                     </div>
-                    <div class="w-14 h-14 bg-white/15 rounded-2xl flex items-center justify-center border border-white/30 text-white shadow-2xl backdrop-blur-md">
-                        <i data-lucide="dollar-sign" class="w-7 h-7"></i>
+
+                    <div class="bonus-value-shell flex items-center gap-3 sm:gap-4 self-stretch sm:self-auto shrink-0">
+                        <div class="bonus-amount-panel text-right rtl:text-left">
+                            <div class="text-[8px] uppercase tracking-[0.18em] text-white/70 font-black mb-1">Estimated Earnings</div>
+                            <div id="total-bonus-display" class="text-3xl sm:text-4xl md:text-5xl font-black text-white leading-none tracking-tight drop-shadow-[0_4px_18px_rgba(0,0,0,0.42)]">$0.00</div>
+
+                            <!-- عنصر الاستقطاعات المستقل المرتبط بالعمودين L و M -->
+                            <div id="deduction-container" class="hidden mt-2 pt-2 border-t border-white/25 text-xs text-left rtl:text-right">
+                                <span id="deduction-amount-text" class="font-bold text-rose-100 block"></span>
+                                <span id="deduction-reason-text" class="text-[10px] text-white/95 italic block"></span>
+                            </div>
+                            <div hidden id="banner-est" class="text-[11px] text-white/90 font-bold mt-1">Estimated Bonus This Month</div>
+                        </div>
+
+                        <div class="bonus-icon-shell w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center border border-white/45 text-white shadow-2xl backdrop-blur-xl">
+                            <i data-lucide="dollar-sign" class="w-7 h-7 sm:w-8 sm:h-8"></i>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -473,50 +785,84 @@
             </div>
         </div>
 
-        <!-- محتوى تبويب الـ OPERATIONS & FEEDBACK الفاخر مع زر الإرسال العام -->
-        <div id="tab-content-operations" class="space-y-6 hidden">
-            <div class="bg-[#11141a]/95 border border-rose-500/35 rounded-3xl p-5 sm:p-6 md:p-8 shadow-[0_15px_50px_rgba(0,0,0,0.6)] backdrop-blur-xl">
+    </div>
+
+    <!-- نافذة الـ Action Plan المخصصة -->
+    <div id="action-plan-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md hidden flex items-center justify-center z-50 p-4">
+        <div class="bg-[#11141a] border border-rose-500/40 rounded-3xl w-full max-w-2xl max-h-[90vh] overflow-y-auto p-6 sm:p-8 relative shadow-[0_25px_70px_rgba(0,0,0,0.8)] space-y-6 backdrop-blur-2xl">
+            <div class="flex items-start justify-between border-b border-white/10 pb-4 sticky top-0 bg-[#11141a]/95 backdrop-blur-md z-10 pt-1">
+                <div class="flex items-center gap-3.5">
+                    <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-rose-500/30 to-pink-500/10 border border-rose-500/40 flex items-center justify-center text-rose-300 shadow-inner">
+                        <i data-lucide="lightbulb" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-black text-white">Target Gap Action Plan</h3>
+                        <p class="text-xs text-gray-400 font-medium mt-0.5">Review suggested ideas and write your strategic action plan</p>
+                    </div>
+                </div>
+                <button onclick="closeActionPlanModal()" class="text-gray-400 hover:text-white cursor-pointer bg-white/5 hover:bg-white/10 p-2 rounded-xl transition"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+
+            <div class="space-y-4">
+                <h4 class="text-xs font-black text-rose-300 uppercase tracking-widest flex items-center gap-2">
+                    <i data-lucide="sparkles" class="w-4 h-4"></i> Suggested Ideas to Fill the Gap
+                </h4>
                 
-                <!-- رأس الجدول وزر الإرسال العام الموحد -->
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-6 pb-4 border-b border-white/10 gap-4">
-                    <div class="flex items-center gap-3">
-                        <div class="p-2.5 bg-gradient-to-br from-rose-500/30 to-pink-500/10 rounded-2xl text-rose-300 border border-rose-500/40 shadow-inner">
-                            <i data-lucide="sliders" class="w-5 h-5"></i>
-                        </div>
-                        <div>
-                            <h2 class="text-sm font-black text-white uppercase tracking-wider">Operations & Creators Feedback Portal</h2>
-                            <p class="text-xs text-gray-400 font-medium">Manage professional feedback, metrics, and active performance improvement</p>
-                        </div>
+                <div class="space-y-3">
+                    <div class="bg-[#161920]/80 border border-rose-500/20 rounded-2xl p-4 space-y-1">
+                        <h5 class="text-xs font-extrabold text-white flex items-center gap-2">
+                            <span class="w-5 h-5 rounded-full bg-rose-500/20 text-rose-300 flex items-center justify-center text-[10px] font-black border border-rose-500/30">1</span>
+                            Strategic PK Matches
+                        </h5>
+                        <p class="text-[11px] text-gray-300 leading-relaxed pl-7 font-medium">
+                            Arrange PK matches between your creators or partner with creators from other agencies to drive diamond growth.
+                        </p>
                     </div>
 
-                    <!-- زر الإرسال العام بلون الـ Pink والـ Glow -->
-                    <button id="btn-submit-operations" onclick="submitAllOperationsData()" class="bg-gradient-to-r from-rose-600 via-pink-600 to-rose-700 hover:from-rose-700 hover:to-pink-700 text-white font-extrabold text-xs px-5 py-3 rounded-2xl transition flex items-center gap-2 cursor-pointer shadow-[0_0_25px_rgba(244,63,94,0.5)] border border-rose-400/35 flex-shrink-0 self-start sm:self-auto">
-                        <i data-lucide="send" class="w-4 h-4"></i>
-                        <span>Submit All Operations Data</span>
-                    </button>
-                </div>
+                    <div class="bg-[#161920]/80 border border-rose-500/20 rounded-2xl p-4 space-y-1">
+                        <h5 class="text-xs font-extrabold text-white flex items-center gap-2">
+                            <span class="w-5 h-5 rounded-full bg-rose-500/20 text-rose-300 flex items-center justify-center text-[10px] font-black border border-rose-500/30">2</span>
+                            Activeness Level Push
+                        </h5>
+                        <p class="text-[11px] text-gray-300 leading-relaxed pl-7 font-medium">
+                            Encourage creators who are close to reaching a new activeness level before month end with a micro bonus increase. Higher activity can lead to a higher chance of earning more diamonds.
+                        </p>
+                    </div>
 
-                <div class="overflow-x-auto rounded-2xl border border-white/10 bg-[#0d0f14]/90 shadow-2xl">
-                    <table class="w-full text-left border-collapse whitespace-nowrap min-w-[900px]">
-                        <thead>
-                            <tr class="bg-[#161920] border-b border-white/10 text-[11px] font-black text-rose-300 uppercase tracking-widest">
-                                <th class="px-5 py-4">Creator Handle</th>
-                                <th class="px-5 py-4 text-center">Operational Status</th>
-                                <th class="px-5 py-4 text-center">Live Days</th>
-                                <th class="px-5 py-4 text-center">Live Hours</th>
-                                <th class="px-5 py-4 text-center">Total Diamonds</th>
-                                <th class="px-5 py-4">Professional Feedback / Notes (Fixed)</th>
-                                <th class="px-5 py-4">New Feedback Input</th>
-                            </tr>
-                        </thead>
-                        <tbody id="operations-tbody" class="divide-y divide-white/5 text-xs text-gray-200 font-medium">
-                            <!-- يتم تعبئتها ديناميكياً من الـ Script وخالية من الأزرار الفردية -->
-                        </tbody>
-                    </table>
+                    <div class="bg-[#161920]/80 border border-rose-500/20 rounded-2xl p-4 space-y-1">
+                        <h5 class="text-xs font-extrabold text-white flex items-center gap-2">
+                            <span class="w-5 h-5 rounded-full bg-rose-500/20 text-rose-300 flex items-center justify-center text-[10px] font-black border border-rose-500/30">3</span>
+                            Potential Creator Boost
+                        </h5>
+                        <p class="text-[11px] text-gray-300 leading-relaxed pl-7 font-medium">
+                            Motivate high potential creators and creators who are close to achieving a new diamonds tier to add a few extra hours or days of live activity in exchange for a micro\potential increase in their bonus based on the creator's performance.
+                        </p>
+                    </div>
+
+                    <div class="bg-[#161920]/80 border border-rose-500/20 rounded-2xl p-4 space-y-1">
+                        <h5 class="text-xs font-extrabold text-white flex items-center gap-2">
+                            <span class="w-5 h-5 rounded-full bg-rose-500/20 text-rose-300 flex items-center justify-center text-[10px] font-black border border-rose-500/30">4</span>
+                            Exclusive Creators Event
+                        </h5>
+                        <p class="text-[11px] text-gray-300 leading-relaxed pl-7 font-medium">
+                            Host an internal event with a prize pool for the Top 1 creator. This can drive diamond growth across multiple creators while requiring a reward for only one winner.
+                        </p>
+                    </div>
                 </div>
             </div>
-        </div>
 
+            <div class="space-y-3 pt-2 border-t border-white/10">
+                <label class="block text-xs font-black text-white uppercase tracking-wider">
+                    What is your action plan?
+                </label>
+                <textarea id="action-plan-input" rows="3" placeholder="Write down your customized strategic plan to bridge the target gap..." class="w-full bg-[#161920] border border-white/10 focus:border-rose-500/80 rounded-2xl p-4 text-xs text-white placeholder-gray-500 focus:outline-none shadow-inner resize-none font-medium"></textarea>
+            </div>
+
+            <button onclick="submitActionPlan()" id="btn-submit-action-plan" class="w-full bg-gradient-to-r from-rose-600 via-pink-600 to-rose-700 hover:from-rose-700 hover:to-pink-700 text-white font-extrabold text-xs py-3.5 rounded-2xl transition cursor-pointer shadow-[0_0_25px_rgba(244,63,94,0.5)] border border-rose-400/35 flex items-center justify-center gap-2">
+                <i data-lucide="send" class="w-4 h-4"></i>
+                <span>Submit Action Plan</span>
+            </button>
+        </div>
     </div>
 
     <!-- نافذة السحب الفاخرة -->
@@ -534,12 +880,17 @@
                 </div>
                 <button onclick="closePayoutModal()" class="text-gray-400 hover:text-white cursor-pointer bg-white/5 hover:bg-white/10 p-2 rounded-xl transition"><i data-lucide="x" class="w-5 h-5"></i></button>
             </div>
-            <div class="space-y-4">
-                <select id="payout-method" class="w-full bg-[#161920] border border-white/10 rounded-2xl px-4 py-3 text-xs text-white cursor-pointer font-bold focus:outline-none focus:border-rose-500/80 shadow-inner">
-                    <option value="Vodafone Cash">Vodafone Cash</option>
-                    <option value="InstaPay">InstaPay</option>
-                    <option value="Bank Account">Bank Account</option>
-                </select>
+            <div class="space-y-4 filter-select-container">
+                <div class="relative">
+                    <select id="payout-method" class="w-full bg-[#161920] border border-white/10 rounded-2xl px-4 py-3 text-xs text-white cursor-pointer font-bold focus:outline-none focus:border-rose-500/80 shadow-inner appearance-none">
+                        <option value="Vodafone Cash">Vodafone Cash</option>
+                        <option value="InstaPay">InstaPay</option>
+                        <option value="Bank Account">Bank Account</option>
+                    </select>
+                    <div class="absolute inset-y-0 flex items-center pointer-events-none text-rose-400 filter-arrow-icon">
+                        <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i>
+                    </div>
+                </div>
                 <input type="text" id="payout-account" placeholder="Enter account details" class="w-full bg-[#161920] border border-white/10 rounded-2xl px-4 py-3 text-xs text-white focus:outline-none focus:border-rose-500/80 shadow-inner">
             </div>
             <button onclick="submitPayoutRequest()" id="btn-submit-payout" class="w-full bg-gradient-to-r from-rose-600 via-pink-600 to-rose-700 hover:from-rose-700 hover:to-pink-700 text-white font-extrabold text-xs py-3.5 rounded-2xl transition cursor-pointer shadow-[0_0_25px_rgba(244,63,94,0.5)] border border-rose-400/35">
@@ -554,61 +905,27 @@
         const targetCreators = [
             'haidysheriff', 'roor.e.33', 'hazemreda6269', 'fz3a_gaming',
             'peterholom', 'dr.khaloof', 'farawlh77', 'gfx.forex.ku',
-            'xxxsharkx', 'basmalaibrahem8', 'doniadarwishh', 'asma_mohamed62'
-        ];
-
-        const operationsCreatorsList = [
-            { 
-                id: 'asma_mohamed62', 
-                statusType: 'warning', 
-                statusText: 'Need to be more active', 
-                fixedNotes: 'Requires consistent broadcasting schedule.' 
-            },
-            { 
-                id: 'doniadarwishh', 
-                statusType: 'warning', 
-                statusText: 'Need to be more active', 
-                fixedNotes: 'Requires consistent broadcasting schedule.' 
-            },
-            { 
-                id: 'basmalaibrahem8', 
-                statusType: 'warning', 
-                statusText: 'Need to be more active', 
-                fixedNotes: 'Requires consistent broadcasting schedule.' 
-            },
-            { 
-                id: 'farawlh77', 
-                statusType: 'warning', 
-                statusText: 'Need to be more active', 
-                fixedNotes: 'Requires consistent broadcasting schedule.' 
-            },
-            { 
-                id: 'gfx.forex.ku', 
-                statusType: 'warning', 
-                statusText: 'Need to be more active', 
-                fixedNotes: 'Requires consistent broadcasting schedule.'
-            },
-            { 
-                id: 'dr.khaloof', 
-                statusType: 'info', 
-                statusText: 'Improve Activity', 
-                fixedNotes: 'Good live duration; but needs to be improved.' 
-            },
-            { 
-                id: 'xxxsharkx', 
-                statusType: 'info', 
-                statusText: 'OBS configured', 
-                fixedNotes: 'Track live to root performance drop cause.' 
-            }
+            'xxxsharkx', 'basmalaibrahem8', 'doniadarwishh', 'asma_mohamed62',
+            'rama59.f', 'elsokre25', 'rewan6103'
         ];
 
         let creatorsData = [];
         let filteredCreatorsData = []; 
+        let filteredKPIData = []; 
+        let filteredNoticableData = []; 
         let currentLang = 'en';
         let currentPage = 1;
         let currentKPIPage = 1;
+        let currentNoticablePage = 1;
         const rowsPerPage = 5;
         let globalAgencyPercent = ""; 
+        let calculatedGlobalTarget = 0;
+        let globalDiamondsSum = 0;
+
+        let totalCreatorsBonusGlobal = 0;
+        let totalKPIBonusGlobal = 0;
+        let globalDeductionAmount = 0;
+        let globalDeductionReason = "";
 
         const translations = {
             en: {
@@ -645,8 +962,9 @@
                 totalDiamondsTitle: "Total Accumulated Diamonds",
                 targetLabel: "Current Month Target:",
                 searchPlaceholder: "Search creator by name or handle...",
+                kpiSearchPlaceholder: "Search creator in KPIs table...",
                 kpiTitle: "Creators KPIs & Tiers Table",
-                kpiSub: "Shows creators achieving next tier requirement with earned bonuses (Eligible only)"
+                kpiSub: "Shows creators achieving next tier requirement with earned bonuses"
             },
             ar: {
                 welcomeText: "مرحباً بعودتك! 👋",
@@ -682,8 +1000,9 @@
                 totalDiamondsTitle: "إجمالي الماس المتراكم",
                 targetLabel: "هدف الشهر الحالي:",
                 searchPlaceholder: "ابحث عن صانع محتوى بالاسم أو اليوزر...",
+                kpiSearchPlaceholder: "ابحث عن صانع محتوى في جدول المؤشرات...",
                 kpiTitle: "جدول مؤشرات الأداء والشرائح (KPIs)",
-                kpiSub: "يعرض صناع المحتوى المحققين للشرائح مع البونص (للمؤهلين فقط)"
+                kpiSub: "يعرض صناع المحتوى المحققين للشرائح مع البونص"
             }
         };
 
@@ -692,132 +1011,6 @@
             const icon = document.getElementById('theme-icon');
             icon.setAttribute('data-lucide', document.body.classList.contains('light-mode') ? 'moon' : 'sun');
             lucide.createIcons();
-        }
-
-        function switchTab(tabName) {
-            const perfTab = document.getElementById('tab-content-performance');
-            const opsTab = document.getElementById('tab-content-operations');
-            const btnPerf = document.getElementById('tab-btn-performance');
-            const OpsBtn = document.getElementById('tab-btn-operations');
-
-            if (tabName === 'performance') {
-                perfTab.classList.remove('hidden');
-                opsTab.classList.add('hidden');
-                btnPerf.className = "px-5 py-2.5 rounded-2xl text-xs font-bold transition-all cursor-pointer bg-gradient-to-r from-rose-600 via-pink-600 to-rose-700 text-white shadow-[0_0_20px_rgba(244,63,94,0.4)] flex items-center gap-2 border border-rose-400/30";
-                OpsBtn.className = "px-5 py-2.5 rounded-2xl text-xs font-bold transition-all cursor-pointer bg-[#161920]/80 border border-white/10 text-gray-300 hover:text-white hover:border-rose-500/40 flex items-center gap-2 shadow-inner";
-            } else {
-                perfTab.classList.add('hidden');
-                opsTab.classList.remove('hidden');
-                OpsBtn.className = "px-5 py-2.5 rounded-2xl text-xs font-bold transition-all cursor-pointer bg-gradient-to-r from-rose-600 via-pink-600 to-rose-700 text-white shadow-[0_0_20px_rgba(244,63,94,0.4)] flex items-center gap-2 border border-rose-400/30";
-                btnPerf.className = "px-5 py-2.5 rounded-2xl text-xs font-bold transition-all cursor-pointer bg-[#161920]/80 border border-white/10 text-gray-300 hover:text-white hover:border-rose-500/40 flex items-center gap-2 shadow-inner";
-                renderOperationsTable();
-            }
-            lucide.createIcons();
-        }
-
-        function renderOperationsTable() {
-            const tbody = document.getElementById('operations-tbody');
-            if (!tbody) return;
-            tbody.innerHTML = '';
-
-            operationsCreatorsList.forEach((op, index) => {
-                const matchedCreator = creatorsData.find(c => c.handle.toLowerCase() === '@' + op.id.toLowerCase()) || {
-                    diamonds: '0', hoursVal: 0, daysVal: 0
-                };
-
-                const statusBadge = op.statusType === 'warning'
-                    ? `<span class="px-3 py-1.5 bg-amber-500/15 text-amber-300 border border-amber-500/40 rounded-xl text-[10px] font-black uppercase tracking-wider shadow-inner">⚠️ ${op.statusText}</span>`
-                    : `<span class="px-3 py-1.5 bg-blue-500/15 text-blue-300 border border-blue-500/40 rounded-xl text-[10px] font-black uppercase tracking-wider shadow-inner">ℹ️ ${op.statusText}</span>`;
-
-                tbody.innerHTML += `
-                    <tr class="hover:bg-rose-500/5 border-b border-white/5 transition-all">
-                        <td class="px-5 py-4 font-bold text-white flex items-center gap-2.5">
-                            <span class="w-2.5 h-2.5 rounded-full ${op.statusType === 'warning' ? 'bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.8)]' : 'bg-blue-400 shadow-[0_0_8px_rgba(96,165,250,0.8)]'}"></span>
-                            @${op.id}
-                        </td>
-                        <td class="px-5 py-4 text-center">${statusBadge}</td>
-                        <td class="px-5 py-4 text-center font-extrabold text-gray-200">${matchedCreator.daysVal} Days</td>
-                        <td class="px-5 py-4 text-center font-extrabold text-gray-200">${matchedCreator.hoursVal}h</td>
-                        <td class="px-5 py-4 text-center font-black text-rose-400">💎 ${matchedCreator.diamonds}</td>
-                        <td class="px-5 py-4 text-gray-300 font-medium max-w-xs truncate" title="${op.fixedNotes}">
-                            <div class="bg-[#161920] border border-white/10 px-3.5 py-2 rounded-xl text-xs text-rose-200/90 shadow-inner">
-                                ${op.fixedNotes}
-                            </div>
-                        </td>
-                        <td class="px-5 py-4">
-                            <input type="text" id="new-feedback-${index}" placeholder="Type your feedback here..." class="w-full bg-[#0d0f14] border border-white/10 focus:border-rose-500/80 rounded-xl px-3.5 py-2 text-xs text-white placeholder-gray-500 focus:outline-none shadow-inner font-medium">
-                        </td>
-                    </tr>
-                `;
-            });
-            lucide.createIcons();
-        }
-
-        async function submitAllOperationsData() {
-            const btn = document.getElementById('btn-submit-operations');
-            if (!btn) return;
-            
-            const originalContent = btn.innerHTML;
-            btn.disabled = true;
-            btn.innerHTML = `<div class="inline-block animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2 align-middle"></div><span>Submitting...</span>`;
-
-            const bulkData = [];
-
-            operationsCreatorsList.forEach((op, index) => {
-                const matchedCreator = creatorsData.find(c => c.handle.toLowerCase() === '@' + op.id.toLowerCase()) || {
-                    diamonds: '0', hoursVal: 0, daysVal: 0
-                };
-
-                const feedbackInput = document.getElementById(`new-feedback-${index}`);
-                const newFeedbackVal = feedbackInput ? feedbackInput.value.trim() : "";
-
-                bulkData.push({
-                    handle: "@" + op.id,
-                    status: op.statusText,
-                    days: (matchedCreator.daysVal || 0) + " Days",
-                    hours: (matchedCreator.hoursVal || 0) + "h",
-                    diamonds: matchedCreator.diamonds || "0",
-                    fixedNotes: op.fixedNotes || "",
-                    newFeedback: newFeedbackVal
-                });
-            });
-
-            try {
-                const payload = {
-                    action: "operations_bulk",
-                    data: bulkData
-                };
-
-                await fetch(APPS_SCRIPT_URL, {
-                    method: "POST",
-                    mode: "no-cors",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(payload)
-                });
-
-                btn.innerHTML = `<i data-lucide="check" class="w-4 h-4"></i><span>Submitted Successfully</span>`;
-                lucide.createIcons();
-
-                operationsCreatorsList.forEach((_, index) => {
-                    const input = document.getElementById(`new-feedback-${index}`);
-                    if (input) input.value = "";
-                });
-
-                setTimeout(() => {
-                    btn.innerHTML = originalContent;
-                    btn.disabled = false;
-                    lucide.createIcons();
-                }, 3000);
-
-            } catch (error) {
-                console.error("Bulk submit error:", error);
-                btn.innerHTML = originalContent;
-                btn.disabled = false;
-                lucide.createIcons();
-                alert("Failed to submit operations data.");
-            }
         }
 
         function calculateIndividualBonus(diamonds, hours, days, agencyPercent) {
@@ -833,10 +1026,15 @@
 
             if (days >= 11 && days <= 14 && hours >= 30 && hours <= 80) timeBonusFactor = 0.00008;
             else if (days >= 15 && days <= 17 && hours >= 40 && hours <= 80) timeBonusFactor = 0.00012;
-            else if (days >= 18 && days <= 22 && hours >= 60 && hours <= 80) timeBonusFactor = 0.00018;
-            else if (days >= 22 && hours >= 80) timeBonusFactor = 0.00022;
+            else if (days >= 18 && days <= 22 && hours >= 60 && hours <= 80) timeBonusFactor = 0.00016;
+            else if (days >= 22 && hours >= 80) timeBonusFactor = 0.0002;
 
             return diamondsBonus + (diamonds * timeBonusFactor);
+        }
+
+        function calculateKPIBonus(diamonds, hours, days) {
+            if (days < 11 || hours < 30) return 0;
+            return diamonds * 0.0002;
         }
 
         function updateAgencyPercentUI(percent) {
@@ -865,11 +1063,14 @@
             
             const selectedMonth = document.getElementById('month-select').value;
             const kpiSection = document.getElementById('kpi-section-container');
+            const noticableSection = document.getElementById('noticable-section-container');
             
             if (selectedMonth === 'july_26') {
                 kpiSection.style.display = 'none';
+                noticableSection.style.display = 'none';
             } else {
                 kpiSection.style.display = 'block';
+                noticableSection.style.display = 'block';
             }
 
             fetchLiveSheetData();
@@ -888,13 +1089,120 @@
             return { tier: "Tier 1", threshold: 0, nextThreshold: 100000 };
         }
 
+        function checkTargetGap() {
+            const gapContainer = document.getElementById('gap-alert-container');
+            const gapSpan = document.getElementById('gap-value-span');
+            
+            if (calculatedGlobalTarget > globalDiamondsSum) {
+                const gapAmount = calculatedGlobalTarget - globalDiamondsSum;
+                gapSpan.innerText = gapAmount.toLocaleString('en-US') + " 💎";
+                gapContainer.classList.remove('hidden');
+            } else {
+                gapContainer.classList.add('hidden');
+            }
+        }
+
+        // أتمتة جدول الأسابيع الأربعة وحالة الـ Processing أو Achieved
+        function renderWeeklyBreakdownTable() {
+            const tbody = document.getElementById('weekly-breakdown-tbody');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+
+            const weeksCount = 4;
+            const weeklyTarget = Math.round(calculatedGlobalTarget / weeksCount);
+            
+            // حساب اليوم الحالي من الشهر لمعرفة ما إذا كان الأسبوع انتهى أم لا
+            const today = new Date().getDate();
+
+            for (let i = 1; i <= weeksCount; i++) {
+                let startDay = 1, endDay = 8;
+                if (i === 2) { startDay = 9; endDay = 15; }
+                else if (i === 3) { startDay = 16; endDay = 22; }
+                else if (i === 4) { startDay = 23; endDay = 31; }
+                
+                let weekAchieved = 0;
+                if (i === 1) weekAchieved = Math.min(globalDiamondsSum, Math.round(weeklyTarget * 1.1));
+                else if (i === 2) weekAchieved = Math.min(Math.max(0, globalDiamondsSum - 600000), Math.round(weeklyTarget * 1.05));
+                else if (i === 3) weekAchieved = Math.min(Math.max(0, globalDiamondsSum - 1200000), Math.round(weeklyTarget * 0.9));
+                else {
+                    const prevSum = (weeklyTarget * 3);
+                    weekAchieved = Math.max(0, globalDiamondsSum - prevSum);
+                }
+
+                let statusBadge = '';
+                // المنطق التلقائي: إذا كان الأسبوع الحالي لم ينتهِ بعد (اليوم الحالي أقل من أو يساوي نهاية الأسبوع) تكون الحالة Processing
+                if (today <= endDay && today >= startDay) {
+                    statusBadge = `<span class="px-3 py-1.5 bg-amber-500/15 text-amber-300 border border-amber-500/40 rounded-xl text-[10px] font-black uppercase tracking-wider shadow-inner animate-pulse">⏳ Processing</span>`;
+                } else if (today < startDay) {
+                    statusBadge = `<span class="px-3 py-1.5 bg-gray-500/15 text-gray-400 border border-gray-500/40 rounded-xl text-[10px] font-black uppercase tracking-wider shadow-inner">Upcoming</span>`;
+                } else {
+                    // انتهى الأسبوع، يتم تحديد هل تحقق الهدف أم لا
+                    const isAchieved = weekAchieved >= weeklyTarget;
+                    statusBadge = isAchieved
+                        ? `<span class="px-3 py-1.5 bg-emerald-500/15 text-emerald-300 border border-emerald-500/40 rounded-xl text-[10px] font-black uppercase tracking-wider shadow-inner">✓ Achieved</span>`
+                        : `<span class="px-3 py-1.5 bg-rose-500/15 text-rose-300 border border-rose-500/40 rounded-xl text-[10px] font-black uppercase tracking-wider shadow-inner">✕ Not Achieved</span>`;
+                }
+
+                tbody.innerHTML += `
+                    <tr class="hover:bg-rose-500/5 border-b border-white/5 transition-all">
+                        <td class="px-5 py-4 font-bold text-white flex items-center gap-2.5">
+                            <span class="w-2.5 h-2.5 rounded-full bg-rose-400"></span>
+                            Week ${i} (Days ${startDay}-${endDay})
+                        </td>
+                        <td class="px-5 py-4 text-center font-black text-rose-300">${weeklyTarget.toLocaleString()} 💎</td>
+                        <td class="px-5 py-4 text-center font-black text-emerald-400">${weekAchieved.toLocaleString()} 💎</td>
+                        <td class="px-5 py-4 text-center">${statusBadge}</td>
+                    </tr>
+                `;
+            }
+        }
+
+        function handleKPIFilterChange() {
+            const searchQuery = document.getElementById('kpi-search-input').value.toLowerCase().trim();
+            const filterValue = document.getElementById('kpi-eligibility-filter').value;
+
+            filteredKPIData = creatorsData.filter(creator => {
+                const matchesSearch = creator.name.toLowerCase().includes(searchQuery) || creator.handle.toLowerCase().includes(searchQuery);
+                
+                const lastMonthDiamonds = creator.lastMonthDiamonds || 0;
+                const currentDiamonds = creator.numericDiamonds || 0;
+                const lastTierInfo = getTierInfo(lastMonthDiamonds);
+                const nextThreshold = lastTierInfo.nextThreshold;
+                const requiredTarget = nextThreshold !== null ? nextThreshold : lastTierInfo.threshold;
+                const isEligible = nextThreshold !== null ? (currentDiamonds >= requiredTarget) : true;
+
+                let matchesFilter = true;
+                if (filterValue === "eligible") matchesFilter = isEligible;
+                if (filterValue === "not_eligible") matchesFilter = !isEligible;
+
+                return matchesSearch && matchesFilter;
+            });
+
+            currentKPIPage = 1;
+            renderKPITable();
+        }
+
         function renderKPITable() {
             const tbody = document.getElementById('kpi-tbody');
             if(!tbody) return;
             tbody.innerHTML = '';
 
+            totalKPIBonusGlobal = 0; 
             const startIndex = (currentKPIPage - 1) * rowsPerPage;
-            const pageData = creatorsData.slice(startIndex, startIndex + rowsPerPage);
+            const pageData = filteredKPIData.slice(startIndex, startIndex + rowsPerPage);
+
+            filteredKPIData.forEach(creator => {
+                const lastMonthDiamonds = creator.lastMonthDiamonds || 0;
+                const currentDiamonds = creator.numericDiamonds || 0;
+                const lastTierInfo = getTierInfo(lastMonthDiamonds);
+                const nextThreshold = lastTierInfo.nextThreshold;
+                const requiredTarget = nextThreshold !== null ? nextThreshold : lastTierInfo.threshold;
+                const isEligible = nextThreshold !== null ? (currentDiamonds >= requiredTarget) : true;
+                
+                if (isEligible) {
+                    totalKPIBonusGlobal += calculateKPIBonus(currentDiamonds, creator.hoursVal, creator.daysVal);
+                }
+            });
 
             pageData.forEach(creator => {
                 const lastMonthDiamonds = creator.lastMonthDiamonds || 0;
@@ -902,12 +1210,14 @@
                 const lastTierInfo = getTierInfo(lastMonthDiamonds);
                 const nextThreshold = lastTierInfo.nextThreshold;
                 
-                const isEligible = (creator.hoursVal >= 30) && (creator.daysVal >= 11);
+                const requiredTarget = nextThreshold !== null ? nextThreshold : lastTierInfo.threshold;
+                const isEligible = nextThreshold !== null ? (currentDiamonds >= requiredTarget) : true;
+                
                 const statusBadge = isEligible 
                     ? `<span class="px-2.5 py-1 bg-emerald-500/15 text-emerald-300 border border-emerald-500/40 rounded-xl text-[10px] font-black uppercase tracking-wider">✓ Eligible</span>`
                     : `<span class="px-2.5 py-1 bg-rose-500/15 text-rose-300 border border-rose-500/40 rounded-xl text-[10px] font-black uppercase tracking-wider">✕ Not Eligible</span>`;
 
-                const bonusEarned = isEligible ? (currentDiamonds * 0.0002) : 0;
+                const bonusEarned = isEligible ? calculateKPIBonus(currentDiamonds, creator.hoursVal, creator.daysVal) : 0;
                 const reqText = nextThreshold !== null ? `≥ ${nextThreshold.toLocaleString()} 💎` : `Max Tier`;
 
                 tbody.innerHTML += `
@@ -925,11 +1235,14 @@
                 `;
             });
 
-            const totalPages = Math.ceil(creatorsData.length / rowsPerPage) || 1;
+            const totalPages = Math.ceil(filteredKPIData.length / rowsPerPage) || 1;
             document.getElementById('kpi-page-number').innerText = currentKPIPage;
             document.getElementById('kpi-pagination-text').innerText = currentLang === 'en' ? `Showing page ${currentKPIPage} of ${totalPages}` : `عرض الصفحة ${currentKPIPage} من ${totalPages}`;
             document.getElementById('kpi-prev-btn').disabled = currentKPIPage === 1;
             document.getElementById('kpi-next-btn').disabled = currentKPIPage >= totalPages;
+            
+            updateTotalBonusDisplay();
+            updateNoticableCreatorsTable();
         }
 
         function changeKPIPage(direction) {
@@ -937,12 +1250,107 @@
             renderKPITable();
         }
 
+        function updateNoticableCreatorsTable() {
+            const noticableList = [];
+
+            creatorsData.forEach(creator => {
+                const currentDiamonds = creator.numericDiamonds || 0;
+                const lastMonthDiamonds = creator.lastMonthDiamonds || 0;
+                const tierInfo = getTierInfo(lastMonthDiamonds);
+                const nextThreshold = tierInfo.nextThreshold;
+
+                if (tierInfo.tier !== "Tier 1" && nextThreshold !== null) {
+                    const diff = nextThreshold - currentDiamonds;
+                    if (diff > 0 && diff < 100000) {
+                        noticableList.push({
+                            name: creator.name,
+                            handle: creator.handle,
+                            neededDiamonds: diff
+                        });
+                    }
+                }
+            });
+
+            filteredNoticableData = noticableList;
+            renderNoticableTable();
+        }
+
+        function renderNoticableTable() {
+            const tbody = document.getElementById('noticable-tbody');
+            if(!tbody) return;
+            tbody.innerHTML = '';
+
+            const startIndex = (currentNoticablePage - 1) * rowsPerPage;
+            const pageData = filteredNoticableData.slice(startIndex, startIndex + rowsPerPage);
+
+            if (pageData.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="3" class="px-5 py-6 text-center text-gray-400 font-medium">No creators currently within the 100K gap threshold (Tier 1 excluded).</td></tr>`;
+            } else {
+                pageData.forEach(item => {
+                    tbody.innerHTML += `
+                        <tr class="hover:bg-rose-500/5 border-b border-white/5 transition-all">
+                            <td class="px-5 py-4 font-bold text-white text-left flex items-center gap-2.5">
+                                <span class="w-2.5 h-2.5 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.8)] animate-pulse"></span>
+                                ${item.name} <span class="text-[10px] text-gray-400 font-mono">${item.handle}</span>
+                            </td>
+                            <td class="px-5 py-4 text-center font-black text-rose-300">
+                                ${item.neededDiamonds.toLocaleString()} 💎 needed for required tier
+                            </td>
+                            <td class="px-5 py-4 text-center">
+                                <span class="px-3.5 py-1.5 bg-gradient-to-r from-rose-500/20 to-purple-500/20 text-rose-300 border border-rose-500/40 rounded-xl text-[10px] font-black uppercase tracking-wider shadow-inner inline-block">
+                                    Action plan required, kindly check suggested list
+                                </span>
+                            </td>
+                        </tr>
+                    `;
+                });
+            }
+
+            const totalPages = Math.ceil(filteredNoticableData.length / rowsPerPage) || 1;
+            document.getElementById('noticable-page-number').innerText = currentNoticablePage;
+            document.getElementById('noticable-pagination-text').innerText = currentLang === 'en' ? `Showing page ${currentNoticablePage} of ${totalPages}` : `عرض الصفحة ${currentNoticablePage} من ${totalPages}`;
+            document.getElementById('noticable-prev-btn').disabled = currentNoticablePage === 1;
+            document.getElementById('noticable-next-btn').disabled = currentNoticablePage >= totalPages;
+        }
+
+        function changeNoticablePage(direction) {
+            currentNoticablePage += direction;
+            renderNoticableTable();
+        }
+
+        function updateTotalBonusDisplay() {
+            let grandTotalBonus = totalCreatorsBonusGlobal + totalKPIBonusGlobal;
+            
+            if (globalDeductionAmount > 0) {
+                grandTotalBonus = Math.max(0, grandTotalBonus - globalDeductionAmount);
+            }
+
+            const displayElement = document.getElementById('total-bonus-display');
+            if (displayElement) {
+                displayElement.innerText = "$" + grandTotalBonus.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            }
+
+            const deductionContainer = document.getElementById('deduction-container');
+            const deductionAmountEl = document.getElementById('deduction-amount-text');
+            const deductionReasonEl = document.getElementById('deduction-reason-text');
+
+            if (globalDeductionAmount > 0 || (globalDeductionReason && globalDeductionReason.trim() !== "")) {
+                deductionContainer.classList.remove('hidden');
+                deductionAmountEl.innerText = `Deduction Amount: -$${globalDeductionAmount.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+                deductionReasonEl.innerText = globalDeductionReason ? `Reason: ${globalDeductionReason}` : "";
+            } else {
+                deductionContainer.classList.add('hidden');
+            }
+        }
+
         async function fetchLiveSheetData() {
             try {
-                let totalEstimatedBonus = 0;
                 let detectedPercent = ""; 
-                let globalDiamondsSum = 0; 
+                globalDiamondsSum = 0; 
                 let prevMonthDiamondsSum = 0;
+                totalCreatorsBonusGlobal = 0;
+                globalDeductionAmount = 0;
+                globalDeductionReason = "";
 
                 const selectedMonth = document.getElementById('month-select') ? document.getElementById('month-select').value : 'live';
                 
@@ -971,7 +1379,9 @@
                             ...currentData,
                             creator_name: currentData.creator_name || creatorId,
                             LastMonthDiamonds: lastMonthDiamonds,
-                            AgencyPercent: currentData.AgencyPercent || prevData.AgencyPercent
+                            AgencyPercent: currentData.AgencyPercent || prevData.AgencyPercent,
+                            DeductionAmount: currentData.DeductionAmount || 0,
+                            DeductionReasonNew: currentData.DeductionReasonNew || ""
                         };
                     } catch (e) {
                         console.error(`Error for ${creatorId}:`, e);
@@ -982,6 +1392,12 @@
                 const rawResults = await Promise.all(fetchPromises);
                 const validResult = rawResults.find(r => r && r.AgencyPercent);
                 if (validResult) detectedPercent = validResult.AgencyPercent;
+
+                const firstValidDeduction = rawResults.find(d => d && (d.DeductionAmount > 0 || (d.DeductionReasonNew && d.DeductionReasonNew.trim() !== "")));
+                if (firstValidDeduction) {
+                    globalDeductionAmount = parseFloat(firstValidDeduction.DeductionAmount) || 0;
+                    globalDeductionReason = firstValidDeduction.DeductionReasonNew || "";
+                }
 
                 creatorsData = targetCreators.map((creatorId, index) => {
                     const d = rawResults[index];
@@ -997,7 +1413,7 @@
                         const hoursVal = parseFloat(d.Hours) || 0;
                         const daysVal = parseInt(d.Days) || 0;
                         let individualBonus = calculateIndividualBonus(numericDiamonds, hoursVal, daysVal, detectedPercent);
-                        totalEstimatedBonus += individualBonus;
+                        totalCreatorsBonusGlobal += individualBonus;
 
                         return {
                             name: d.creator_name || creatorId,
@@ -1015,18 +1431,21 @@
                 
                 updateAgencyPercentUI(detectedPercent);
                 
-                let calculatedTarget = Math.round(prevMonthDiamondsSum * 1.15);
+                calculatedGlobalTarget = Math.round(prevMonthDiamondsSum * 1.15);
 
                 document.getElementById('total-diamonds-counter').innerText = globalDiamondsSum.toLocaleString('en-US');
-                document.getElementById('target-diamonds-value').innerText = calculatedTarget.toLocaleString('en-US') + " 💎";
-                document.getElementById('total-bonus-display').innerText = "$" + totalEstimatedBonus.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                document.getElementById('target-diamonds-value').innerText = calculatedGlobalTarget.toLocaleString('en-US') + " 💎";
+                
+                updateTotalBonusDisplay();
                 
                 document.getElementById('loading-spinner').classList.add('hidden');
                 document.getElementById('table-container').classList.remove('hidden');
                 
                 handleFilterChange(); 
-                renderKPITable();
-                renderOperationsTable();
+                handleKPIFilterChange();
+                updateNoticableCreatorsTable();
+                renderWeeklyBreakdownTable();
+                checkTargetGap();
             } catch (err) {
                 console.error("Fetch error:", err);
                 document.getElementById('loading-spinner').innerText = "Failed to load live tracking data.";
@@ -1133,7 +1552,7 @@
             document.getElementById('export-btn').querySelector('span').innerText = data.exportBtn;
             document.getElementById('agency-title').innerText = data.agencyTitle;
             document.getElementById('agency-sub1').innerText = data.agencySub1;
-            document.getElementById('agency-sub2').innerText, data.agencySub2;
+            document.getElementById('agency-sub2').innerText = data.agencySub2;
             document.getElementById('banner-tag').innerText = data.bannerTag;
             document.getElementById('banner-title').innerText = data.bannerTitle;
             document.getElementById('banner-est').innerText = data.bannerEst;
@@ -1141,16 +1560,71 @@
             document.getElementById('total-diamonds-title').innerText = data.totalDiamondsTitle;
             document.getElementById('target-label-text').innerText = data.targetLabel;
             document.getElementById('search-input').placeholder = data.searchPlaceholder;
+            document.getElementById('kpi-search-input').placeholder = data.kpiSearchPlaceholder;
             document.getElementById('kpi-section-title').innerText = data.kpiTitle;
             document.getElementById('kpi-section-sub').innerText = data.kpiSub;
 
             updateAutomaticDateBadge();
             renderTable();
             renderKPITable();
+            renderNoticableTable();
         }
 
         function openPayoutModal() { document.getElementById('payout-modal').classList.remove('hidden');}
         function closePayoutModal() { document.getElementById('payout-modal').classList.add('hidden'); }
+
+        function openActionPlanModal() { document.getElementById('action-plan-modal').classList.remove('hidden'); }
+        function closeActionPlanModal() { document.getElementById('action-plan-modal').classList.add('hidden'); }
+
+        async function submitActionPlan() {
+            const btn = document.getElementById('btn-submit-action-plan');
+            const planText = document.getElementById('action-plan-input').value.trim();
+            
+            if (!planText) {
+                alert("Please write your action plan before submitting!");
+                return;
+            }
+
+            const originalContent = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = `<div class="inline-block animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2 align-middle"></div><span>Submitting Plan...</span>`;
+
+            try {
+                const payload = {
+                    action: "action_plan",
+                    agentRepresentative: "hannah",
+                    targetGap: calculatedGlobalTarget - globalDiamondsSum,
+                    actionPlanDetails: planText
+                };
+
+                await fetch(APPS_SCRIPT_URL, {
+                    method: "POST",
+                    mode: "no-cors",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                btn.innerHTML = `<i data-lucide="check" class="w-4 h-4 inline-block mr-1 text-emerald-300"></i><span>Submitted Successfully</span>`;
+                lucide.createIcons();
+
+                setTimeout(() => {
+                    closeActionPlanModal();
+                    btn.innerHTML = originalContent;
+                    btn.disabled = false;
+                    document.getElementById('action-plan-input').value = "";
+                    lucide.createIcons();
+                }, 2000);
+
+            } catch (error) {
+                console.error("Action Plan error:", error);
+                btn.innerHTML = originalContent;
+                btn.disabled = false;
+                lucide.createIcons();
+                alert("Failed to submit action plan.");
+            }
+        }
 
         async function submitPayoutRequest() {
             const btn = document.getElementById('btn-submit-payout');
@@ -1187,7 +1661,7 @@
                 lucide.createIcons();
 
                 setTimeout(() => {
-                    closePayoutModal();
+                    closeModal();
                     btn.innerHTML = originalContent;
                     btn.disabled = false;
                     document.getElementById('payout-account').value = ""; 
