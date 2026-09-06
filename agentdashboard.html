@@ -465,7 +465,7 @@
                                 </p>
                             </div>
                         </div>
-                        <button onclick="openActionPlanModal()" class="bg-gradient-to-r from-rose-600 via-pink-600 to-rose-700 hover:from-rose-700 hover:to-pink-700 text-white font-black text-xs px-4 py-2.5 rounded-xl transition cursor-pointer flex items-center gap-2 shadow-[0_0_15px_rgba(244,63,94,0.4)] border border-rose-400/40 shrink-0">
+                        <button id="action-plan-button" onclick="openActionPlanModal()" class="bg-gradient-to-r from-rose-600 via-pink-600 to-rose-700 hover:from-rose-700 hover:to-pink-700 text-white font-black text-xs px-4 py-2.5 rounded-xl transition cursor-pointer flex items-center gap-2 shadow-[0_0_15px_rgba(244,63,94,0.4)] border border-rose-400/40 shrink-0">
                             <i data-lucide="sparkles" class="w-4 h-4 text-rose-200"></i>
                             <span>Action Plan</span>
                         </button>
@@ -1089,18 +1089,63 @@
             return { tier: "Tier 1", threshold: 0, nextThreshold: 100000 };
         }
 
-        function checkTargetGap() {
-            const gapContainer = document.getElementById('gap-alert-container');
-            const gapSpan = document.getElementById('gap-value-span');
-            
-            if (calculatedGlobalTarget > globalDiamondsSum) {
-                const gapAmount = calculatedGlobalTarget - globalDiamondsSum;
-                gapSpan.innerText = gapAmount.toLocaleString('en-US') + " 💎";
-                gapContainer.classList.remove('hidden');
-            } else {
-                gapContainer.classList.add('hidden');
-            }
+     function checkTargetGap() {
+    const gapContainer = document.getElementById('gap-alert-container');
+    const gapSpan = document.getElementById('gap-value-span');
+
+    const selectedMonth = document.getElementById('month-select')?.value || 'live';
+    const gapTitle = gapContainer.querySelector('h4');
+    const gapDescription = document.getElementById('gap-description-text');
+    const actionPlanButton = document.getElementById('action-plan-button');
+
+    let isCompletedPreviousMonth = false;
+
+   if (selectedMonth !== 'live') {
+    const monthMap = {
+        'july_26': { month: 6, year: 2026 },
+        'august_26': { month: 7, year: 2026 },
+        'september_26': { month: 8, year: 2026 },
+        'october_26': { month: 9, year: 2026 },
+        'november_26': { month: 10, year: 2026 },
+        'december_26': { month: 11, year: 2026 }
+    };
+
+    if (monthMap[selectedMonth]) {
+        const { month, year } = monthMap[selectedMonth];
+
+        const monthEnd = new Date(
+            year,
+            month + 1,
+            0,
+            23,
+            59,
+            59,
+            999
+        );
+
+        isCompletedPreviousMonth = new Date() > monthEnd;
+    }
+}
+    
+    if (calculatedGlobalTarget > globalDiamondsSum) {
+        const gapAmount = calculatedGlobalTarget - globalDiamondsSum;
+
+        gapSpan.innerText = gapAmount.toLocaleString('en-US') + " 💎";
+
+        if (isCompletedPreviousMonth) {
+            if (actionPlanButton) actionPlanButton.classList.add('hidden');
+            gapTitle.innerText = "Target Not Achieved";
+
+            gapDescription.innerHTML =
+                `The target was not achieved with Gap: <span id="gap-value-span" class="font-bold text-white underline">${gapAmount.toLocaleString('en-US')} 💎</span>`;
         }
+
+        gapContainer.classList.remove('hidden');
+    } else {
+        if (actionPlanButton) actionPlanButton.classList.remove('hidden');
+        gapContainer.classList.add('hidden');
+    }
+}
 
         // أتمتة جدول الأسابيع الأربعة وحالة الـ Processing أو Achieved
         function renderWeeklyBreakdownTable() {
@@ -1354,11 +1399,43 @@
 
                 const selectedMonth = document.getElementById('month-select') ? document.getElementById('month-select').value : 'live';
                 
+                // Automatically determine the previous month from the selected calendar month
                 let previousMonthKey = "july_26";
-                if (selectedMonth === "september_26") previousMonthKey = "august_26";
-                else if (selectedMonth === "october_26") previousMonthKey = "september_26";
-                else if (selectedMonth === "november_26") previousMonthKey = "october_26";
-                else if (selectedMonth === "december_26") previousMonthKey = "november_26";
+                if (selectedMonth !== "live") {
+                    const monthParts = selectedMonth.split('_');
+                    if (monthParts.length === 2) {
+                        let monthIndex = parseInt(monthParts[0], 10) - 1;
+                        let year = parseInt(monthParts[1], 10) + 2000;
+
+                        if (!isNaN(monthIndex) && !isNaN(year)) {
+                            monthIndex -= 1;
+                            if (monthIndex < 0) {
+                                monthIndex = 11;
+                                year -= 1;
+                            }
+
+                            const monthNames = [
+                                "january", "february", "march", "april", "may", "june",
+                                "july", "august", "september", "october", "november", "december"
+                            ];
+                            previousMonthKey = `${monthNames[monthIndex]}_${String(year).slice(-2)}`;
+                        }
+                    }
+                } else {
+                    // Live Data uses the real current month and therefore its real previous month
+                    const now = new Date();
+                    let monthIndex = now.getMonth() - 1;
+                    let year = now.getFullYear();
+                    if (monthIndex < 0) {
+                        monthIndex = 11;
+                        year -= 1;
+                    }
+                    const monthNames = [
+                        "january", "february", "march", "april", "may", "june",
+                        "july", "august", "september", "october", "november", "december"
+                    ];
+                    previousMonthKey = `${monthNames[monthIndex]}_${String(year).slice(-2)}`;
+                }
 
                 const fetchPromises = targetCreators.map(async (creatorId) => {
                     try {
@@ -1379,7 +1456,7 @@
                             ...currentData,
                             creator_name: currentData.creator_name || creatorId,
                             LastMonthDiamonds: lastMonthDiamonds,
-                            AgencyPercent: currentData.AgencyPercent || prevData.AgencyPercent,
+                            AgencyPercent: currentData.AgencyPercent ?? "",
                             DeductionAmount: currentData.DeductionAmount || 0,
                             DeductionReasonNew: currentData.DeductionReasonNew || ""
                         };
@@ -1431,6 +1508,9 @@
                 
                 updateAgencyPercentUI(detectedPercent);
                 
+                // Automatically use the Previous Month Target and add 15% for the Current Month Target
+                // The previous month target is calculated from the previous month's total diamonds.
+                const previousMonthTarget = Math.round(prevMonthDiamondsSum * 1.15);
                 calculatedGlobalTarget = Math.round(prevMonthDiamondsSum * 1.15);
 
                 document.getElementById('total-diamonds-counter').innerText = globalDiamondsSum.toLocaleString('en-US');
