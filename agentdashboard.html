@@ -1388,85 +1388,184 @@
             }
         }
 
-        async function fetchLiveSheetData() {
+        // Data-loading helpers: keep the existing dashboard/UI behavior while making
+        // month calculation, numeric parsing, request timing, and stale responses reliable.
+        let dataRequestSequence = 0;
+
+        const dashboardMonthNames = [
+            "january", "february", "march", "april", "may", "june",
+            "july", "august", "september", "october", "november", "december"
+        ];
+
+        const dashboardMonthIndexes = {
+            january: 0, february: 1, march: 2, april: 3, may: 4, june: 5,
+            july: 6, august: 7, september: 8, october: 9, november: 10, december: 11
+        };
+
+        function getPreviousMonthKey(selectedMonth) {
+            // Live Data always uses the actual calendar month immediately before the current month.
+            if (selectedMonth === "live") {
+                const now = new Date();
+                let monthIndex = now.getMonth() - 1;
+                let year = now.getFullYear();
+
+                if (monthIndex < 0) {
+                    monthIndex = 11;
+                    year -= 1;
+                }
+
+                return `${dashboardMonthNames[monthIndex]}_${String(year).slice(-2)}`;
+            }
+
+            // Historical selections use values such as "october_26".
+            // Convert the month NAME to its numeric index instead of parseInt("october").
+            const monthParts = String(selectedMonth).toLowerCase().split('_');
+            if (monthParts.length !== 2) {
+                return "";
+            }
+
+            const monthName = monthParts[0];
+            let monthIndex = dashboardMonthIndexes[monthName];
+            let year = Number(monthParts[1]) + 2000;
+
+            if (!Number.isInteger(monthIndex) || !Number.isFinite(year)) {
+                return "";
+            }
+
+            monthIndex -= 1;
+            if (monthIndex < 0) {
+                monthIndex = 11;
+                year -= 1;
+            }
+
+            return `${dashboardMonthNames[monthIndex]}_${String(year).slice(-2)}`;
+        }
+
+        function parseDiamondValue(value) {
+            if (typeof value === "number" && Number.isFinite(value)) {
+                return value;
+            }
+
+            const normalized = String(value ?? "")
+                .trim()
+                .replace(/,/g, "")
+                .toUpperCase();
+
+            if (!normalized) return 0;
+
+            const match = normalized.match(/(-?\d+(?:\.\d+)?)\s*([KMB])?/);
+            if (!match) return 0;
+
+            const numberValue = Number(match[1]);
+            if (!Number.isFinite(numberValue)) return 0;
+
+            const multiplier = {
+                K: 1e3,
+                M: 1e6,
+                B: 1e9
+            }[match[2]] || 1;
+
+            return numberValue * multiplier;
+        }
+
+        async function fetchJsonWithTimeout(url, timeoutMs = 30000) {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+
             try {
-                let detectedPercent = ""; 
-                globalDiamondsSum = 0; 
+                const response = await fetch(url, {
+                    cache: "no-store",
+                    signal: controller.signal
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+
+                return await response.json();
+            } finally {
+                clearTimeout(timeoutId);
+            }
+        }
+
+        async function fetchWithRetry(url, attempts = 2) {
+            let lastError;
+
+            for (let attempt = 1; attempt <= attempts; attempt++) {
+                try {
+                    return await fetchJsonWithTimeout(url);
+                } catch (error) {
+                    lastError = error;
+                    if (attempt < attempts) {
+                        // Small delay before one retry for transient mobile/network failures.
+                        await new Promise(resolve => setTimeout(resolve, 350));
+                    }
+                }
+            }
+
+            throw lastError || new Error("Request failed");
+        }
+
+        async function fetchLiveSheetData() {
+            const requestId = ++dataRequestSequence;
+
+            try {
+                let detectedPercent = "";
+                globalDiamondsSum = 0;
                 let prevMonthDiamondsSum = 0;
                 totalCreatorsBonusGlobal = 0;
                 globalDeductionAmount = 0;
                 globalDeductionReason = "";
 
                 const selectedMonth = document.getElementById('month-select') ? document.getElementById('month-select').value : 'live';
-                
-                // Automatically determine the previous month from the selected calendar month
-                let previousMonthKey = "july_26";
-                if (selectedMonth !== "live") {
-                    const monthParts = selectedMonth.split('_');
-                    if (monthParts.length === 2) {
-                        let monthIndex = parseInt(monthParts[0], 10) - 1;
-                        let year = parseInt(monthParts[1], 10) + 2000;
 
-                        if (!isNaN(monthIndex) && !isNaN(year)) {
-                            monthIndex -= 1;
-                            if (monthIndex < 0) {
-                                monthIndex = 11;
-                                year -= 1;
-                            }
-
-                            const monthNames = [
-                                "january", "february", "march", "april", "may", "june",
-                                "july", "august", "september", "october", "november", "december"
-                            ];
-                            previousMonthKey = `${monthNames[monthIndex]}_${String(year).slice(-2)}`;
-                        }
-                    }
-                } else {
-                    // Live Data uses the real current month and therefore its real previous month
-                    const now = new Date();
-                    let monthIndex = now.getMonth() - 1;
-                    let year = now.getFullYear();
-                    if (monthIndex < 0) {
-                        monthIndex = 11;
-                        year -= 1;
-                    }
-                    const monthNames = [
-                        "january", "february", "march", "april", "may", "june",
-                        "july", "august", "september", "october", "november", "december"
-                    ];
-                    previousMonthKey = `${monthNames[monthIndex]}_${String(year).slice(-2)}`;
+                // The current-month target ALWAYS remains:
+                // previous month's TOTAL accumulated diamonds × 1.15.
+                const previousMonthKey = getPreviousMonthKey(selectedMonth);
+                if (!previousMonthKey) {
+                    throw new Error(`Unable to determine previous month for: ${selectedMonth}`);
                 }
 
                 const fetchPromises = targetCreators.map(async (creatorId) => {
-                    try {
-                        const currentRes = await fetch(`${APPS_SCRIPT_URL}?id=${encodeURIComponent(creatorId)}&month=${encodeURIComponent(selectedMonth)}`);
-                        const currentJson = await currentRes.json();
-                        
-                        const prevRes = await fetch(`${APPS_SCRIPT_URL}?id=${encodeURIComponent(creatorId)}&month=${encodeURIComponent(previousMonthKey)}`);
-                        const prevJson = await prevRes.json();
-                        
-                        let currentData = (currentJson.status === "success" && currentJson.data) ? currentJson.data : {};
-                        let prevData = (prevJson.status === "success" && prevJson.data) ? prevJson.data : {};
+                    const currentUrl = `${APPS_SCRIPT_URL}?id=${encodeURIComponent(creatorId)}&month=${encodeURIComponent(selectedMonth)}`;
+                    const previousUrl = `${APPS_SCRIPT_URL}?id=${encodeURIComponent(creatorId)}&month=${encodeURIComponent(previousMonthKey)}`;
 
-                        let rawPrevDiamonds = String(prevData.Diamonds || "0").replace(/[^0-9kK.]/g, '');
-                        let lastMonthDiamonds = parseFloat(rawPrevDiamonds) || 0;
-                        if (/k/i.test(rawPrevDiamonds)) lastMonthDiamonds *= 1000;
+                    // Keep the original request pattern: current month first, then previous month.
+                    // This avoids sending 30 requests to Apps Script at the same time, which can
+                    // cause temporary throttling/rate-limit failures on mobile.
+                    const currentJson = await fetchWithRetry(currentUrl);
+                    const prevJson = await fetchWithRetry(previousUrl);
 
-                        return {
-                            ...currentData,
-                            creator_name: currentData.creator_name || creatorId,
-                            LastMonthDiamonds: lastMonthDiamonds,
-                            AgencyPercent: currentData.AgencyPercent ?? "",
-                            DeductionAmount: currentData.DeductionAmount || 0,
-                            DeductionReasonNew: currentData.DeductionReasonNew || ""
-                        };
-                    } catch (e) {
-                        console.error(`Error for ${creatorId}:`, e);
+                    if (currentJson.status !== "success" || !currentJson.data) {
+                        throw new Error(`Current-month data unavailable for ${creatorId}`);
                     }
-                    return null;
+
+                    if (prevJson.status !== "success" || !prevJson.data) {
+                        throw new Error(`Previous-month data unavailable for ${creatorId}`);
+                    }
+
+                    const currentData = currentJson.data;
+                    const prevData = prevJson.data;
+                    const lastMonthDiamonds = parseDiamondValue(prevData.Diamonds);
+
+                    return {
+                        ...currentData,
+                        creator_name: currentData.creator_name || creatorId,
+                        LastMonthDiamonds: lastMonthDiamonds,
+                        AgencyPercent: currentData.AgencyPercent ?? "",
+                        DeductionAmount: currentData.DeductionAmount || 0,
+                        DeductionReasonNew: currentData.DeductionReasonNew || ""
+                    };
                 });
 
                 const rawResults = await Promise.all(fetchPromises);
+
+                // If another load started while this one was running, do not let the older
+                // response overwrite the newer month/data selection.
+                if (requestId !== dataRequestSequence) {
+                    return;
+                }
+
                 const validResult = rawResults.find(r => r && r.AgencyPercent);
                 if (validResult) detectedPercent = validResult.AgencyPercent;
 
@@ -1478,56 +1577,57 @@
 
                 creatorsData = targetCreators.map((creatorId, index) => {
                     const d = rawResults[index];
-                    if (d) {
-                        const rawDiamonds = String(d.Diamonds || "0").replace(/[^0-9kK.]/g, '');
-                        let numericDiamonds = parseFloat(rawDiamonds) || 0;
-                        if (/k/i.test(rawDiamonds)) numericDiamonds *= 1000;
+                    const numericDiamonds = parseDiamondValue(d.Diamonds);
 
-                        globalDiamondsSum += numericDiamonds; 
-                        let lastMonthDiamonds = d.LastMonthDiamonds || 0;
-                        prevMonthDiamondsSum += lastMonthDiamonds;
+                    globalDiamondsSum += numericDiamonds;
 
-                        const hoursVal = parseFloat(d.Hours) || 0;
-                        const daysVal = parseInt(d.Days) || 0;
-                        let individualBonus = calculateIndividualBonus(numericDiamonds, hoursVal, daysVal, detectedPercent);
-                        totalCreatorsBonusGlobal += individualBonus;
+                    // This is the accumulated diamonds total from the PREVIOUS month.
+                    // It is used only for calculating the current month's target.
+                    const lastMonthDiamonds = Number.isFinite(d.LastMonthDiamonds) ? d.LastMonthDiamonds : 0;
+                    prevMonthDiamondsSum += lastMonthDiamonds;
 
-                        return {
-                            name: d.creator_name || creatorId,
-                            handle: "@" + creatorId,
-                            diamonds: d.Diamonds || "0",
-                            numericDiamonds: numericDiamonds,
-                            lastMonthDiamonds: lastMonthDiamonds,
-                            hoursVal: hoursVal,
-                            daysVal: daysVal,
-                            bonus: "$" + individualBonus.toFixed(2)
-                        };
-                    }
-                    return { name: creatorId, handle: "@" + creatorId, diamonds: "0", numericDiamonds: 0, lastMonthDiamonds: 0, hoursVal: 0, daysVal: 0, bonus: "$0.00" };
+                    const hoursVal = parseFloat(d.Hours) || 0;
+                    const daysVal = parseInt(d.Days) || 0;
+                    const individualBonus = calculateIndividualBonus(numericDiamonds, hoursVal, daysVal, detectedPercent);
+                    totalCreatorsBonusGlobal += individualBonus;
+
+                    return {
+                        name: d.creator_name || creatorId,
+                        handle: "@" + creatorId,
+                        diamonds: d.Diamonds || "0",
+                        numericDiamonds: numericDiamonds,
+                        lastMonthDiamonds: lastMonthDiamonds,
+                        hoursVal: hoursVal,
+                        daysVal: daysVal,
+                        bonus: "$" + individualBonus.toFixed(2)
+                    };
                 });
-                
+
                 updateAgencyPercentUI(detectedPercent);
-                
-                // Automatically use the Previous Month Target and add 15% for the Current Month Target
-                // The previous month target is calculated from the previous month's total diamonds.
-                const previousMonthTarget = Math.round(prevMonthDiamondsSum * 1.15);
+
+                // IMPORTANT: Current month target = PREVIOUS MONTH'S TOTAL ACCUMULATED DIAMONDS × 1.15.
+                // Example: October target = September total accumulated diamonds × 1.15.
                 calculatedGlobalTarget = Math.round(prevMonthDiamondsSum * 1.15);
 
                 document.getElementById('total-diamonds-counter').innerText = globalDiamondsSum.toLocaleString('en-US');
                 document.getElementById('target-diamonds-value').innerText = calculatedGlobalTarget.toLocaleString('en-US') + " 💎";
-                
+
                 updateTotalBonusDisplay();
-                
+
                 document.getElementById('loading-spinner').classList.add('hidden');
                 document.getElementById('table-container').classList.remove('hidden');
-                
-                handleFilterChange(); 
+
+                handleFilterChange();
                 handleKPIFilterChange();
                 updateNoticableCreatorsTable();
                 renderWeeklyBreakdownTable();
                 checkTargetGap();
             } catch (err) {
+                // Never convert a failed creator request into zero diamonds.
+                // Keep the existing UI behavior/message, but stop the load instead of publishing incorrect totals.
                 console.error("Fetch error:", err);
+                if (requestId !== dataRequestSequence) return;
+
                 document.getElementById('loading-spinner').innerText = "Failed to load live tracking data.";
             }
         }
