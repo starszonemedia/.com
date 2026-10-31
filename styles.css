@@ -1559,13 +1559,42 @@ html[lang="ar"] .hero .hero-ar-image {
 }
 @media (max-width: 576px) {
     .hero-en-image {
-        left: 0px;
-        top: 0px;
+    
+          position: relative !important;
+        top: 0 !important;
+        left: auto !important;
+        right: auto !important;
+        transform: none !important;
+
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 20px auto 0 !important;
+
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+    .hero-en-image .image-wrapper {
+        margin-inline: auto !important;
     }
 
     .hero-ar-image {
-        right: px;
-        top: -10px;
+          position: relative !important;
+        top: 0 !important;
+        left: auto !important;
+        right: auto !important;
+        transform: none !important;
+
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 20px auto 0 !important;
+
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+    .hero-ar-image .image-wrapper {
+        margin-inline: auto !important;
     }
 }
 /* Dark Mode Logo Size */
@@ -1640,4 +1669,16 @@ html[dir="rtl"] .carousel-controls {
     .nav-container > .menu-toggle .bar {
         width: 20px;
     }
+}
+.hero-en-image,
+.hero-ar-image {
+    display: none !important;
+}
+
+html[lang="en"] .hero-en-image {
+    display: flex !important;
+}
+
+html[lang="ar"] .hero-ar-image {
+    display: flex !important;
 }
