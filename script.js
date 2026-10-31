@@ -126,8 +126,33 @@ function toggleMenu() {
     }
 }
 
-if (menuToggle) menuToggle.addEventListener('click', toggleMenu);
-if (menuOverlay) menuOverlay.addEventListener('click', toggleMenu);
+if (menuToggle) {
+    menuToggle.addEventListener('click', toggleMenu);
+}
+
+// Close menu without toggling it open
+function closeMenu() {
+    if (menuToggle) menuToggle.classList.remove('active');
+    if (navMenu) navMenu.classList.remove('active');
+    if (menuOverlay) menuOverlay.classList.remove('active');
+}
+
+// Close when clicking the overlay
+if (menuOverlay) {
+    menuOverlay.addEventListener('click', closeMenu);
+}
+
+// Close when clicking anywhere outside the menu
+document.addEventListener('click', (e) => {
+    if (!navMenu || !navMenu.classList.contains('active')) return;
+
+    const clickedInsideMenu = navMenu.contains(e.target);
+    const clickedToggle = menuToggle && menuToggle.contains(e.target);
+
+    if (!clickedInsideMenu && !clickedToggle) {
+        closeMenu();
+    }
+});
 
 if (navMenu) {
     navMenu.addEventListener('click', (e) => {
