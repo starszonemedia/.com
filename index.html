@@ -19,6 +19,35 @@
 
     <link rel="icon" href="images/webicon.webp">
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .career-cv-field input[type="file"] {
+            display: block;
+            width: 100%;
+            max-width: 100%;
+            padding: 12px;
+            border: 1px dashed rgba(201, 164, 92, 0.65);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.04);
+            color: inherit;
+            font: inherit;
+            box-sizing: border-box;
+        }
+        .career-cv-field input[type="file"]::file-selector-button {
+            margin-inline-end: 12px;
+            padding: 8px 12px;
+            border: 0;
+            border-radius: 7px;
+            cursor: pointer;
+            font: inherit;
+        }
+        .career-cv-help {
+            display: block;
+            margin-top: 7px;
+            line-height: 1.5;
+            opacity: 0.75;
+            font-size: 0.82rem;
+        }
+    </style>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,12 +55,12 @@
 
     <link rel="preload"
           as="style"
-          href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@300;400;500;600&family=Syne:wght@700;800&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@500;600;700&family=Syne:wght@700;800&display=swap"
           onload="this.onload=null;this.rel='stylesheet'">
 
     <noscript>
     <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@300;400;500;600&family=Syne:wght@700;800&display=swap">
+          href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@500;600;700&family=Syne:wght@700;800&display=swap">
     </noscript>
 
     <!-- Font Awesome -->
@@ -154,7 +183,7 @@
 
                 <!-- Arabic Hero Image -->
                 <div class="image-wrapper hero-zoom-wrapper hero-ar-image">
-                    <img src="images/arabherosec.JPEG"
+                    <img src="images/arabherosec.PNG"
                          alt="ستارز زون ميديا"
                          loading="eager"
                          decoding="async">
@@ -507,7 +536,7 @@
 <!-- Join Section -->
 <section id="join" class="section join-section text-center">
     <div class="container">
-        <h2 class="section-title centered-title" data-en="Join The Zone" data-ar="انضم إلى المنطقة">Join The Zone</h2>
+        <h2 class="section-title centered-title" data-en="Join The Zone" data-ar="انضم إلى ستارز زون ميديا">Join The Zone</h2>
         <p class="section-subtitle centered-subtitle" data-en="Ready to level up? Fill out the exclusive application form below." data-ar="جاهز للانتقال للمستوى التالي؟ املأ استمارة الانضمام أدناه.">Ready to level up? Fill out the exclusive application form below.</p>
         <div class="form-wrapper">
             <form id="join-form" class="join-form">
@@ -546,7 +575,7 @@
 
 <section id="career" class="section career-section">
     <div class="container">
-        <div class="career-box">
+        <div class="career-box career-box-trigger" id="career-open" role="button" tabindex="0" aria-haspopup="dialog" aria-controls="career-modal">
             <h2 data-en="Need a Career?" data-ar="تبحث عن فرصة عمل؟">Need a Career?</h2>
             <p><b data-en="We want you in our team!" data-ar="نريدك ضمن فريقنا!">We want you in our team!</b><br><span data-en="Join Stars Zone Media and work with us to connect talented creators with opportunities and helping them reach their dreams all while earning amazing rewards!" data-ar="انضم إلى ستارز زون ميديا واعمل معنا للربط بين المبدعين الموهوبين والفرص ومساعدتهم في تحقيق أحلامهم مع الحصول على مكافآت ممتازة!">Join Stars Zone Media and work with us to connect talented creators with opportunities, helping them reach their dreams — all while earning amazing rewards!</span></p>
         </div>
@@ -568,6 +597,93 @@
     </div>
 </footer>
 
+
+<!-- Career Application Modal -->
+<div id="career-modal" class="career-modal" aria-hidden="true">
+    <div class="career-modal-backdrop" data-career-close></div>
+    <div class="career-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="career-modal-title">
+        <button type="button" class="career-modal-close" aria-label="Close" data-career-close>&times;</button>
+        <div id="career-form-view">
+            <h2 id="career-modal-title" data-en="Career Application" data-ar="استمارة التقديم للوظائف">Career Application</h2>
+            <p class="career-modal-intro" data-en="Tell us a little about yourself and the role you're interested in." data-ar="عرّفنا بنفسك وبالوظيفة التي ترغب في التقدم إليها.">Tell us a little about yourself and the role you're interested in.</p>
+
+            <form id="career-application-form" class="career-application-form">
+                <div class="career-field">
+                    <label for="career-full-name" data-en="Full name" data-ar="الاسم بالكامل">Full name</label>
+                    <input id="career-full-name" name="fullName" type="text" autocomplete="name" required
+                        placeholder="Enter your full name" data-placeholder-en="Enter your full name" data-placeholder-ar="اكتب اسمك بالكامل">
+                </div>
+                <div class="career-field">
+                    <label for="career-email" data-en="Email address" data-ar="البريد الإلكتروني">Email address</label>
+                    <input id="career-email" name="email" type="email" autocomplete="email" required
+                        placeholder="name@example.com" data-placeholder-en="name@example.com" data-placeholder-ar="name@example.com">
+                </div>
+                <div class="career-field">
+                    <label for="career-phone" data-en="Phone number" data-ar="رقم الهاتف">Phone number</label>
+                    <input id="career-phone" name="phoneNumber" type="tel" inputmode="numeric" pattern="[0-9]{7,15}" maxlength="15" autocomplete="tel" required
+                        placeholder="Numbers only" data-placeholder-en="Numbers only" data-placeholder-ar="أرقام فقط">
+                </div>
+                <div class="career-field">
+                    <label for="career-age" data-en="Age" data-ar="العمر">Age</label>
+                    <input id="career-age" name="age" type="number" inputmode="numeric" min="16" max="99" step="1" required
+                        placeholder="Enter your age" data-placeholder-en="Enter your age" data-placeholder-ar="اكتب عمرك">
+                </div>
+                <div class="career-field">
+                    <label for="career-position" data-en="Which position are you applying for?" data-ar="ما الوظيفة التي تتقدم إليها؟">Which position are you applying for?</label>
+                    <select id="career-position" name="position" required>
+                        <option value="" selected disabled data-en="Select a position" data-ar="اختر الوظيفة">Select a position</option>
+                        <option value="Agent" data-en="Agent" data-ar="مسؤول وكالة (Agent)">Agent</option>
+                        <option value="Marketing specialist" data-en="Marketing specialist" data-ar="أخصائي تسويق">Marketing specialist</option>
+                        <option value="Video editor" data-en="Video editor" data-ar="محرر فيديو">Video editor</option>
+                        <option value="Other" data-en="Other" data-ar="أخرى">Other</option>
+                    </select>
+                </div>
+                <div class="career-field">
+                    <label for="career-employment" data-en="Preferred Employment Type?" data-ar="ما نوع التوظيف الذي تبحث عنه؟">What type of employment are you looking for?</label>
+                    <select id="career-employment" name="employmentType" required>
+                        <option value="" selected disabled data-en="Select employment type" data-ar="اختر نوع التوظيف">Select employment type</option>
+                        <option value="Full-time" data-en="Full-time" data-ar="دوام كامل">Full-time</option>
+                        <option value="Part-time" data-en="Part-time" data-ar="دوام جزئي">Part-time</option>
+                        <option value="Freelance" data-en="Freelance" data-ar="عمل حر">Freelance</option>
+                    </select>
+                </div>
+                <div class="career-field">
+                    <label for="career-arrangement" data-en="Preferred work arrangement?" data-ar="نظام العمل المفضل">Preferred work arrangement</label>
+                    <select id="career-arrangement" name="workArrangement" required>
+                        <option value="" selected disabled data-en="Select work arrangement" data-ar="اختر نظام العمل">Select work arrangement</option>
+                        <option value="On-site" data-en="On-site" data-ar="من مقر الشركة">On-site</option>
+                        <option value="Remote" data-en="Remote" data-ar="عن بُعد">Remote</option>
+                        <option value="Hybrid" data-en="Hybrid" data-ar="نظام هجين (من المقر وعن بُعد)">Hybrid</option>
+                    </select>
+                </div>
+                <fieldset class="career-field career-radio-field">
+                    <legend data-en="Do you have previous experience working with a TikTok LIVE agency?" data-ar="هل لديك خبرة سابقة في العمل مع وكالة متخصصة في TikTok LIVE؟">Do you have previous experience working with a TikTok LIVE agency?</legend>
+                    <label class="career-radio-option"><input type="radio" name="agencyExperience" value="Yes" required><span data-en="Yes" data-ar="نعم">Yes</span></label>
+                    <label class="career-radio-option"><input type="radio" name="agencyExperience" value="No" required><span data-en="No" data-ar="لا">No</span></label>
+                </fieldset>
+                <div class="career-field career-cv-field">
+                    <label for="career-cv" data-en="Upload Your CV" data-ar="ارفع سيرتك الذاتية">Upload Your CV</label>
+                    <input id="career-cv" name="cvFile" type="file" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" required>
+                    <small class="career-cv-help" data-en="Accepted formats: PDF or Word (DOC/DOCX). Maximum file size: 5 MB." data-ar="الصيغ المقبولة: PDF أو Word (DOC/DOCX). الحد الأقصى لحجم الملف: 5 ميجابايت.">Accepted formats: PDF or Word (DOC/DOCX). Maximum file size: 5 MB.</small>
+                </div>
+                <button type="submit" id="career-submit-btn" class="cta-button full-width">
+                    <span class="career-submit-label" data-en="Submit Application" data-ar="إرسال الطلب">Submit Application</span>
+                    <span class="career-spinner" aria-hidden="true"></span>
+                </button>
+                <p id="career-form-error" class="career-form-error" role="alert" aria-live="polite"></p>
+            </form>
+        </div>
+        <div id="career-success-view" class="career-success-view" hidden>
+            <div class="career-success-icon" aria-hidden="true">✓</div>
+            <h2 data-en="Application submitted!" data-ar="تم إرسال طلبك بنجاح!">Application submitted!</h2>
+            <p data-en="Thank you for your interest in joining Stars Zone Media. Our team will review your application." data-ar="شكرًا لاهتمامك بالانضمام إلى ستارز زون ميديا. سيقوم فريقنا بمراجعة طلبك.">Thank you for your interest in joining Stars Zone Media. Our team will review your application.</p>
+            <button type="button" class="cta-button full-width" data-career-close>
+                <span data-en="Close" data-ar="إغلاق">Close</span>
+            </button>
+        </div>
+    </div>
+</div>
+
 <div id="video-modal" class="video-modal" style="display: none;">
     <div class="modal-content">
         <span class="close-modal">&times;</span>
@@ -578,6 +694,179 @@
         </div>
     </div>
 </div>
+
+
+<script>
+(function () {
+    // Paste the deployed Google Apps Script Web App URL here (ends in /exec).
+    const careerEndpoint = "https://script.google.com/macros/s/AKfycbw-OqouiNnFtXuafkSsL5j9z_C3TcK_rMQtLaxH-DOs7I1XXMtam_Erffbf6ngIvnsS/exec";
+    const careerModal = document.getElementById("career-modal");
+    const careerOpen = document.getElementById("career-open");
+    const careerForm = document.getElementById("career-application-form");
+    const careerSubmit = document.getElementById("career-submit-btn");
+    const careerError = document.getElementById("career-form-error");
+    const careerFormView = document.getElementById("career-form-view");
+    const careerSuccessView = document.getElementById("career-success-view");
+
+    if (!careerModal || !careerOpen || !careerForm) return;
+
+    function currentCareerLanguage() {
+        return document.documentElement.lang.toLowerCase().startsWith("ar") ? "ar" : "en";
+    }
+
+    function fileToDataURL(file) {
+        return new Promise(function (resolve, reject) {
+            const reader = new FileReader();
+            reader.onload = function () { resolve(reader.result); };
+            reader.onerror = function () { reject(new Error("Unable to read the selected CV file.")); };
+            reader.readAsDataURL(file);
+        });
+    }
+
+    function translateCareerModal() {
+        const lang = currentCareerLanguage();
+        careerModal.querySelectorAll("[data-en][data-ar]").forEach(function (node) {
+            const value = node.getAttribute("data-" + lang);
+            if (value !== null) node.textContent = value;
+        });
+        careerModal.querySelectorAll("[data-placeholder-en][data-placeholder-ar]").forEach(function (node) {
+            node.placeholder = node.getAttribute("data-placeholder-" + lang);
+        });
+        careerModal.dir = lang === "ar" ? "rtl" : "ltr";
+    }
+
+    function openCareerModal() {
+        translateCareerModal();
+        careerModal.classList.add("is-open");
+        careerModal.setAttribute("aria-hidden", "false");
+        document.body.classList.add("career-modal-open");
+        careerForm.querySelector("input[name='fullName']").focus();
+    }
+
+    function closeCareerModal() {
+        careerModal.classList.remove("is-open");
+        careerModal.setAttribute("aria-hidden", "true");
+        document.body.classList.remove("career-modal-open");
+    }
+
+    careerOpen.addEventListener("click", openCareerModal);
+    careerOpen.addEventListener("keydown", function (event) {
+        if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            openCareerModal();
+        }
+    });
+
+    careerModal.querySelectorAll("[data-career-close]").forEach(function (button) {
+        button.addEventListener("click", closeCareerModal);
+    });
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape" && careerModal.classList.contains("is-open")) closeCareerModal();
+    });
+
+    // Keep the popup translated when the site's language switch changes.
+    const languageObserver = new MutationObserver(translateCareerModal);
+    languageObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["lang", "dir"] });
+
+    // Restrict phone input to digits only.
+    const phoneInput = document.getElementById("career-phone");
+    phoneInput.addEventListener("input", function () {
+        this.value = this.value.replace(/[^0-9]/g, "").slice(0, 15);
+    });
+
+    careerForm.addEventListener("submit", async function (event) {
+        event.preventDefault();
+        careerError.textContent = "";
+
+        if (!careerForm.reportValidity()) return;
+        if (careerEndpoint.indexOf("PASTE_YOUR_") === 0) {
+            careerError.textContent = currentCareerLanguage() === "ar"
+                ? "نحتاج أولًا إلى ربط نموذج التقديم بخدمة Google Apps Script. راجعي تعليمات الربط المرفقة."
+                : "The form needs to be connected to Google Apps Script first. Please follow the setup instructions included with the files.";
+            return;
+        }
+
+        const formData = new FormData(careerForm);
+        const payload = Object.fromEntries(
+            Array.from(formData.entries()).filter(function (entry) {
+                return entry[0] !== "cvFile";
+            })
+        );
+        const cvInput = document.getElementById("career-cv");
+        const cvFile = cvInput.files && cvInput.files[0];
+
+        if (!cvFile) {
+            careerError.textContent = currentCareerLanguage() === "ar"
+                ? "يرجى إرفاق السيرة الذاتية قبل إرسال الطلب."
+                : "Please attach your CV before submitting.";
+            return;
+        }
+
+        const allowedExtensions = /\.(pdf|doc|docx)$/i;
+        if (!allowedExtensions.test(cvFile.name)) {
+            careerError.textContent = currentCareerLanguage() === "ar"
+                ? "يرجى اختيار ملف PDF أو Word فقط."
+                : "Please select a PDF or Word document only.";
+            return;
+        }
+
+        if (cvFile.size > 5 * 1024 * 1024) {
+            careerError.textContent = currentCareerLanguage() === "ar"
+                ? "حجم الملف يجب ألا يتجاوز 5 ميجابايت."
+                : "The CV file must be 5 MB or smaller.";
+            return;
+        }
+
+        careerSubmit.disabled = true;
+        careerSubmit.classList.add("is-loading");
+
+        try {
+            const cvDataURL = await fileToDataURL(cvFile);
+            payload.cvBase64 = cvDataURL.split(",")[1];
+            payload.cvFileName = cvFile.name;
+            payload.cvMimeType = cvFile.type || (
+                /\.pdf$/i.test(cvFile.name) ? "application/pdf" :
+                /\.doc$/i.test(cvFile.name) ? "application/msword" :
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            );
+
+            // Send the application and CV to Google Apps Script.
+            // text/plain avoids a browser CORS preflight for the Web App request.
+            await fetch(careerEndpoint, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
+                body: JSON.stringify(payload)
+            });
+
+            // With no-cors, the browser cannot read Google's response. The success view
+            // appears once the browser has handed the submission request off successfully.
+            careerFormView.hidden = true;
+            careerSuccessView.hidden = false;
+            careerSuccessView.querySelector("button").focus();
+        } catch (error) {
+            careerError.textContent = currentCareerLanguage() === "ar"
+                ? "تعذر إرسال الطلب حاليًا. يرجى المحاولة مرة أخرى."
+                : "We couldn't submit your application right now. Please try again.";
+            careerSubmit.disabled = false;
+            careerSubmit.classList.remove("is-loading");
+        }
+    });
+
+    careerModal.querySelectorAll("[data-career-close]").forEach(function (button) {
+        button.addEventListener("click", function () {
+            if (careerSuccessView.hidden === false) {
+                careerForm.reset();
+                careerFormView.hidden = false;
+                careerSuccessView.hidden = true;
+                careerSubmit.disabled = false;
+                careerSubmit.classList.remove("is-loading");
+                careerError.textContent = "";
+            }
+        });
+    });
+})();
+</script>
 
 <script src="script.js" defer></script>
 </body>
